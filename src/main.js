@@ -6,8 +6,8 @@ import Aura from '@primeuix/themes/aura'
 import 'primeicons/primeicons.css'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
-import { RadarChart } from 'echarts/charts'
-import { RadarComponent, TooltipComponent } from 'echarts/components'
+import { RadarChart, PieChart } from 'echarts/charts'
+import { RadarComponent, TooltipComponent, LegendComponent } from 'echarts/components'
 import VChart from 'vue-echarts'
 import router from './router/index.js'
 import './style.css'
@@ -31,7 +31,7 @@ const SchoolDayPreset = definePreset(Aura, {
   }
 })
 
-use([CanvasRenderer, RadarChart, RadarComponent, TooltipComponent])
+use([CanvasRenderer, RadarChart, PieChart, RadarComponent, TooltipComponent, LegendComponent])
 
 const app = createApp(App)
 
