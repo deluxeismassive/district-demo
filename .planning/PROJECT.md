@@ -29,7 +29,7 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 
 - ✓ DPA page: sortable/filterable DataTable with status badge, signed/expiry dates, and risk labels — Validated in Phase 3: DPA View
 - ✓ At-risk vendor surface: "Top 8 Vendors Needing Attention" card on Dashboard + VendorDrawer DPA section — Validated in Phase 3: DPA View
-- [ ] Risk Position page: display a converged view of discovery + DPA data showing district risk (visualization approach TBD during planning)
+- ✓ Risk Position page: donut chart (ECharts) + sortable 5-column vendor table with computed risk tiers (High/Medium/Low) derived from DPA status, usage volume, and 1EdTech certification — Validated in Phase 5: Risk Position View
 - ✓ 1EdTech certification data: visible in VendorDrawer (status badge, standard, certified date) — Validated in Phase 4: 1EdTech View
 - [ ] Tags management: users can create, edit, and delete tags used to categorize vendors/domains
 - [ ] All data backed by editable mock data files (JSON/JS config) for same-day sales iteration
@@ -45,6 +45,7 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 
 ## Context
 
+- Phase 5 complete — Risk Position View: ReportsView rewritten as live Risk Position page; RISK_TIER_COLORS constant added to riskLabels.js; PieChart + LegendComponent registered in main.js; donut chart (ECharts) shows High:2 / Medium:7 / Low:18 tier distribution; sortable 5-column vendor table with calcTier formula (DPA status + usage + 1EdTech modifier); VendorDrawer drill-down on row click; DPA tab skeleton removed
 - Phase 4 complete — 1EdTech View: edtech.js enriched with certificationStandard + certifiedDate (27 records, 5 real standards), EDTECH_STATUS_COLORS added to riskLabels.js, VendorDrawer 1EdTech section (between DPA and Privacy Score), dead '1EdTech' tab removed from ReportsView
 - Phase 3 complete — DPA View: Discovery|DPA tab bar, DpaGrid with 6-column sortable table + badge colors, riskLabels.js constants, VendorDrawer DPA section, Dashboard Top 8 Vendors Needing Attention card with KPI tiles
 - Phase 2 complete — Discovery page fully functional: 27-vendor DataTable (sortable, filterable), VendorDrawer slide-over with 10-axis ECharts radar chart, tag assignment via grouped MultiSelect, localStorage persistence, all data from `src/data/*.js`
@@ -71,7 +72,7 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 | Separate pages/routes per section | User confirmed — each section is its own page | — Pending |
 | Mock data in config/JSON files | Same-day iteration requires data decoupled from components | — Pending |
 | No authentication | Demo is guided by a sales rep; login adds friction with no benefit | — Pending |
-| Risk Position visualization TBD | Approach not yet defined — will be decided during phase planning | — Pending |
+| Risk Position visualization | Donut chart (ECharts) + sortable DataTable with RISK_TIER_COLORS badge palette | — Implemented in Phase 5 |
 
 ## Evolution
 
@@ -91,4 +92,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-13 after Phase 4: 1EdTech View*
+*Last updated: 2026-05-13 after Phase 5: Risk Position View*
