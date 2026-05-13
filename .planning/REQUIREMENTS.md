@@ -81,30 +81,30 @@ Deferred to future iteration. Tracked but not in current roadmap.
 
 ## Traceability
 
-Updated during roadmap creation.
+Updated: 2026-05-13 after roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | — | Pending |
-| FOUND-02 | — | Pending |
-| FOUND-03 | — | Pending |
-| FOUND-04 | — | Pending |
-| DISC-01 | — | Pending |
-| DISC-02 | — | Pending |
-| DISC-03 | — | Pending |
-| DPA-01 | — | Pending |
-| DPA-02 | — | Pending |
-| RISK-01 | — | Pending |
-| RISK-02 | — | Pending |
-| EDTECH-01 | — | Pending |
-| TAGS-01 | — | Pending |
-| TAGS-02 | — | Pending |
+| FOUND-01 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Pending |
+| FOUND-04 | Phase 1 | Pending |
+| FOUND-03 | Phase 2 | Pending |
+| DISC-01 | Phase 2 | Pending |
+| DISC-02 | Phase 2 | Pending |
+| DISC-03 | Phase 2 | Pending |
+| TAGS-02 | Phase 2 | Pending |
+| DPA-01 | Phase 3 | Pending |
+| DPA-02 | Phase 3 | Pending |
+| EDTECH-01 | Phase 4 | Pending |
+| RISK-01 | Phase 5 | Pending |
+| RISK-02 | Phase 5 | Pending |
+| TAGS-01 | Phase 6 | Pending |
 
 **Coverage:**
 - v1 requirements: 14 total
-- Mapped to phases: 0
-- Unmapped: 14 ⚠️ (populate during roadmap creation)
+- Mapped to phases: 14
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-05-13*
-*Last updated: 2026-05-13 after initial definition*
+*Last updated: 2026-05-13 after roadmap creation*
