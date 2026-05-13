@@ -25,8 +25,8 @@
 
 ### Risk
 
-- [ ] **RISK-01**: Each vendor has a calculated risk tier (High / Medium / Low) derived from DPA status and usage volume
-- [ ] **RISK-02**: A donut chart displays the distribution of vendors by risk tier
+- [x] **RISK-01**: Each vendor has a calculated risk tier (High / Medium / Low) derived from DPA status and usage volume
+- [x] **RISK-02**: A donut chart displays the distribution of vendors by risk tier
 
 ### 1EdTech
 
@@ -96,8 +96,8 @@ Updated: 2026-05-13 after roadmap creation.
 | DPA-01 | Phase 3 | Complete |
 | DPA-02 | Phase 3 | Complete |
 | EDTECH-01 | Phase 4 | Complete |
-| RISK-01 | Phase 5 | Pending |
-| RISK-02 | Phase 5 | Pending |
+| RISK-01 | Phase 5 | Complete |
+| RISK-02 | Phase 5 | Complete |
 | TAGS-01 | Phase 6 | Pending |
 
 **Coverage:**

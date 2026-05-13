@@ -114,7 +114,7 @@
 | 2. Data Layer + Discovery | 4/4 | Complete   | 2026-05-13 |
 | 3. DPA View | 1/3 | In Progress|  |
 | 4. 1EdTech View | 2/2 | Complete   | 2026-05-13 |
-| 5. Risk Position View | 0/2 | Planned | - |
+| 5. Risk Position View | 1/2 | In Progress|  |
 | 6. Tags Management | 0/? | Not started | - |
 
 ---
