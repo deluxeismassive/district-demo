@@ -31,6 +31,51 @@ const selectedTagIds = computed({
     if (props.vendor) tagsStore.assignments[props.vendor.vendorId] = val
   }
 })
+
+const radarOption = computed(() => {
+  if (!props.vendor) return {}
+  const s = props.vendor.privacyScore
+  return {
+    radar: {
+      indicator: [
+        { name: 'Information Collected', max: 10 },
+        { name: 'Use of Information', max: 10 },
+        { name: 'Data Sharing', max: 10 },
+        { name: 'Security Measures', max: 10 },
+        { name: 'User Rights', max: 10 },
+        { name: 'Retention Period', max: 10 },
+        { name: 'Compliance with Laws', max: 10 },
+        { name: 'Updates to Privacy Policy', max: 10 },
+        { name: 'Overall Clarity and Transparency', max: 10 },
+        { name: 'Contact Information', max: 10 }
+      ]
+    },
+    series: [
+      {
+        type: 'radar',
+        data: [
+          {
+            value: [
+              s.informationCollected,
+              s.useOfInformation,
+              s.dataSharing,
+              s.securityMeasures,
+              s.userRights,
+              s.retentionPeriod,
+              s.complianceWithLaws,
+              s.updatesToPolicy,
+              s.clarityAndTransparency,
+              s.contactInformation
+            ],
+            areaStyle: { color: 'rgba(72, 76, 230, 0.15)' },
+            lineStyle: { color: '#484ce6', width: 2 }
+          }
+        ]
+      }
+    ],
+    tooltip: { trigger: 'item' }
+  }
+})
 </script>
 
 <template>
@@ -77,7 +122,11 @@ const selectedTagIds = computed({
           <span class="text-2xl font-semibold text-primary">{{ totalPrivacyScore }}</span>
           <span class="text-sm text-gray-500">Total Score / 100</span>
         </div>
-        <div id="vendor-drawer-radar-slot" style="height: 320px; width: 100%"></div>
+        <VChart
+          :option="radarOption"
+          autoresize
+          style="height: 320px; width: 100%"
+        />
       </section>
 
       <Divider />
