@@ -12,7 +12,7 @@
 - [x] **Phase 1: Shell & Routing** - Working SPA with sidebar nav, all routes registered, Pinia store initialized, shared component foundations in place (completed 2026-05-13)
 - [x] **Phase 2: Data Layer + Discovery** - Mock data files seeded with realistic vendors, Discovery view fully functional with sortable/filterable table, vendor detail, and tag assignment (completed 2026-05-13)
 - [ ] **Phase 3: DPA View** - DPA page with status badges, signed/expiry dates, and "needs attention" headline count
-- [ ] **Phase 4: 1EdTech View** - 1EdTech certification table displaying vendor compliance status
+- [ ] **Phase 4: 1EdTech View** - 1EdTech certification surfaced inside the VendorDrawer (status badge + standard + certified date); no standalone table; ReportsView '1EdTech' tab removed
 - [ ] **Phase 5: Risk Position View** - Risk tier calculation, donut chart showing vendor distribution by tier
 - [ ] **Phase 6: Tags Management** - Tags page with full create/rename/delete and color assignment
 
@@ -66,13 +66,18 @@
 **UI hint**: yes
 
 ### Phase 4: 1EdTech View
-**Goal**: District admins can see which vendors hold 1EdTech certifications in a clean, consistent table
+**Goal**: District admins can see each vendor's 1EdTech certification status, standard, and certified date inside the VendorDrawer — no standalone 1EdTech page; the drawer is the single 1EdTech surface
 **Depends on**: Phase 2
 **Requirements**: EDTECH-01
 **Success Criteria** (what must be TRUE):
-  1. The 1EdTech page displays a table of vendors with their certification status badge and relevant certification metadata
-  2. The table is sortable by column header
-**Plans**: TBD
+  1. Opening the VendorDrawer for any vendor shows a 1EdTech section between DPA and Privacy Policy Score
+  2. The section shows a color-coded status badge for Certified / Not Certified / In Review / Expired
+  3. Certified and Expired vendors display the 1EdTech standard name and certified date; Not Certified and In Review vendors show only the badge
+  4. Vendors with no 1EdTech record show the fallback message 'No 1EdTech record on file.'
+  5. The ReportsView tab bar no longer contains a '1EdTech' tab
+**Plans**: 2 plans
+  - [ ] 04-1edtech-view/04-01-PLAN.md — Enrich edtech.js with certificationStandard + certifiedDate; add EDTECH_STATUS_COLORS to riskLabels.js; remove '1EdTech' from ReportsView tabs
+  - [ ] 04-1edtech-view/04-02-PLAN.md — Add 1EdTech section to VendorDrawer.vue (between DPA and Privacy Policy Score) with status badge + conditional standard/date rows + empty fallback
 **UI hint**: yes
 
 ### Phase 5: Risk Position View
@@ -107,7 +112,7 @@
 | 1. Shell & Routing | 2/2 | Complete   | 2026-05-13 |
 | 2. Data Layer + Discovery | 4/4 | Complete   | 2026-05-13 |
 | 3. DPA View | 1/3 | In Progress|  |
-| 4. 1EdTech View | 0/? | Not started | - |
+| 4. 1EdTech View | 0/2 | Not started | - |
 | 5. Risk Position View | 0/? | Not started | - |
 | 6. Tags Management | 0/? | Not started | - |
 
