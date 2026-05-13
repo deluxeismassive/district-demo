@@ -29,7 +29,9 @@
   2. The sidebar nav is visible and shows an active highlight on every route
   3. Refreshing the browser on any route (e.g., `/#/dpa`) returns to that same view, not a 404
   4. The Pinia tags store is initialized and accessible from any component
-**Plans**: TBD
+**Plans**: 2 plans
+  - [ ] 01-shell-routing/01-PLAN-A.md — Install deps and wire foundation (router + Pinia + PrimeVue + Tailwind v4)
+  - [ ] 01-shell-routing/01-PLAN-B.md — Build AppShell, SidebarNav, and 4 stub views with skeletons
 **UI hint**: yes
 
 ### Phase 2: Data Layer + Discovery
