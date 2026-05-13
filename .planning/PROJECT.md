@@ -30,7 +30,7 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 - ✓ DPA page: sortable/filterable DataTable with status badge, signed/expiry dates, and risk labels — Validated in Phase 3: DPA View
 - ✓ At-risk vendor surface: "Top 8 Vendors Needing Attention" card on Dashboard + VendorDrawer DPA section — Validated in Phase 3: DPA View
 - [ ] Risk Position page: display a converged view of discovery + DPA data showing district risk (visualization approach TBD during planning)
-- [ ] 1EdTech page: display vendor 1EdTech certification/compliance status
+- ✓ 1EdTech certification data: visible in VendorDrawer (status badge, standard, certified date) — Validated in Phase 4: 1EdTech View
 - [ ] Tags management: users can create, edit, and delete tags used to categorize vendors/domains
 - [ ] All data backed by editable mock data files (JSON/JS config) for same-day sales iteration
 - [ ] Section structure flexible — easy to add or remove pages without structural rework
@@ -45,6 +45,7 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 
 ## Context
 
+- Phase 4 complete — 1EdTech View: edtech.js enriched with certificationStandard + certifiedDate (27 records, 5 real standards), EDTECH_STATUS_COLORS added to riskLabels.js, VendorDrawer 1EdTech section (between DPA and Privacy Score), dead '1EdTech' tab removed from ReportsView
 - Phase 3 complete — DPA View: Discovery|DPA tab bar, DpaGrid with 6-column sortable table + badge colors, riskLabels.js constants, VendorDrawer DPA section, Dashboard Top 8 Vendors Needing Attention card with KPI tiles
 - Phase 2 complete — Discovery page fully functional: 27-vendor DataTable (sortable, filterable), VendorDrawer slide-over with 10-axis ECharts radar chart, tag assignment via grouped MultiSelect, localStorage persistence, all data from `src/data/*.js`
 - Phase 1 complete — SPA shell with Vue Router (hash history), Pinia, PrimeVue 4 (Aura preset, `#484CE6` primary), Tailwind v4, and 4 stub views with skeleton placeholders
@@ -90,4 +91,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-13 after Phase 3: DPA View*
+*Last updated: 2026-05-13 after Phase 4: 1EdTech View*
