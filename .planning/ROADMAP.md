@@ -44,7 +44,11 @@
   3. Typing in the filter input narrows the vendor list in real time
   4. Clicking a vendor row opens a detail view showing full usage data for that vendor
   5. A user can assign and remove tags on a vendor row directly from the Discovery table
-**Plans**: TBD
+**Plans**: 4 plans
+  - [ ] 02-data-layer-discovery/02-01-PLAN.md — Install ECharts + seed 4 data files (vendors, discovery, dpa, edtech) with 27 vendors
+  - [ ] 02-data-layer-discovery/02-02-PLAN.md — Restructure tags store with tagGroups + localStorage; register VChart globally
+  - [ ] 02-data-layer-discovery/02-03-PLAN.md — Build VendorDrawer with usage detail, 10-axis radar chart, and grouped tag MultiSelect
+  - [ ] 02-data-layer-discovery/02-04-PLAN.md — Replace DiscoveryView skeleton with sortable/filterable table mounting the drawer
 **UI hint**: yes
 
 ### Phase 3: DPA View
@@ -98,7 +102,7 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Shell & Routing | 2/2 | Complete   | 2026-05-13 |
-| 2. Data Layer + Discovery | 0/? | Not started | - |
+| 2. Data Layer + Discovery | 0/4 | Not started | - |
 | 3. DPA View | 0/? | Not started | - |
 | 4. 1EdTech View | 0/? | Not started | - |
 | 5. Risk Position View | 0/? | Not started | - |
