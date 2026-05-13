@@ -6,7 +6,8 @@ import MultiSelect from 'primevue/multiselect'
 import Tag from 'primevue/tag'
 import { useTagsStore } from '../stores/tags.js'
 import dpaData from '../data/dpa.js'
-import { DPA_STATUS_COLORS, RISK_LABEL_COLORS } from '../data/riskLabels.js'
+import edtechData from '../data/edtech.js'
+import { DPA_STATUS_COLORS, RISK_LABEL_COLORS, EDTECH_STATUS_COLORS } from '../data/riskLabels.js'
 
 const props = defineProps({
   vendor: { type: Object, default: null },
@@ -21,6 +22,12 @@ const dpaMap = Object.fromEntries(dpaData.map((d) => [d.vendorId, d]))
 
 const vendorDpa = computed(() =>
   props.vendor ? dpaMap[props.vendor.vendorId] ?? null : null
+)
+
+const edtechMap = Object.fromEntries(edtechData.map((d) => [d.vendorId, d]))
+
+const vendorEdtech = computed(() =>
+  props.vendor ? edtechMap[props.vendor.vendorId] ?? null : null
 )
 
 const visibleProxy = computed({
@@ -152,6 +159,30 @@ const radarOption = computed(() => {
           </div>
         </div>
         <div v-else class="text-sm text-gray-500">No DPA record on file.</div>
+      </section>
+
+      <Divider />
+
+      <section>
+        <h3 class="text-sm font-semibold text-gray-900 mb-4">1EdTech Certification</h3>
+        <div v-if="vendorEdtech" class="flex flex-col gap-3">
+          <div class="flex items-center gap-3">
+            <div class="text-sm text-gray-500 w-24">Status</div>
+            <Tag
+              :value="vendorEdtech.certificationStatus"
+              :style="{ backgroundColor: EDTECH_STATUS_COLORS[vendorEdtech.certificationStatus], color: '#ffffff' }"
+            />
+          </div>
+          <div v-if="vendorEdtech.certificationStandard" class="flex items-center gap-3">
+            <div class="text-sm text-gray-500 w-24">Standard</div>
+            <div class="text-sm font-semibold text-gray-900">{{ vendorEdtech.certificationStandard }}</div>
+          </div>
+          <div v-if="vendorEdtech.certifiedDate" class="flex items-center gap-3">
+            <div class="text-sm text-gray-500 w-24">Certified Date</div>
+            <div class="text-sm font-semibold text-gray-900">{{ vendorEdtech.certifiedDate }}</div>
+          </div>
+        </div>
+        <div v-else class="text-sm text-gray-500">No 1EdTech record on file.</div>
       </section>
 
       <Divider />
