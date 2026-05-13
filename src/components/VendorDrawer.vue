@@ -3,7 +3,10 @@ import { computed } from 'vue'
 import Drawer from 'primevue/drawer'
 import Divider from 'primevue/divider'
 import MultiSelect from 'primevue/multiselect'
+import Tag from 'primevue/tag'
 import { useTagsStore } from '../stores/tags.js'
+import dpaData from '../data/dpa.js'
+import { DPA_STATUS_COLORS, RISK_LABEL_COLORS } from '../data/riskLabels.js'
 
 const props = defineProps({
   vendor: { type: Object, default: null },
@@ -13,6 +16,12 @@ const props = defineProps({
 const emit = defineEmits(['update:visible'])
 
 const tagsStore = useTagsStore()
+
+const dpaMap = Object.fromEntries(dpaData.map((d) => [d.vendorId, d]))
+
+const vendorDpa = computed(() =>
+  props.vendor ? dpaMap[props.vendor.vendorId] ?? null : null
+)
 
 const visibleProxy = computed({
   get: () => props.visible,
@@ -112,6 +121,37 @@ const radarOption = computed(() => {
             <div class="text-sm font-semibold text-gray-900">{{ vendor.studentCount.toLocaleString() }}</div>
           </div>
         </div>
+      </section>
+
+      <Divider />
+
+      <section>
+        <h3 class="text-sm font-semibold text-gray-900 mb-4">DPA</h3>
+        <div v-if="vendorDpa" class="flex flex-col gap-3">
+          <div class="flex items-center gap-3">
+            <div class="text-sm text-gray-500 w-24">Status</div>
+            <Tag
+              :value="vendorDpa.status"
+              :style="{ backgroundColor: DPA_STATUS_COLORS[vendorDpa.status], color: '#ffffff' }"
+            />
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="text-sm text-gray-500 w-24">Signed Date</div>
+            <div class="text-sm font-semibold text-gray-900">{{ vendorDpa.signedDate ?? '—' }}</div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="text-sm text-gray-500 w-24">Expiry Date</div>
+            <div class="text-sm font-semibold text-gray-900">{{ vendorDpa.expiryDate ?? '—' }}</div>
+          </div>
+          <div v-if="vendorDpa.riskLabel" class="flex items-center gap-3">
+            <div class="text-sm text-gray-500 w-24">Risk Label</div>
+            <Tag
+              :value="vendorDpa.riskLabel"
+              :style="{ backgroundColor: RISK_LABEL_COLORS[vendorDpa.riskLabel], color: '#ffffff' }"
+            />
+          </div>
+        </div>
+        <div v-else class="text-sm text-gray-500">No DPA record on file.</div>
       </section>
 
       <Divider />
