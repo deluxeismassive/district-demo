@@ -20,8 +20,8 @@
 
 ### DPA
 
-- [ ] **DPA-01**: User can view a sortable, filterable table of vendors with DPA status badge, signed date, and expiry date
-- [ ] **DPA-02**: Page header shows a count of vendors that need DPA review
+- [x] **DPA-01**: User can view a sortable, filterable table of vendors with DPA status badge, signed date, and expiry date
+- [x] **DPA-02**: Page header shows a count of vendors that need DPA review
 
 ### Risk
 
@@ -93,8 +93,8 @@ Updated: 2026-05-13 after roadmap creation.
 | DISC-02 | Phase 2 | Complete |
 | DISC-03 | Phase 2 | Complete |
 | TAGS-02 | Phase 2 | Complete |
-| DPA-01 | Phase 3 | Pending |
-| DPA-02 | Phase 3 | Pending |
+| DPA-01 | Phase 3 | Complete |
+| DPA-02 | Phase 3 | Complete |
 | EDTECH-01 | Phase 4 | Pending |
 | RISK-01 | Phase 5 | Pending |
 | RISK-02 | Phase 5 | Pending |
