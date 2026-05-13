@@ -41,3 +41,14 @@ export const EDTECH_STATUS_COLORS = {
   'In Review': '#f59e0b',
   Expired: '#dc2626'
 }
+
+// Risk tier badge colors for Phase 5 Risk Position view (per D-15).
+// Semantic palette matching DPA status severity:
+// - High   → red-600   (#dc2626)  — Unsigned/Expired DPA with userCount > 1000
+// - Medium → amber-500 (#f59e0b)  — Unsigned/Expired DPA with userCount <= 1000, or reduced from High via Certified 1EdTech
+// - Low    → green-600 (#16a34a)  — Signed/Pending DPA, or reduced from Medium via Certified 1EdTech
+export const RISK_TIER_COLORS = {
+  High: '#dc2626',
+  Medium: '#f59e0b',
+  Low: '#16a34a'
+}
