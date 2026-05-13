@@ -30,7 +30,7 @@
 
 ### 1EdTech
 
-- [ ] **EDTECH-01**: User can view a table of vendors with their 1EdTech certification status badge
+- [x] **EDTECH-01**: User can view a table of vendors with their 1EdTech certification status badge
 
 ### Tags
 
@@ -95,7 +95,7 @@ Updated: 2026-05-13 after roadmap creation.
 | TAGS-02 | Phase 2 | Complete |
 | DPA-01 | Phase 3 | Complete |
 | DPA-02 | Phase 3 | Complete |
-| EDTECH-01 | Phase 4 | Pending |
+| EDTECH-01 | Phase 4 | Complete |
 | RISK-01 | Phase 5 | Pending |
 | RISK-02 | Phase 5 | Pending |
 | TAGS-01 | Phase 6 | Pending |
