@@ -59,7 +59,10 @@
   1. The DPA table displays all vendors with a color-coded status badge (Signed / Unsigned / Expired / Pending), signed date, and expiry date
   2. Clicking a column header sorts the DPA table by that column; the filter input narrows results in real time
   3. The page header shows an accurate count of vendors that need DPA review (unsigned or expired)
-**Plans**: TBD
+**Plans**: 3 plans
+  - [ ] 03-dpa-view/03-01-PLAN.md — Add riskLabel field to dpa.js (27 records) + create shared riskLabels.js constants module
+  - [ ] 03-dpa-view/03-02-PLAN.md — Build DpaGrid.vue component + add Discovery|DPA tab bar to DiscoveryView
+  - [ ] 03-dpa-view/03-03-PLAN.md — Extend VendorDrawer with DPA section + replace Dashboard skeleton with Top 8 At-Risk card
 **UI hint**: yes
 
 ### Phase 4: 1EdTech View
