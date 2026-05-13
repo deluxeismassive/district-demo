@@ -1,7 +1,7 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import AppShell from './components/layout/AppShell.vue'
 </script>
 
 <template>
-  <HelloWorld />
+  <AppShell />
 </template>
