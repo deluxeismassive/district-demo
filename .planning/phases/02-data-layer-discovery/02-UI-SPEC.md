@@ -45,7 +45,7 @@ Declared values (multiples of 4 only). Implemented via Tailwind v4 utility class
 Exceptions:
 - Filter input row: `mb-4` (16px) between input and table — standard md
 - Drawer panel: PrimeVue Drawer default padding retained; do not override with custom padding on the root element
-- Tag pills: `px-2 py-0.5` (8px / 2px) — compact pill shape per PrimeVue Tag default
+- Tag pills: PrimeVue Tag default padding retained — do not override with custom padding on the Tag root element
 
 > Source: Existing `p-6` in DiscoveryView stub and AppShell header `pl-6`; 8-point scale default
 
@@ -58,14 +58,13 @@ All sizes are Tailwind utility classes mapped to the browser default rem base (1
 | Role | Size | Tailwind class | Weight | Tailwind class | Line Height |
 |------|------|----------------|--------|----------------|-------------|
 | Body | 14px | `text-sm` | 400 Regular | `font-normal` | 1.5 |
-| Label / UI chrome | 14px | `text-sm` | 500 Medium | `font-medium` | 1.4 |
+| Label / UI chrome | 14px | `text-sm` | 600 Semibold | `font-semibold` | 1.4 |
 | Heading (view title) | 20px | `text-xl` | 600 Semibold | `font-semibold` | 1.2 |
 | Display (drawer vendor name) | 24px | `text-2xl` | 600 Semibold | `font-semibold` | 1.2 |
 
-Weights in use: **400** (body copy, table cell data) and **600** (headings, view titles, vendor name in drawer).
-Weight 500 reserved for UI chrome labels only (column headers, section labels).
+Weights in use: **400** (body copy, table cell data) and **600** (headings, view titles, vendor name in drawer, column header labels, section labels).
 
-> Source: Existing `text-xl font-semibold` heading in DiscoveryView stub; `text-sm font-medium` in SidebarNav; defaults applied for body and display
+> Source: Existing `text-xl font-semibold` heading in DiscoveryView stub; `text-sm font-medium` in SidebarNav (demoted to font-normal for body, promoted to font-semibold for headers); defaults applied for body and display
 
 ---
 
