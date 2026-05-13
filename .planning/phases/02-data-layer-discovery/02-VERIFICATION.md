@@ -1,230 +1,158 @@
 ---
 phase: 02-data-layer-discovery
-verified: 2026-05-13T00:00:00Z
-status: gaps_found
-score: 3/8 must-haves verified
-gaps:
-  - truth: "useTagsStore exposes tagGroups (hierarchical) and assignments (object keyed by vendorId)"
-    status: failed
-    reason: "src/stores/tags.js on master is the Phase 1 placeholder — still exports { tags, assignments } with flat shape, no tagGroups, no localStorage watchers"
-    artifacts:
-      - path: "src/stores/tags.js"
-        issue: "9-line placeholder: const tags = ref([]), const assignments = ref({}). Missing tagGroups, SEED_TAG_GROUPS, watch persistence, loadOrDefault. Correct implementation exists on branch worktree-agent-ab521d50 but was never merged to master."
-    missing:
-      - "Merge worktree-agent-ab521d50 (or cherry-pick commits 93c5f4a + 9eed973 + a652d3b + 97afb89 + 4465b9d) into master"
-  - truth: "tagGroups initial value seeded with 4 parent groups containing 11+ child tags total"
-    status: failed
-    reason: "Depends on tags.js restructure — same root cause as above. No tagGroups property exists in master version of store."
-    artifacts:
-      - path: "src/stores/tags.js"
-        issue: "No SEED_TAG_GROUPS constant, no group-curriculum/group-assessment/group-communication/group-admin entries"
-    missing:
-      - "Same fix as above: merge implementation branch into master"
-  - truth: "Both tagGroups and assignments survive a page refresh via localStorage"
-    status: failed
-    reason: "No watch() calls on master. loadOrDefault helper absent. localStorage not connected."
-    artifacts:
-      - path: "src/stores/tags.js"
-        issue: "No watch import, no localStorage.setItem calls, no loadOrDefault function"
-    missing:
-      - "Same fix: merge implementation branch into master"
-  - truth: "VChart component is globally registered and ECharts radar modules tree-shaken via use()"
-    status: failed
-    reason: "src/main.js on master has no ECharts imports and no app.component('VChart', VChart) call. Correct 50-line version with full ECharts registration exists on branch worktree-agent-ab521d50."
-    artifacts:
-      - path: "src/main.js"
-        issue: "42-line file. No echarts/core, no CanvasRenderer, no RadarChart, no VChart import, no use([...]) call, no app.component registration."
-    missing:
-      - "Same fix: merge implementation branch into master"
-  - truth: "VendorDrawer renders a right-side slide-over when v-model:visible is true"
-    status: failed
-    reason: "src/components/VendorDrawer.vue does not exist on master. File was created in commit a652d3b on worktree branch but never landed in master."
-    artifacts:
-      - path: "src/components/VendorDrawer.vue"
-        issue: "File missing entirely from master working tree"
-    missing:
-      - "Same fix: merge implementation branch into master"
-  - truth: "Discovery page shows a table of 27 vendors loaded from src/data/vendors.js + src/data/discovery.js"
-    status: failed
-    reason: "src/views/DiscoveryView.vue on master is still the Phase 1 skeleton (23 lines, imports only Skeleton from primevue, renders placeholder bones)"
-    artifacts:
-      - path: "src/views/DiscoveryView.vue"
-        issue: "Skeleton stub: imports Skeleton from primevue/skeleton, renders 8 dummy skeleton rows, no DataTable, no data import, no filter, no drawer, no tags"
-    missing:
-      - "Same fix: merge implementation branch into master"
-  - truth: "Clicking a column header sorts the table by that column (asc/desc/clear)"
-    status: failed
-    reason: "No DataTable in DiscoveryView.vue on master — same root cause as above"
-    artifacts:
-      - path: "src/views/DiscoveryView.vue"
-        issue: "No DataTable component present"
-    missing:
-      - "Same fix: merge implementation branch into master"
-  - truth: "Tags column displays child tag pills colored by parent group, refreshing when assignments change"
-    status: failed
-    reason: "No tag pill rendering in DiscoveryView.vue on master; store shape also wrong — same compound root cause"
-    artifacts:
-      - path: "src/views/DiscoveryView.vue"
-        issue: "No tag column, no tagsForVendor function, no childTagIndex computed"
-      - path: "src/stores/tags.js"
-        issue: "tagGroups missing — pills have no group color source"
-    missing:
-      - "Same fix: merge implementation branch into master"
+verified: 2026-05-13T21:00:00Z
+status: passed
+score: 10/10 must-haves verified
+re_verification:
+  previous_status: gaps_found
+  previous_score: 4/10
+  gaps_closed:
+    - "useTagsStore exposes tagGroups (hierarchical) and assignments (object keyed by vendorId)"
+    - "tagGroups initial value seeded with 4 parent groups containing 11+ child tags total"
+    - "Both tagGroups and assignments survive a page refresh via localStorage"
+    - "VChart component is globally registered and ECharts radar modules tree-shaken via use()"
+    - "VendorDrawer renders a right-side slide-over when v-model:visible is true"
+    - "Discovery page shows a table of 27 vendors loaded from src/data/vendors.js + src/data/discovery.js"
+    - "Clicking a column header sorts the table by that column (asc/desc/clear)"
+    - "Tags column displays child tag pills colored by parent group, refreshing when assignments change"
+  gaps_remaining: []
+  regressions: []
 ---
 
 # Phase 2: Data Layer + Discovery Verification Report
 
 **Phase Goal:** All mock data schemas are established in `src/data/*.js` and the Discovery page is fully functional — vendors are browsable, sortable, filterable, drillable, and taggable
 **Verified:** 2026-05-13
-**Status:** GAPS FOUND
-**Re-verification:** No — initial verification
-
----
-
-## Root Cause Finding
-
-All four plans executed successfully in git worktree branches, but Plans 02-02, 02-03, and 02-04 were **never merged into master**. The SUMMARY files for those plans were committed to master, but the implementation commits were not.
-
-**Evidence:**
-
-| Commit | Message | Branch |
-|--------|---------|--------|
-| `93c5f4a` | feat(02-02): restructure tags store | worktree-agent-aa818125 only |
-| `9eed973` | feat(02-02): register ECharts radar modules | worktree-agent-aa818125 only |
-| `a652d3b` | feat(02-03): create VendorDrawer.vue | worktree-agent-a6e6ac12 only |
-| `97afb89` | feat(02-03): add VChart radar option | worktree-agent-a6e6ac12 only |
-| `4465b9d` | feat(02-04): replace DiscoveryView skeleton | worktree-agent-ab521d50 only |
-
-The most recent worktree branch `worktree-agent-ab521d50` contains all five commits above and represents the complete Phase 2 implementation. It has never been merged to master.
-
-**Fix:** Merge `worktree-agent-ab521d50` into `master` (or cherry-pick the five commits in order).
-
----
+**Status:** PASSED
+**Re-verification:** Yes — after gap closure (commit f8d8048 merged all Phase 2 implementation from worktrees)
 
 ## Goal Achievement
+
+All 5 ROADMAP success criteria confirmed satisfied:
+
+1. Discovery table displays 27 realistic vendors loaded from `src/data/` — verified
+2. Column header click sorts the table — DataTable `sortable` on all 7 columns, `removableSort` for tri-state
+3. Typing in filter input narrows vendor list in real time — `FilterMatchMode.CONTAINS` on name + category
+4. Clicking a vendor row opens a detail view — `@row-click` opens VendorDrawer with full usage data and radar chart
+5. User can assign and remove tags from Discovery — grouped MultiSelect writes to Pinia store; pills render in Tags column; localStorage persistence confirmed by user
 
 ### Observable Truths
 
 | # | Truth | Status | Evidence |
 |---|-------|--------|----------|
-| 1 | Four data files exist under src/data/ and export non-empty arrays | VERIFIED | All four files present on master: vendors.js (461 lines, 27 vendors), discovery.js (191 lines), dpa.js (164 lines), edtech.js (110 lines) |
-| 2 | Every vendor row has a vendorId matching vendors.js | VERIFIED | All 27 vendorIds consistent across all 4 files — verified by reading each file |
-| 3 | Every vendor in vendors.js has all 10 privacy score dimensions | VERIFIED | Confirmed: all 27 vendors have all 10 keys populated with integers 1-10 |
-| 4 | echarts and vue-echarts are installed in package.json | VERIFIED | package.json: "echarts": "^6.0.0", "vue-echarts": "^8.0.1" in dependencies |
-| 5 | useTagsStore exposes tagGroups (hierarchical) and assignments | FAILED | src/stores/tags.js on master is 9-line placeholder with flat `tags` shape — tagGroups does not exist |
-| 6 | tagGroups seeded with 4 groups / 11 child tags + localStorage persistence | FAILED | Same root cause — store not restructured on master |
-| 7 | VChart globally registered, ECharts radar modules registered | FAILED | src/main.js has no ECharts imports or VChart registration |
-| 8 | VendorDrawer renders a right-side slide-over | FAILED | src/components/VendorDrawer.vue does not exist on master |
-| 9 | Discovery page shows sortable/filterable table of 27 vendors | FAILED | DiscoveryView.vue is still the Phase 1 skeleton (Skeleton placeholders only) |
-| 10 | Tags column displays grouped tag pills | FAILED | Depends on both store restructure and DiscoveryView — both absent on master |
+| 1 | Four data files exist under src/data/ and export non-empty arrays | VERIFIED | vendors.js 461 lines / 27 vendors; discovery.js 191 lines; dpa.js and edtech.js both present with 27 records each |
+| 2 | Every vendor row has a vendorId matching vendors.js | VERIFIED | All 27 vendorIds consistent across all 4 files; anchor check (google-classroom, clever, powerschool) confirmed in all 4 |
+| 3 | Every vendor in vendors.js has all 10 privacy score dimensions (1-10) | VERIFIED | `informationCollected:` count = 27; `contactInformation:` count = 27; no `totalScore` key present (0 matches) |
+| 4 | echarts and vue-echarts installed in package.json dependencies | VERIFIED | `"echarts": "^6.0.0"` and `"vue-echarts": "^8.0.1"` present in package.json |
+| 5 | useTagsStore exposes tagGroups (hierarchical) and assignments (vendorId-keyed) | VERIFIED | tags.js 74 lines; `defineStore('tags',` present; `tagGroups` ref with SEED_TAG_GROUPS; `assignments` ref; old `tags` shape gone |
+| 6 | tagGroups seeded with 4 parent groups / 11+ child tags; tagGroups + assignments persist via localStorage | VERIFIED | 4 group-* entries; 11 tag-* entries; 2 `{ deep: true }` watches; localStorage keys `schoolday-tag-groups` and `schoolday-tag-assignments` present |
+| 7 | VChart globally registered; ECharts radar modules tree-shaken via use() | VERIFIED | main.js: `use([...])` at line 34 (before createApp at line 36); `app.component('VChart', VChart)` at line 48 (before mount at line 50); no `import * as echarts` |
+| 8 | VendorDrawer renders a right-side slide-over when v-model:visible is true | VERIFIED | VendorDrawer.vue 152 lines; `<Drawer position="right"`; `v-model:visible="visibleProxy"`; `width: '480px'`; usage grid; totalPrivacyScore; 10-axis VChart; grouped MultiSelect |
+| 9 | Discovery page shows sortable/filterable table of 27 vendors from data files | VERIFIED | DiscoveryView.vue 143 lines; DataTable with 7 Column elements; imports vendorsData + discoveryData; `@row-click="onRowClick"`; `removableSort`; `globalFilterFields` on name + category |
+| 10 | Tags column displays grouped tag pills colored by parent group | VERIFIED | `tagsForVendor()` resolves child IDs through `childTagIndex` computed; `backgroundColor: t.parentColor` inline style; `VendorDrawer` mounted with v-model + :vendor; browser smoke test confirmed pills appear after assignment |
 
-**Score:** 4/10 truths verified (data layer complete; UI layer entirely unmerged)
-
----
+**Score:** 10/10 truths verified
 
 ### Required Artifacts
 
 | Artifact | Min Lines | Actual Lines | Status | Details |
 |----------|-----------|-------------|--------|---------|
-| `src/data/vendors.js` | 200 | 461 | VERIFIED | 27 vendors, all 10 privacyScore dimensions present |
-| `src/data/discovery.js` | 100 | 191 | VERIFIED | 27 records with frequency/lastSeen/userCount/studentCount |
-| `src/data/dpa.js` | 80 | 164 | VERIFIED | 27 records with status/signedDate/expiryDate |
-| `src/data/edtech.js` | 60 | 110 | VERIFIED | 27 records with certificationStatus |
-| `package.json` | — | — | VERIFIED | echarts + vue-echarts present in dependencies |
-| `src/stores/tags.js` | 50 | 9 | STUB | Old shape: `tags + assignments` flat refs. Must-have `tagGroups` missing entirely |
-| `src/main.js` | — | 42 | STUB | No ECharts imports. `app.component('VChart', VChart)` absent |
-| `src/components/VendorDrawer.vue` | 120 | 0 | MISSING | File does not exist on master |
-| `src/views/DiscoveryView.vue` | 120 | 23 | STUB | Phase 1 Skeleton placeholder — no DataTable, no data imports |
-
----
+| `src/data/vendors.js` | 200 | 461 | VERIFIED | 27 vendors, all 10 privacyScore dimensions, no totalScore |
+| `src/data/discovery.js` | 100 | 191 | VERIFIED | 27 records: Daily×12, Weekly×9, Monthly×4, Rarely×2 |
+| `src/data/dpa.js` | 80 | present | VERIFIED | 27 records with status/signedDate/expiryDate |
+| `src/data/edtech.js` | 60 | present | VERIFIED | 27 records with certificationStatus |
+| `package.json` | — | — | VERIFIED | echarts ^6.0.0 and vue-echarts ^8.0.1 in dependencies |
+| `src/stores/tags.js` | 50 | 74 | VERIFIED | defineStore('tags'), tagGroups ref, assignments ref, 2 deep watchers, loadOrDefault helper |
+| `src/main.js` | — | 50 | VERIFIED | use([...]) at line 34, app.component('VChart', VChart) at line 48 |
+| `src/components/VendorDrawer.vue` | 120 | 152 | VERIFIED | Drawer + usage grid + totalPrivacyScore + VChart radar + grouped MultiSelect |
+| `src/views/DiscoveryView.vue` | 120 | 143 | VERIFIED | DataTable with 7 columns, global filter, row-click drawer, tag pills |
 
 ### Key Link Verification
 
 | From | To | Via | Status | Details |
 |------|----|-----|--------|---------|
-| src/data/discovery.js | src/data/vendors.js | shared vendorId string | VERIFIED | All 27 IDs match exactly |
-| src/data/dpa.js | src/data/vendors.js | shared vendorId string | VERIFIED | All 27 IDs match exactly |
-| src/data/edtech.js | src/data/vendors.js | shared vendorId string | VERIFIED | All 27 IDs match exactly |
-| src/stores/tags.js | localStorage | watch + localStorage.setItem | NOT WIRED | No watch, no localStorage calls on master |
-| src/main.js | echarts/core use() | use([CanvasRenderer, RadarChart...]) | NOT WIRED | No echarts imports on master |
-| src/main.js | app.component('VChart') | global component registration | NOT WIRED | Line absent on master |
-| src/components/VendorDrawer.vue | useTagsStore.assignments | computed getter/setter | NOT WIRED | File missing |
-| src/components/VendorDrawer.vue | VChart radar option | computed radarOption | NOT WIRED | File missing |
-| src/views/DiscoveryView.vue | src/data/vendors.js + discovery.js | static ES module imports | NOT WIRED | DiscoveryView is stub, no data imports |
-| src/views/DiscoveryView.vue | VendorDrawer.vue | v-model:visible + :vendor | NOT WIRED | No VendorDrawer import or mount in stub |
-| DataTable @row-click | VendorDrawer visibility | onRowClick sets drawerVisible | NOT WIRED | No DataTable on master |
-
----
+| src/data/discovery.js | src/data/vendors.js | shared vendorId string | WIRED | All 27 IDs align; vendor-google-classroom confirmed in both |
+| src/data/dpa.js | src/data/vendors.js | shared vendorId string | WIRED | All 27 IDs align |
+| src/data/edtech.js | src/data/vendors.js | shared vendorId string | WIRED | All 27 IDs align |
+| src/stores/tags.js | localStorage | watch + localStorage.setItem | WIRED | 2 deep watchers; schoolday-tag-groups + schoolday-tag-assignments keys; loadOrDefault on init |
+| src/main.js | echarts/core use() | use([CanvasRenderer, RadarChart, RadarComponent, TooltipComponent]) | WIRED | Line 34, before createApp |
+| src/main.js | app.component('VChart') | global component registration | WIRED | Line 48, before app.mount |
+| src/components/VendorDrawer.vue | useTagsStore.assignments | computed getter/setter on selectedTagIds | WIRED | `tagsStore.assignments[props.vendor.vendorId]` read and written |
+| src/components/VendorDrawer.vue | VChart radar option | computed radarOption referencing props.vendor.privacyScore | WIRED | 10 indicators using s.informationCollected through s.contactInformation |
+| src/views/DiscoveryView.vue | src/data/vendors.js + src/data/discovery.js | static ES module imports joined by vendorId | WIRED | `import vendorsData` + `import discoveryData`; Object.fromEntries join |
+| src/views/DiscoveryView.vue | src/components/VendorDrawer.vue | v-model:visible + :vendor prop | WIRED | `<VendorDrawer v-model:visible="drawerVisible" :vendor="selectedVendor" />` |
+| DataTable @row-click | VendorDrawer visibility | onRowClick sets selectedVendor + drawerVisible=true | WIRED | `@row-click="onRowClick"` handler sets both reactive refs |
 
 ### Data-Flow Trace (Level 4)
 
-Skipped for artifacts that fail Level 1 (existence) — VendorDrawer.vue missing, DiscoveryView.vue is stub, tags.js is stub.
+| Artifact | Data Variable | Source | Produces Real Data | Status |
+|----------|---------------|--------|-------------------|--------|
+| DiscoveryView.vue | tableRows | vendorsData + discoveryData (static import join) | Yes — 27 vendor objects with all usage fields | FLOWING |
+| DiscoveryView.vue | filteredCount | tableRows filtered by global filter value | Yes — reflects actual row visibility | FLOWING |
+| VendorDrawer.vue | totalPrivacyScore | Object.values(vendor.privacyScore).reduce(sum+v) | Yes — computed from real privacyScore data, max 100 | FLOWING |
+| VendorDrawer.vue | radarOption | props.vendor.privacyScore keys directly | Yes — 10 real integer values from vendor object | FLOWING |
+| VendorDrawer.vue | selectedTagIds | tagsStore.assignments[vendorId] | Yes — Pinia store, localStorage-backed | FLOWING |
+| DiscoveryView.vue | tag pills | tagsStore.assignments + childTagIndex | Yes — resolves child IDs to name + parentColor | FLOWING |
 
-For the data files (which pass Levels 1-3), data flow is static ES module import — no async fetch, no empty returns. Verified as FLOWING.
-
----
+All dynamic data flows verified. No static empty returns, no hardcoded arrays passed as props.
 
 ### Behavioral Spot-Checks
 
 | Behavior | Check | Status |
 |----------|-------|--------|
-| Data files export arrays | File content inspection — all 4 files read successfully with export default | PASS |
-| 27 vendors in vendors.js | Count of vendorId: entries | PASS (27) |
-| Tags store has tagGroups | grep tagGroups in src/stores/tags.js | FAIL — absent |
-| VChart registered globally | grep VChart in src/main.js | FAIL — absent |
-| VendorDrawer exists | File existence check | FAIL — missing |
-| DiscoveryView has DataTable | grep DataTable in src/views/DiscoveryView.vue | FAIL — absent |
-
----
+| 27 vendors in table | `grep -c "vendorId:" src/data/vendors.js` → 27 | PASS |
+| Discovery distribution matches spec | Daily 12, Weekly 9, Monthly 4, Rarely 2 | PASS |
+| Tags store has 4 groups / 11 child tags | `grep -c "id: 'group-"` → 4; `grep -c "id: 'tag-"` → 11 | PASS |
+| VChart registered before mount | use() at line 34; createApp at line 36; app.component at line 48; mount at line 50 | PASS |
+| 10 radar indicators with correct labels | `grep -c "max: 10"` → 10; "Overall Clarity and Transparency" exact match confirmed | PASS |
+| No anti-patterns in DiscoveryView | No filterDisplay, no Skeleton import, no hardcoded vendor data | PASS |
+| No anti-patterns in VendorDrawer | No local VChart import, no radar placeholder div remaining, no import * as echarts | PASS |
+| npm run build exits 0 | Build completed in 297ms, all assets generated | PASS |
+| Human smoke test (user-confirmed) | All 7 verification sections passed: 27 vendors visible, sort works, filter narrows with count update, row click opens drawer with radar chart, tag assignment updates pills, localStorage persistence confirmed across hard refresh | PASS |
 
 ### Requirements Coverage
 
 | Requirement | Source Plan | Description | Status | Evidence |
 |-------------|-------------|-------------|--------|----------|
-| FOUND-03 | 02-01 | All display data lives in src/data/*.js files, editable without touching components | SATISFIED | All 4 data files populated with 27 vendors each; no hardcoded vendor data in any component |
-| DISC-01 | 02-04 | Sortable, filterable table with vendors, name, category, usage metrics, user/student counts | BLOCKED | DiscoveryView.vue is skeleton stub on master |
-| DISC-02 | 02-04 | User can assign and remove tags on a vendor from the Discovery table | BLOCKED | Tag pills column absent; store shape wrong |
-| DISC-03 | 02-03, 02-04 | User can open a detail view for a vendor to see full usage data | BLOCKED | VendorDrawer.vue missing on master |
-| TAGS-02 | 02-02, 02-03, 02-04 | User can assign and remove tags on vendor rows in the Discovery page | BLOCKED | Store shape wrong, drawer missing, discovery view is stub |
+| FOUND-03 | 02-01 | All display data lives in src/data/*.js files, editable without touching components | SATISFIED | 4 data files with 27 vendors each; grep `vendor-google-classroom` in src/ returns hits only in src/data/ |
+| DISC-01 | 02-04 | Sortable, filterable table with vendors, name, category, usage metrics, user/student counts | SATISFIED | DataTable with 7 sortable columns, removableSort, globalFilterFields on name+category, filteredCount label |
+| DISC-02 | 02-04 | User can assign and remove tags on a vendor from the Discovery table | SATISFIED | MultiSelect in VendorDrawer writes to assignments; tag pills render in Tags column; user confirmed in smoke test |
+| DISC-03 | 02-03, 02-04 | User can open a detail view for a vendor to see full usage data | SATISFIED | VendorDrawer slide-over with usage grid, privacy score, 10-axis radar chart; @row-click opens it |
+| TAGS-02 | 02-02, 02-03, 02-04 | User can assign and remove tags on vendor rows in the Discovery page | SATISFIED | Tags store with localStorage persistence; MultiSelect assignment; pills in table; hard-refresh persistence confirmed |
 
-**Result:** 1/5 requirements satisfied on master (FOUND-03). The other 4 have complete implementations on `worktree-agent-ab521d50` waiting to be merged.
-
----
+No orphaned requirements. All 5 Phase 2 requirements are satisfied. REQUIREMENTS.md traceability table reflects Complete status for all five.
 
 ### Anti-Patterns Found
 
-| File | Content | Severity | Impact |
-|------|---------|----------|--------|
-| `src/stores/tags.js` | `const tags = ref([])` — old shape from Phase 1, never cleared | BLOCKER | Any component reading `tagGroups` will get undefined; VendorDrawer tag MultiSelect will break |
-| `src/views/DiscoveryView.vue` | `import Skeleton from 'primevue/skeleton'` + 8 skeleton rows | BLOCKER | Discovery page shows loading skeleton forever, no real data |
-| `src/main.js` | No ECharts `use([...])` call | BLOCKER | Any rendered VChart will throw "Component RADAR not registered" at runtime |
+No blockers or warnings. Specific checks performed:
 
----
+| Check | Result |
+|-------|--------|
+| `filterDisplay` in DiscoveryView.vue | Not found — correct |
+| `import * as echarts` anywhere | Not found — tree-shaken correctly |
+| `id="vendor-drawer-radar-slot"` placeholder remaining | Not found — replaced with VChart |
+| `import VChart` in VendorDrawer.vue | Not found — using global registration |
+| `const tags = ref(` in tags.js (old shape) | Not found — old shape fully replaced |
+| `import Skeleton` in DiscoveryView.vue | Not found — skeleton stub fully replaced |
+| `totalScore` in vendors.js | Not found — score is computed at render, not stored |
+| `TODO`/`FIXME`/`placeholder` in modified files | Not found |
 
 ### Human Verification Required
 
-None blocking — the gaps are all code-level (missing merges), not behavioral edge cases requiring human judgment. Once the implementation branch is merged, a browser smoke test per Plan 04 Task 2 checklist should be performed to confirm end-to-end behavior.
+None. The user completed the browser smoke test (Plan 04 Task 2 human-verify checkpoint) and confirmed all 7 sections passed, including:
+- 27 vendors rendered with 7 sortable columns
+- Filter input narrows results in real time with count update
+- Row click opens VendorDrawer slide-over with radar chart
+- Tag assignment via MultiSelect updates table tag pills
+- Tag persistence confirmed after hard refresh (localStorage verified in browser devtools)
 
----
+## Re-Verification Summary
 
-## Gaps Summary
+**Previous status (2026-05-13):** gaps_found — 4/10 truths verified. Root cause: Plans 02-02, 02-03, and 02-04 executed in git worktree branches and were never merged to master. Data layer was complete; UI implementation (tags store restructure, ECharts registration, VendorDrawer, DiscoveryView) existed only on `worktree-agent-ab521d50`.
 
-**Root cause: 3 worktree branches with completed implementations were never merged to master.**
+**Fix applied:** Commit `f8d8048` — "feat(02): merge all Phase 2 implementation from worktrees" — merged the complete implementation to master.
 
-Plans 02-02, 02-03, and 02-04 each executed in isolated git worktrees. The SUMMARY markdown files for those plans were committed to master (documenting completion), but the actual code changes — restructured tags store, ECharts/VChart registration, VendorDrawer component, and the full DiscoveryView — live only on worktree branches.
-
-**What exists on master:**
-- All four data files (vendors, discovery, dpa, edtech) — complete and correct
-- echarts + vue-echarts in package.json
-- SUMMARY documentation for all plans
-
-**What is missing from master (exists on worktree-agent-ab521d50):**
-- Restructured `src/stores/tags.js` (hierarchical tagGroups + localStorage persistence)
-- Updated `src/main.js` (ECharts radar registration + global VChart)
-- New `src/components/VendorDrawer.vue` (vendor detail slide-over with radar chart + tag MultiSelect)
-- Full `src/views/DiscoveryView.vue` implementation (DataTable + filter + row-click + tag pills)
-
-**Recommended fix:** `git merge worktree-agent-ab521d50` from master, or cherry-pick commits `93c5f4a`, `9eed973`, `a652d3b`, `97afb89`, `4465b9d` in that order. Then run `npm run build` and perform the browser smoke test from Plan 04 Task 2.
+**Current status:** passed — 10/10 truths verified. All 8 previously-failed items are now closed. No regressions on the 4 items that passed in the initial check (data files and package.json).
 
 ---
 
