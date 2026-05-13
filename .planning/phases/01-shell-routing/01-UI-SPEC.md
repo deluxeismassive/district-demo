@@ -1,10 +1,11 @@
 ---
 phase: 1
 slug: shell-routing
-status: draft
+status: approved
 shadcn_initialized: false
 preset: none
 created: 2026-05-13
+reviewed_at: 2026-05-13
 ---
 
 # Phase 1 — UI Design Contract
@@ -37,13 +38,12 @@ Declared values (multiples of 4 only):
 | xs | 4px | Icon-to-label gap in nav items |
 | sm | 8px | Nav item list spacing (`space-y-1`), compact inline gaps |
 | md | 16px | Default content padding unit, nav item padding (`px-3 py-2`) |
-| lg | 24px | Page content padding (`p-6` = 24px), sidebar brand header padding (`px-6 py-5`) |
+| lg | 24px | Page content padding (`p-6` = 24px), sidebar brand header padding (`px-6 py-6`) |
 | xl | 32px | Dashboard skeleton card grid gap |
 | 2xl | 48px | Not used in Phase 1 |
 | 3xl | 64px | Not used in Phase 1 |
 
 Exceptions:
-- Sidebar brand header vertical padding: 20px (`py-5`) — closest even multiple that gives logo area visual weight
 - Nav item border-bottom (`border-b`): 1px — structural, not spacing scale
 - Touch target minimum: not applicable (desktop-only demo per REQUIREMENTS.md out-of-scope)
 
@@ -54,13 +54,15 @@ Exceptions:
 | Role | Size | Weight | Line Height | Element |
 |------|------|--------|-------------|---------|
 | Body | 14px | 400 (regular) | 1.5 | Skeleton view labels, nav item labels |
-| Label | 12px | 500 (medium) | 1.4 | District name in header, section meta text |
+| Label | 12px | 400 (regular) | 1.4 | District name in header, section meta text |
 | Heading | 20px | 600 (semibold) | 1.2 | Page title (`h1`) in each stub view |
 | Brand | 18px | 600 (semibold) | 1.0 | "Schoolday" in sidebar header |
 
 Font stack (all roles): `system-ui, 'Segoe UI', Roboto, sans-serif`
 
-**Source:** RESEARCH.md Pattern 4 (nav uses `text-sm font-medium` = 14px/500); Pattern 7 stub view headings use `text-xl font-semibold` = 20px/600. Brand name from Pattern 4 (`text-lg font-semibold` = 18px/600). Label role is Claude's Discretion — 12px/500 is standard for supporting metadata in enterprise SaaS.
+**Source:** RESEARCH.md Pattern 4 (nav uses `text-sm` = 14px/400); Pattern 7 stub view headings use `text-xl font-semibold` = 20px/600. Brand name from Pattern 4 (`text-lg font-semibold` = 18px/600). Label role is Claude's Discretion — 12px/400 for supporting metadata; size alone provides sufficient hierarchy over Body at 14px.
+
+Font weights: 2 only — 400 (regular) for Body + Label, 600 (semibold) for Heading + Brand.
 
 No serif or display type in Phase 1. The skeleton phase has no prose content requiring a distinct display size.
 
@@ -118,7 +120,7 @@ Accent B (`#DA8231`) is NOT used in Phase 1. First use in Phase 2 (DPA status ba
 | Property | Value |
 |----------|-------|
 | Content | Text "Schoolday" (no icon/logo in Phase 1) |
-| Padding | `px-6 py-5` (24px horizontal, 20px vertical) |
+| Padding | `px-6 py-6` (24px horizontal, 24px vertical) |
 | Border | `border-b border-gray-700` (1px separator below brand) |
 | Text | 18px, semibold, white (`text-lg font-semibold text-white`) |
 
@@ -136,7 +138,7 @@ Nav item anatomy (each `<li>` → `<RouterLink>`):
 - Padding: `px-3 py-2` (12px horizontal, 8px vertical)
 - Border radius: `rounded-lg` (8px)
 - Icon: PrimeIcons `<i>` element, `text-base` size (16px), positioned left
-- Label: `text-sm font-medium` (14px, 500), flex-1
+- Label: `text-sm` (14px, 400), flex-1
 - Icon-label gap: `gap-3` (12px)
 
 Nav item icons per route:
@@ -163,7 +165,7 @@ A minimal top header sits above the `<RouterView>` content area inside `<main>`.
 | Background | `#FFFFFF` |
 | Border | `border-b border-gray-200` |
 | Content | District name placeholder text ("Lakewood Unified School District") — left-aligned, `pl-6` |
-| Typography | 14px, weight 500, `text-gray-700` |
+| Typography | 14px, weight 400, `text-gray-700` |
 
 **Source:** D-07 (district name in top header area), RESEARCH.md open question resolved: use "Lakewood Unified School District" as Phase 1 placeholder. The header bar itself is Phase 1 structure; actual district name is confirmed in Phase 2.
 
@@ -194,6 +196,8 @@ Layout: 4-column grid (`grid grid-cols-4 gap-4`), each cell a card-like block.
 | Stat card block | `100%` | `96px` | `border-radius="8px"` — card shape |
 
 Row count: 1 row of 4 cards. Represents the summary stat cards the Dashboard will show in Phase 2+.
+
+**Visual focal point:** The 4-card stat row is the primary visual anchor — its 96px height creates immediate contrast against the surrounding surface. The page `<h1>` ("Dashboard") is the text entry point above it.
 
 Below the card row: 2 skeleton rows of narrower blocks (`width="60%" height="1rem"`) representing a secondary summary section.
 
@@ -360,11 +364,11 @@ All components are from PrimeVue 4 official package (`primevue` on npm) or Vue R
 
 ## Checker Sign-Off
 
-- [ ] Dimension 1 Copywriting: PASS
-- [ ] Dimension 2 Visuals: PASS
-- [ ] Dimension 3 Color: PASS
-- [ ] Dimension 4 Typography: PASS
-- [ ] Dimension 5 Spacing: PASS
-- [ ] Dimension 6 Registry Safety: PASS
+- [x] Dimension 1 Copywriting: PASS
+- [x] Dimension 2 Visuals: PASS
+- [x] Dimension 3 Color: PASS
+- [x] Dimension 4 Typography: PASS
+- [x] Dimension 5 Spacing: PASS
+- [x] Dimension 6 Registry Safety: PASS
 
-**Approval:** pending
+**Approval:** approved 2026-05-13
