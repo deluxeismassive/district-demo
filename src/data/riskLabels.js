@@ -28,3 +28,16 @@ export const DPA_STATUS_COLORS = {
   Pending: '#f59e0b',
   Unsigned: '#6b7280'
 }
+
+// Status badge colors for 1EdTech certification status column (per D-12).
+// Reuses the DPA semantic palette for visual consistency across the portal.
+// - Certified     → green-600 (#16a34a)  — certified and current
+// - Not Certified → gray-500  (#6b7280)  — vendor has no certification
+// - In Review     → amber-500 (#f59e0b)  — application in progress
+// - Expired       → red-600   (#dc2626)  — previously certified, now lapsed
+export const EDTECH_STATUS_COLORS = {
+  Certified: '#16a34a',
+  'Not Certified': '#6b7280',
+  'In Review': '#f59e0b',
+  Expired: '#dc2626'
+}
