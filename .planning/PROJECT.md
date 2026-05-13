@@ -21,12 +21,12 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 - ✓ Multi-page SPA routing with a persistent sidebar nav (Dashboard / Discovery / Reports / Settings) — Validated in Phase 1: Shell & Routing
 - ✓ Consistent app shell (sidebar + header + content area) renders on every route — Validated in Phase 1: Shell & Routing
 - ✓ Pinia `useTagsStore` initialized and accessible from all components — Validated in Phase 1: Shell & Routing
+- ✓ Discovery page: display vendor/domain name, usage metrics (frequency, last seen), and user/student counts from mocked data — Validated in Phase 2: Data Layer + Discovery
+- ✓ Discovery page: users can assign tags to vendors/domains — Validated in Phase 2: Data Layer + Discovery
+- ✓ All data backed by editable mock data files (`src/data/*.js`) for same-day sales iteration — Validated in Phase 2: Data Layer + Discovery
 
 ### Active
 
-- [ ] Multi-page SPA routing with a persistent navigation sidebar/header
-- [ ] Discovery page: display vendor/domain name, usage metrics (frequency, last seen), and user/student counts from mocked data
-- [ ] Discovery page: users can assign tags to vendors/domains
 - [ ] DPA page: display vendor name, DPA status, signed/expiry dates, version currency (whether DPA is current with subscription version), and addendum presence
 - [ ] Risk Position page: display a converged view of discovery + DPA data showing district risk (visualization approach TBD during planning)
 - [ ] 1EdTech page: display vendor 1EdTech certification/compliance status
@@ -44,6 +44,7 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 
 ## Context
 
+- Phase 2 complete — Discovery page fully functional: 27-vendor DataTable (sortable, filterable), VendorDrawer slide-over with 10-axis ECharts radar chart, tag assignment via grouped MultiSelect, localStorage persistence, all data from `src/data/*.js`
 - Phase 1 complete — SPA shell with Vue Router (hash history), Pinia, PrimeVue 4 (Aura preset, `#484CE6` primary), Tailwind v4, and 4 stub views with skeleton placeholders
 - Existing codebase is a bare Vue 3 + Vite starter (default scaffold, `HelloWorld.vue` only) — all portal features are net-new
 - Deployed as a static SPA to GitHub Pages; no server-side runtime
@@ -87,4 +88,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-13 after Phase 1: Shell & Routing*
+*Last updated: 2026-05-13 after Phase 2: Data Layer + Discovery*
