@@ -9,7 +9,7 @@
 
 ## Phases
 
-- [ ] **Phase 1: Shell & Routing** - Working SPA with sidebar nav, all routes registered, Pinia store initialized, shared component foundations in place
+- [x] **Phase 1: Shell & Routing** - Working SPA with sidebar nav, all routes registered, Pinia store initialized, shared component foundations in place (completed 2026-05-13)
 - [ ] **Phase 2: Data Layer + Discovery** - Mock data files seeded with realistic vendors, Discovery view fully functional with sortable/filterable table, vendor detail, and tag assignment
 - [ ] **Phase 3: DPA View** - DPA page with status badges, signed/expiry dates, and "needs attention" headline count
 - [ ] **Phase 4: 1EdTech View** - 1EdTech certification table displaying vendor compliance status
@@ -97,7 +97,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Shell & Routing | 1/2 | In Progress|  |
+| 1. Shell & Routing | 2/2 | Complete   | 2026-05-13 |
 | 2. Data Layer + Discovery | 0/? | Not started | - |
 | 3. DPA View | 0/? | Not started | - |
 | 4. 1EdTech View | 0/? | Not started | - |
