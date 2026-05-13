@@ -21,79 +21,76 @@ key_files:
   created: []
   modified:
     - src/components/VendorDrawer.vue
-decisions:
+key_decisions:
   - "1EdTech section placed between DPA and Privacy Policy Score per D-08/D-09 decisions"
   - "Status badge always rendered; Standard and Certified Date rows are conditional per D-10"
   - "Section heading is '1EdTech Certification' for clarity over bare '1EdTech'"
+
+patterns_established:
+  - "Drawer section pattern: Divider + section + h3 + conditional content block + fallback text"
+  - "Data join in script setup via Object.fromEntries(data.map(d => [d.vendorId, d])) + computed lookup"
+
+requirements_completed: [EDTECH-01]
+
 metrics:
-  duration: 39s
+  duration: 5min
   completed: "2026-05-13"
-  tasks_completed: 1
+  tasks_completed: 2
   tasks_total: 2
   files_modified: 1
 ---
 
 # Phase 04 Plan 02: 1EdTech VendorDrawer Section Summary
 
-**One-liner:** Added 1EdTech Certification section to VendorDrawer with EDTECH_STATUS_COLORS badge and conditional Standard/Date rows, joined from edtech.js by vendorId.
+**Added 1EdTech Certification section to VendorDrawer with EDTECH_STATUS_COLORS badge and conditional Standard/Date rows, joined from edtech.js by vendorId — human-verified across all four certificationStatus scenarios.**
 
-## What Was Built
+## Performance
 
-### Task 1: 1EdTech section added to VendorDrawer.vue
+- **Duration:** ~5 min
+- **Started:** 2026-05-13T21:22:00Z
+- **Completed:** 2026-05-13
+- **Tasks:** 2
+- **Files modified:** 1
 
-Four changes were made to `src/components/VendorDrawer.vue`:
+## Accomplishments
 
-1. **Import edtechData** — `import edtechData from '../data/edtech.js'` added after dpaData import
-2. **Extend riskLabels import** — `EDTECH_STATUS_COLORS` added alongside `DPA_STATUS_COLORS, RISK_LABEL_COLORS`
-3. **Join map + computed** — `edtechMap` (Object.fromEntries by vendorId) and `vendorEdtech` computed added after vendorDpa, following the identical dpaMap pattern
-4. **1EdTech Certification section in template** — inserted between the DPA `</section>` and the `<Divider />` before Privacy Policy Score
+- VendorDrawer.vue now shows a "1EdTech Certification" section between DPA and Privacy Policy Score for every vendor
+- Color-coded status badge (Certified=green, Not Certified=gray, In Review=amber, Expired=red) always rendered
+- Standard and Certified Date rows render conditionally — hidden for Not Certified and In Review vendors
+- Fallback "No 1EdTech record on file." renders when no edtech.js record exists for a vendor
+- ReportsView tab bar confirmed to show only "DPA" and "Risk Position" tabs (no 1EdTech tab)
 
-#### Section structure:
-- Section heading: `1EdTech Certification` (h3, `text-sm font-semibold text-gray-900 mb-4`)
-- Status badge: always shown via PrimeVue Tag with `EDTECH_STATUS_COLORS[vendorEdtech.certificationStatus]` background
-- Standard row: conditional on `v-if="vendorEdtech.certificationStandard"` (null for Not Certified / In Review vendors)
-- Certified Date row: conditional on `v-if="vendorEdtech.certifiedDate"` (null for same vendors)
-- Fallback: `No 1EdTech record on file.` when vendorEdtech is null
+## Task Commits
 
-**Line count delta:** 193 lines (before) → 223 lines (after) — +30 lines
+1. **Task 1: Add 1EdTech section to VendorDrawer.vue** - `0b622c2` (feat)
+2. **Task 2: Human verify — all four vendor scenarios approved** - (checkpoint, no code commit)
 
-**Build:** `npm run build` exits 0. Chunk size warnings are pre-existing.
+## Files Created/Modified
 
-## Acceptance Criteria Verification
+- `src/components/VendorDrawer.vue` - Added edtechData import, EDTECH_STATUS_COLORS import, edtechMap join, vendorEdtech computed, and 1EdTech Certification template section (+32 lines, 193 → 225 lines)
 
-| Criterion | Result |
-|-----------|--------|
-| `import edtechData from '../data/edtech.js'` present | PASS |
-| `EDTECH_STATUS_COLORS` in riskLabels import | PASS |
-| `const edtechMap = Object.fromEntries(edtechData.map((d) => [d.vendorId, d]))` | PASS |
-| `const vendorEdtech = computed(` | PASS |
-| `1EdTech Certification` h3 heading | PASS |
-| `vendorEdtech.certificationStatus` in Tag :value | PASS |
-| `EDTECH_STATUS_COLORS[vendorEdtech.certificationStatus]` in :style | PASS |
-| `v-if="vendorEdtech.certificationStandard"` conditional row | PASS |
-| `v-if="vendorEdtech.certifiedDate"` conditional row | PASS |
-| `No 1EdTech record on file.` fallback | PASS |
-| New section after DPA, before Privacy Policy Score | PASS |
-| DPA section unchanged | PASS |
-| Privacy Policy Score section unchanged | PASS |
-| `npm run build` exits 0 | PASS |
+## Decisions Made
 
-## Checkpoint Status
+- 1EdTech section placed between DPA and Privacy Policy Score per decisions D-08/D-09 from CONTEXT.md
+- Status badge always rendered; Standard and Certified Date rows conditional per D-10
+- Section heading is "1EdTech Certification" (longer than "1EdTech" for display clarity)
 
-**Task 2 (checkpoint:human-verify)** is pending — awaiting human visual verification of all four vendor scenarios.
+## Human Verification Results
 
-### Expected verification scenarios:
+All four certificationStatus scenarios verified correct:
 
-| Vendor | Status | Expected badge | Standard row | Certified Date row |
-|--------|--------|---------------|---|---|
-| Google Classroom | Certified | Green (#16a34a) "Certified" | "OneRoster 2.0" | "2024-03-15" |
-| Quizlet | Not Certified | Gray (#6b7280) "Not Certified" | Hidden | Hidden |
-| Kahoot | In Review | Amber (#f59e0b) "In Review" | Hidden | Hidden |
-| Flipgrid | Expired | Red (#dc2626) "Expired" | "LTI 1.3" | "2020-06-15" |
+| Vendor | Status | Badge Color | Standard Row | Certified Date Row |
+|--------|--------|-------------|---|---|
+| Google Classroom | Certified | Green (#16a34a) | "OneRoster 2.0" | "2024-03-15" |
+| Quizlet | Not Certified | Gray (#6b7280) | Hidden | Hidden |
+| Kahoot | In Review | Amber (#f59e0b) | Hidden | Hidden |
+| Flipgrid | Expired | Red (#dc2626) | "LTI 1.3" | "2020-06-15" |
+
+ReportsView tab bar: only "DPA" and "Risk Position" tabs visible (no "1EdTech" tab).
 
 ## Deviations from Plan
 
-None — plan executed exactly as written.
+None — plan executed exactly as written. The implementation commit 509163a was created in a worktree and cherry-picked to master as 0b622c2 during the continuation session.
 
 ## Known Stubs
 
@@ -101,8 +98,25 @@ None — all 27 vendors have edtech.js records; the fallback exists but is not e
 
 ## EDTECH-01 Requirement Status
 
-EDTECH-01 is now satisfied through the drawer surface per decisions D-01/D-02 (no standalone 1EdTech page — the drawer IS the 1EdTech view). Should be marked Validated at next `/gsd:transition`.
+EDTECH-01 is now satisfied through the drawer surface per decisions D-01/D-02 (no standalone 1EdTech page — the drawer IS the 1EdTech view). Marked Validated via `requirements mark-complete EDTECH-01`.
 
-## Self-Check: PENDING
+## Issues Encountered
 
-Human checkpoint (Task 2) not yet completed. Self-check will finalize after human approval.
+None. The implementation commit was originally created in a worktree (509163a) and required a cherry-pick to land on master — handled cleanly with no conflicts.
+
+## Next Phase Readiness
+
+- Phase 04 (1edtech-view) complete — both plans (04-01 and 04-02) done
+- EDTECH-01 requirement satisfied
+- Ready for Phase 05 (Risk Position View)
+
+---
+*Phase: 04-1edtech-view*
+*Completed: 2026-05-13*
+
+## Self-Check: PASSED
+
+- File `src/components/VendorDrawer.vue` exists and contains all required strings
+- Commit `0b622c2` exists in master branch
+- Build `npm run build` exits 0
+- Human verification approved all four vendor scenarios
