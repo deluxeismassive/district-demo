@@ -5,14 +5,14 @@ milestone_name: milestone
 current_phase: 02
 current_plan: 1
 status: executing
-stopped_at: Completed 02-02-PLAN.md
-last_updated: "2026-05-13T19:29:53.069Z"
+stopped_at: Completed 02-01-PLAN.md — data layer seeded, echarts installed
+last_updated: "2026-05-13T19:31:49.401Z"
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 6
-  completed_plans: 3
-  percent: 50
+  completed_plans: 4
+  percent: 67
 ---
 
 # Project State: District Demo Portal
@@ -33,7 +33,7 @@ progress:
 ## Current Position
 
 Phase: 02 (data-layer-discovery) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 **Milestone:** v1
 **Current phase:** 02
 **Current plan:** 1
@@ -41,7 +41,7 @@ Plan: 2 of 4
 
 **Progress:**
 
-[█████░░░░░] 50%
+[███████░░░] 67%
 Phase 2 [          ] 0%    Data Layer + Discovery
 Phase 3 [          ] 0%    DPA View
 Phase 4 [          ] 0%    1EdTech View
@@ -64,6 +64,7 @@ Phase 6 [          ] 0%    Tags Management
 **Verifier passes:** 1
 **Repair cycles used:** 0
 | Phase 02-data-layer-discovery P02 | 55s | 2 tasks | 2 files |
+| Phase 02-data-layer-discovery P01 | 3min | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -79,14 +80,15 @@ Phase 6 [          ] 0%    Tags Management
 | Vite 8 rolldown build-time imports | Vite 8 (rolldown) resolves lazy dynamic imports at build time — stub view files required in Plan 01, not Plan 02 | Phase 1 |
 | darkModeSelector: false | PrimeVue dark mode disabled — portal uses structural dark sidebar, not CSS dark mode toggle | Phase 1 |
 | @primeuix/themes import path | Correct PrimeVue 4.x path is @primeuix/themes (not @primevue/themes legacy alias) | Phase 1 |
+| echarts + vue-echarts runtime deps | Installed as runtime dependencies (not dev) — used by VendorDrawer radar chart and Phase 5 risk donut | Phase 2 |
+| 27 vendor fixtures | 27 vendors across all major edtech categories — satisfies 25-30 target from D-10 | Phase 2 |
+| Data layer seeded in plan 01 | All four src/data/*.js files created before any view consumes them — vendorId consistency from day one | Phase 2 |
 
 ### Decisions Pending
 
 | Decision | Needed by | Options |
 |----------|-----------|---------|
-| Tag persistence scope | Phase 2 planning | Does demo require tags to survive page refresh? If yes, add localStorage watch to Pinia store. If no, skip. |
-| Vendor fixture list | Phase 2 planning | Select 20-40 real edtech brand names with realistic spread of DPA statuses and risk tiers |
-| npm version verification | Phase 1 planning | Verify current versions of `primevue`, `vue-echarts`, `echarts`, `tailwindcss` before install |
+| Tag persistence scope | Phase 2 planning | RESOLVED: D-24/D-25 — localStorage persistence via watch() confirmed in CONTEXT.md |
 
 ### Active Blockers
 
@@ -104,17 +106,18 @@ None.
 
 **To resume:** Run `/gsd:execute-phase 2` to begin Phase 2 (Data Layer + Discovery).
 
-**Stopped at:** Completed 02-02-PLAN.md
+**Stopped at:** Completed 02-01-PLAN.md — data layer seeded, echarts installed
 
 **Context for next session:**
 
 - Phase 1 complete: AppShell, SidebarNav, four stub views with PrimeVue Skeleton placeholders
-- Router hash history confirmed working (no 404 on refresh)
-- Active nav highlight: bg-primary (#484ce6) via exact-active-class on all RouterLinks
-- ReportsView tab bar functional: activeTab ref, DPA default, no route change on tab click
-- Pinia tags store wired and accessible from all views (no getActivePinia errors)
-- Brand tokens available: bg-primary (#484ce6), bg-accent (#da8231), bg-sidebar (#111827)
-- Decisions needed before Phase 2 planning: tag persistence scope, vendor fixture list
+- Phase 2 Plan 1 complete: all four src/data/*.js files seeded with 27 vendors, echarts + vue-echarts installed
+- vendorId join key established: vendor-<kebab-case-name> format, consistent across all four files
+- echarts ^6.0.0 + vue-echarts ^8.0.1 in package.json dependencies — Plan 02 can register VChart globally in main.js
+- Privacy score distribution: 6 Low-risk vendors (all dimensions >= 8), 7 High-risk candidates (at least one dimension <= 3)
+- DPA: 16 Signed, 5 Unsigned, 4 Expired, 2 Pending
+- Discovery: 12 Daily, 9 Weekly, 4 Monthly, 2 Rarely
+- Next: Plan 2 — restructure tags store + register VChart in main.js
 
 ---
 *State initialized: 2026-05-13*

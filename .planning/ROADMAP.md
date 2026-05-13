@@ -102,7 +102,7 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Shell & Routing | 2/2 | Complete   | 2026-05-13 |
-| 2. Data Layer + Discovery | 1/4 | In Progress|  |
+| 2. Data Layer + Discovery | 2/4 | In Progress|  |
 | 3. DPA View | 0/? | Not started | - |
 | 4. 1EdTech View | 0/? | Not started | - |
 | 5. Risk Position View | 0/? | Not started | - |

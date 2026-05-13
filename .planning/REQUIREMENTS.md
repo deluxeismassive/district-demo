@@ -9,7 +9,7 @@
 
 - [x] **FOUND-01**: App has multi-page SPA routing with a persistent sidebar nav linking all sections
 - [x] **FOUND-02**: Every page renders inside a consistent app shell (header, nav, content area)
-- [ ] **FOUND-03**: All display data lives in `src/data/*.js` files, editable without touching components
+- [x] **FOUND-03**: All display data lives in `src/data/*.js` files, editable without touching components
 - [x] **FOUND-04**: Pinia store manages shared tag state accessible across all pages
 
 ### Discovery
@@ -88,7 +88,7 @@ Updated: 2026-05-13 after roadmap creation.
 | FOUND-01 | Phase 1 | Complete |
 | FOUND-02 | Phase 1 | Complete |
 | FOUND-04 | Phase 1 | Complete |
-| FOUND-03 | Phase 2 | Pending |
+| FOUND-03 | Phase 2 | Complete |
 | DISC-01 | Phase 2 | Pending |
 | DISC-02 | Phase 2 | Pending |
 | DISC-03 | Phase 2 | Pending |
