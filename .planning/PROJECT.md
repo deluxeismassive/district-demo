@@ -16,6 +16,12 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 - ✓ GitHub Pages deployment pipeline (`npm run deploy`) — existing
 - ✓ Base path configured for `/district-demo/` — existing
 
+### Validated
+
+- ✓ Multi-page SPA routing with a persistent sidebar nav (Dashboard / Discovery / Reports / Settings) — Validated in Phase 1: Shell & Routing
+- ✓ Consistent app shell (sidebar + header + content area) renders on every route — Validated in Phase 1: Shell & Routing
+- ✓ Pinia `useTagsStore` initialized and accessible from all components — Validated in Phase 1: Shell & Routing
+
 ### Active
 
 - [ ] Multi-page SPA routing with a persistent navigation sidebar/header
@@ -38,6 +44,7 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 
 ## Context
 
+- Phase 1 complete — SPA shell with Vue Router (hash history), Pinia, PrimeVue 4 (Aura preset, `#484CE6` primary), Tailwind v4, and 4 stub views with skeleton placeholders
 - Existing codebase is a bare Vue 3 + Vite starter (default scaffold, `HelloWorld.vue` only) — all portal features are net-new
 - Deployed as a static SPA to GitHub Pages; no server-side runtime
 - Sales reps are the primary operators; district admins are the audience
@@ -80,4 +87,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-13 after initialization*
+*Last updated: 2026-05-13 after Phase 1: Shell & Routing*
