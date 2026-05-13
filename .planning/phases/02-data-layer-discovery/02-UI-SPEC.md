@@ -1,7 +1,8 @@
 ---
 phase: 2
 slug: data-layer-discovery
-status: draft
+status: approved
+reviewed_at: 2026-05-13
 shadcn_initialized: false
 preset: none
 created: 2026-05-13
