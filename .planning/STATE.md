@@ -1,7 +1,23 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+current_phase: 01
+current_plan: 2
+status: executing
+last_updated: "2026-05-13T18:17:29Z"
+progress:
+  total_phases: 6
+  completed_phases: 0
+  total_plans: 2
+  completed_plans: 1
+  percent: 50
+---
+
 # Project State: District Demo Portal
 
 **Last updated:** 2026-05-13
-**Session:** Roadmap creation
+**Session:** Executed 01-01-PLAN.md — installed Phase 1 deps, wired router/Pinia/PrimeVue
 
 ---
 
@@ -9,34 +25,41 @@
 
 **Core value:** Sales reps can walk a district admin prospect through a realistic, data-rich portal that makes the value of the product immediately tangible — and any section can be changed within hours for a specific demo.
 
-**Current focus:** Phase 1 — Shell & Routing
+**Current focus:** Phase 01 — Shell & Routing
 
 ---
 
 ## Current Position
 
+Phase: 01 (Shell & Routing) — EXECUTING
+Plan: 2 of 2 (Plan 01 complete; Plan 02 next)
 **Milestone:** v1
-**Current phase:** 1 — Shell & Routing
-**Current plan:** None started
-**Status:** Not started
+**Current phase:** 01
+**Current plan:** 2
+**Status:** Executing Phase 01
 
 **Progress:**
+
 ```
-Phase 1 [          ] 0%   Shell & Routing
-Phase 2 [          ] 0%   Data Layer + Discovery
-Phase 3 [          ] 0%   DPA View
-Phase 4 [          ] 0%   1EdTech View
-Phase 5 [          ] 0%   Risk Position View
-Phase 6 [          ] 0%   Tags Management
+Phase 1 [█████░░░░░] 50%   Shell & Routing (1/2 plans complete)
+Phase 2 [          ] 0%    Data Layer + Discovery
+Phase 3 [          ] 0%    DPA View
+Phase 4 [          ] 0%    1EdTech View
+Phase 5 [          ] 0%    Risk Position View
+Phase 6 [          ] 0%    Tags Management
 ```
 
-**Overall:** 0/6 phases complete
+**Overall:** 0/6 phases complete (Phase 1 in progress)
 
 ---
 
 ## Performance Metrics
 
-**Plans completed:** 0
+| Phase | Plan | Duration | Tasks | Files |
+|-------|------|----------|-------|-------|
+| 01-shell-routing | 01 | 2min | 3 | 11 |
+
+**Plans completed:** 1
 **Plans failed:** 0
 **Verifier passes:** 0
 **Repair cycles used:** 0
@@ -54,6 +77,9 @@ Phase 6 [          ] 0%   Tags Management
 | Pinia store scope | Single tags store for all mutable state — initialized in Phase 1, consumed from Phase 2 onward | Phase 1 |
 | Risk visualization | Donut chart (ECharts) above risk table — confirmed during roadmap derivation from research recommendation | Phase 5 |
 | Vendor join key | Stable `vendorId` string (e.g. `vendor-google-classroom`) across all data files — not display name | Phase 2 |
+| Vite 8 rolldown build-time imports | Vite 8 (rolldown) resolves lazy dynamic imports at build time — stub view files required in Plan 01, not Plan 02 | Phase 1 |
+| darkModeSelector: false | PrimeVue dark mode disabled — portal uses structural dark sidebar, not CSS dark mode toggle | Phase 1 |
+| @primeuix/themes import path | Correct PrimeVue 4.x path is @primeuix/themes (not @primevue/themes legacy alias) | Phase 1 |
 
 ### Decisions Pending
 
@@ -77,14 +103,18 @@ None.
 
 ## Session Continuity
 
-**To resume:** Run `/gsd:plan-phase 1` to begin planning Phase 1 (Shell & Routing).
+**To resume:** Run `/gsd:execute-phase 1` to continue Phase 1 with Plan 02 (AppShell + views).
+
+**Stopped at:** Completed 01-shell-routing 01-01-PLAN.md
 
 **Context for next session:**
-- Roadmap is created, 14/14 requirements mapped, 6 phases
-- Phase 1 is the entry point — creates router, AppShell, SidebarNav, stub views, and Pinia store init
-- Research summary is at `.planning/research/SUMMARY.md` — contains stack recommendations, pitfall list, and phase-level rationale
-- `createWebHashHistory` is non-negotiable for GitHub Pages — must be set in `router/index.js` in Phase 1
-- All phases have UI components (all 6 are `UI hint: yes`)
+
+- Plan 01 complete: all deps installed, router/Pinia/PrimeVue wired, build exits 0
+- Plan 02 next: build AppShell.vue, SidebarNav.vue, and replace stub views with skeleton content
+- Stub views exist at src/views/*.vue — Plan 02 should replace their content, not recreate files
+- All brand color tokens available: bg-primary (#484ce6), bg-accent (#da8231), bg-sidebar (#111827)
+- Router meta pattern established: meta.nav/label/icon drives sidebar nav dynamically
+- Vite 8 (rolldown) resolves lazy imports at build time — any new views must have files before build
 
 ---
 *State initialized: 2026-05-13*

@@ -97,7 +97,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Shell & Routing | 0/? | Not started | - |
+| 1. Shell & Routing | 1/2 | In Progress|  |
 | 2. Data Layer + Discovery | 0/? | Not started | - |
 | 3. DPA View | 0/? | Not started | - |
 | 4. 1EdTech View | 0/? | Not started | - |
