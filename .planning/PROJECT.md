@@ -27,7 +27,8 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 
 ### Active
 
-- [ ] DPA page: display vendor name, DPA status, signed/expiry dates, version currency (whether DPA is current with subscription version), and addendum presence
+- ✓ DPA page: sortable/filterable DataTable with status badge, signed/expiry dates, and risk labels — Validated in Phase 3: DPA View
+- ✓ At-risk vendor surface: "Top 8 Vendors Needing Attention" card on Dashboard + VendorDrawer DPA section — Validated in Phase 3: DPA View
 - [ ] Risk Position page: display a converged view of discovery + DPA data showing district risk (visualization approach TBD during planning)
 - [ ] 1EdTech page: display vendor 1EdTech certification/compliance status
 - [ ] Tags management: users can create, edit, and delete tags used to categorize vendors/domains
@@ -44,6 +45,7 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 
 ## Context
 
+- Phase 3 complete — DPA View: Discovery|DPA tab bar, DpaGrid with 6-column sortable table + badge colors, riskLabels.js constants, VendorDrawer DPA section, Dashboard Top 8 Vendors Needing Attention card with KPI tiles
 - Phase 2 complete — Discovery page fully functional: 27-vendor DataTable (sortable, filterable), VendorDrawer slide-over with 10-axis ECharts radar chart, tag assignment via grouped MultiSelect, localStorage persistence, all data from `src/data/*.js`
 - Phase 1 complete — SPA shell with Vue Router (hash history), Pinia, PrimeVue 4 (Aura preset, `#484CE6` primary), Tailwind v4, and 4 stub views with skeleton placeholders
 - Existing codebase is a bare Vue 3 + Vite starter (default scaffold, `HelloWorld.vue` only) — all portal features are net-new
@@ -88,4 +90,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-13 after Phase 2: Data Layer + Discovery*
+*Last updated: 2026-05-13 after Phase 3: DPA View*
