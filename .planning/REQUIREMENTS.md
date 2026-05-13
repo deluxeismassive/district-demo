@@ -16,7 +16,7 @@
 
 - [ ] **DISC-01**: User can view a sortable, filterable table of vendors with name, category, usage metrics, and user/student counts
 - [ ] **DISC-02**: User can assign and remove tags on a vendor from the Discovery table
-- [ ] **DISC-03**: User can expand or open a detail view for a vendor to see full usage data
+- [x] **DISC-03**: User can expand or open a detail view for a vendor to see full usage data
 
 ### DPA
 
@@ -91,7 +91,7 @@ Updated: 2026-05-13 after roadmap creation.
 | FOUND-03 | Phase 2 | Complete |
 | DISC-01 | Phase 2 | Pending |
 | DISC-02 | Phase 2 | Pending |
-| DISC-03 | Phase 2 | Pending |
+| DISC-03 | Phase 2 | Complete |
 | TAGS-02 | Phase 2 | Complete |
 | DPA-01 | Phase 3 | Pending |
 | DPA-02 | Phase 3 | Pending |
