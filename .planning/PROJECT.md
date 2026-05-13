@@ -1,0 +1,83 @@
+# District Demo Portal
+
+## What This Is
+
+A sales demo web portal for edtech that displays school district data across multiple sections — discovery (app/domain usage), DPA status, risk position, and 1EdTech compliance data. Built as a clickable mockup with fully synthetic data, shown by sales reps to district admin prospects. Needs to iterate same-day as sales requirements change.
+
+## Core Value
+
+Sales reps can walk a district admin prospect through a realistic, data-rich portal that makes the value of the product immediately tangible — and any section can be changed within hours for a specific demo.
+
+## Requirements
+
+### Validated
+
+- ✓ Vue 3 + Vite project scaffold configured — existing
+- ✓ GitHub Pages deployment pipeline (`npm run deploy`) — existing
+- ✓ Base path configured for `/district-demo/` — existing
+
+### Active
+
+- [ ] Multi-page SPA routing with a persistent navigation sidebar/header
+- [ ] Discovery page: display vendor/domain name, usage metrics (frequency, last seen), and user/student counts from mocked data
+- [ ] Discovery page: users can assign tags to vendors/domains
+- [ ] DPA page: display vendor name, DPA status, signed/expiry dates, version currency (whether DPA is current with subscription version), and addendum presence
+- [ ] Risk Position page: display a converged view of discovery + DPA data showing district risk (visualization approach TBD during planning)
+- [ ] 1EdTech page: display vendor 1EdTech certification/compliance status
+- [ ] Tags management: users can create, edit, and delete tags used to categorize vendors/domains
+- [ ] All data backed by editable mock data files (JSON/JS config) for same-day sales iteration
+- [ ] Section structure flexible — easy to add or remove pages without structural rework
+
+### Out of Scope
+
+- Real backend / live data connections — demo uses synthetic data only
+- Authentication / login screen — portal opens directly
+- Student/user PII — all data is synthetic and non-identifying
+- Multi-district support — one fixture district for the demo
+- Mobile optimization — sales demos happen on desktop/laptop
+
+## Context
+
+- Existing codebase is a bare Vue 3 + Vite starter (default scaffold, `HelloWorld.vue` only) — all portal features are net-new
+- Deployed as a static SPA to GitHub Pages; no server-side runtime
+- Sales reps are the primary operators; district admins are the audience
+- The number of portal sections is not fixed — expect it to grow or shrink as the product story evolves
+- Risk Position visualization approach is deliberately undefined — needs a design decision during Phase planning
+- Same-day iteration requirement means mock data must live in standalone files (not hardcoded in components)
+
+## Constraints
+
+- **Tech stack**: Vue 3 + Vite — already established, do not introduce conflicting frameworks
+- **Deployment**: Static GitHub Pages — no server, no SSR, no backend calls
+- **Data**: All data is mocked/synthetic — no Druid, DPA API, or 1EdTech API connections in this demo
+- **Iteration speed**: Mock data and section content must be changeable by a developer in under an hour
+- **Auth**: None — portal opens directly with no login
+
+## Key Decisions
+
+| Decision | Rationale | Outcome |
+|----------|-----------|---------|
+| Separate pages/routes per section | User confirmed — each section is its own page | — Pending |
+| Mock data in config/JSON files | Same-day iteration requires data decoupled from components | — Pending |
+| No authentication | Demo is guided by a sales rep; login adds friction with no benefit | — Pending |
+| Risk Position visualization TBD | Approach not yet defined — will be decided during phase planning | — Pending |
+
+## Evolution
+
+This document evolves at phase transitions and milestone boundaries.
+
+**After each phase transition** (via `/gsd:transition`):
+1. Requirements invalidated? → Move to Out of Scope with reason
+2. Requirements validated? → Move to Validated with phase reference
+3. New requirements emerged? → Add to Active
+4. Decisions to log? → Add to Key Decisions
+5. "What This Is" still accurate? → Update if drifted
+
+**After each milestone** (via `/gsd:complete-milestone`):
+1. Full review of all sections
+2. Core Value check — still the right priority?
+3. Audit Out of Scope — reasons still valid?
+4. Update Context with current state
+
+---
+*Last updated: 2026-05-13 after initialization*
