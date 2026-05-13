@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import Skeleton from 'primevue/skeleton'
 
-const tabs = ['DPA', 'Risk Position', '1EdTech']
+const tabs = ['DPA', 'Risk Position']
 const activeTab = ref('DPA')
 </script>
 
