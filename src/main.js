@@ -4,6 +4,11 @@ import PrimeVue from 'primevue/config'
 import { definePreset } from '@primeuix/themes'
 import Aura from '@primeuix/themes/aura'
 import 'primeicons/primeicons.css'
+import { use } from 'echarts/core'
+import { CanvasRenderer } from 'echarts/renderers'
+import { RadarChart } from 'echarts/charts'
+import { RadarComponent, TooltipComponent } from 'echarts/components'
+import VChart from 'vue-echarts'
 import router from './router/index.js'
 import './style.css'
 import App from './App.vue'
@@ -26,6 +31,8 @@ const SchoolDayPreset = definePreset(Aura, {
   }
 })
 
+use([CanvasRenderer, RadarChart, RadarComponent, TooltipComponent])
+
 const app = createApp(App)
 
 app.use(createPinia())
@@ -38,5 +45,6 @@ app.use(PrimeVue, {
   }
 })
 app.use(router)
+app.component('VChart', VChart)
 
 app.mount('#app')
