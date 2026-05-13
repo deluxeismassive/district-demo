@@ -43,8 +43,10 @@ key-decisions:
   - "AppShell owns the top header bar (h-14) — keeps district name persistent across all routes without repeating in each view"
   - "Header wraps in flex flex-col flex-1 div so header is fixed-height and only main content area scrolls"
 
+requirements-completed: [FOUND-01, FOUND-02]
+
 # Metrics
-duration: 2min
+duration: 5min
 completed: 2026-05-13
 ---
 
@@ -57,7 +59,7 @@ completed: 2026-05-13
 - **Duration:** ~2 min
 - **Started:** 2026-05-13T18:22:10Z
 - **Completed:** 2026-05-13T18:23:24Z
-- **Tasks:** 2 complete, 1 awaiting human verification (checkpoint)
+- **Tasks:** 3 complete (including browser smoke test — approved by user)
 - **Files modified:** 7 (2 created, 5 overwritten)
 
 ## Accomplishments
@@ -77,7 +79,7 @@ completed: 2026-05-13
 |------|------|--------|-------|
 | 1 | Build AppShell + SidebarNav, replace App.vue | c1410cc | AppShell.vue, SidebarNav.vue, App.vue |
 | 2 | Four stub views with PrimeVue Skeleton placeholders | e26e389 | DashboardView.vue, DiscoveryView.vue, ReportsView.vue, SettingsView.vue |
-| 3 | Manual browser smoke test | awaiting human verification | (no files) |
+| 3 | Manual browser smoke test | approved | (no files) |
 
 ## Deviations from Plan
 
@@ -106,11 +108,11 @@ Note on `src/components/HelloWorld.vue`: left on disk (not imported anywhere). C
 | FOUND-02: Consistent app shell on every page | Complete | AppShell.vue wraps RouterView — sidebar never remounts on navigation |
 | FOUND-04: Pinia store accessible from all views | Complete (Plan 01) | useTagsStore() callable from any component; confirmed in Plan 01 |
 
-All three Phase 1 requirements are observably satisfied pending browser smoke test (Task 3 checkpoint).
+All three Phase 1 requirements are observably satisfied — browser smoke test approved (Task 3 checkpoint complete).
 
 ## Next Steps
 
-Task 3 is a manual browser checkpoint. After user approves:
+Task 3 browser checkpoint has been approved by the user.
 
 - Phase 1 (Shell & Routing) is complete
 - Phase 2 (Data Layer + Discovery) can begin
