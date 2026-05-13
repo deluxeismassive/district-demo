@@ -35,7 +35,7 @@
 ### Tags
 
 - [ ] **TAGS-01**: User can create, rename, and delete tags with color assignment on a Tags management page
-- [ ] **TAGS-02**: User can assign and remove tags on vendor rows in the Discovery page
+- [x] **TAGS-02**: User can assign and remove tags on vendor rows in the Discovery page
 
 ## v2 Requirements
 
@@ -92,7 +92,7 @@ Updated: 2026-05-13 after roadmap creation.
 | DISC-01 | Phase 2 | Pending |
 | DISC-02 | Phase 2 | Pending |
 | DISC-03 | Phase 2 | Pending |
-| TAGS-02 | Phase 2 | Pending |
+| TAGS-02 | Phase 2 | Complete |
 | DPA-01 | Phase 3 | Pending |
 | DPA-02 | Phase 3 | Pending |
 | EDTECH-01 | Phase 4 | Pending |
