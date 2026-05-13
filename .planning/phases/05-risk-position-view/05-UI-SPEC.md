@@ -53,7 +53,7 @@ Matched to established portal conventions extracted from `DiscoveryView.vue`, `D
 | Role | Size | Weight | Line Height |
 |------|------|--------|-------------|
 | Body | 14px (text-sm) | 400 (normal) | 1.5 |
-| Label | 14px (text-sm) | 500 (medium) | 1.4 |
+| Label | 14px (text-sm) | 600 (semibold) | 1.4 |
 | Heading | 20px (text-xl) | 600 (semibold) | 1.2 |
 | Display | 14px (text-sm) | 600 (semibold) | 1.0 |
 
