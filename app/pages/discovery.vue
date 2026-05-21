@@ -51,6 +51,19 @@ const tableRows = computed(() =>
   })
 )
 
+// Plan 10-03 — Grouped items shape for the per-row USelectMenu. Array-of-arrays
+// is the Nuxt UI v4 grouped-items API (verified against
+// node_modules/@nuxt/ui/dist/runtime/components/SelectMenu.vue.d.ts —
+// `items?: T` where T extends ArrayOrNested<SelectMenuItem>; the runtime
+// uses `isArrayOfArray()` to switch to the grouped rendering path).
+// Shared between this per-row select and the drawer's full-width select via
+// the same `tagsStore.setVendorTags` action.
+const groupedTagItems = computed(() =>
+  tagsStore.tagGroups.map((g) =>
+    g.children.map((c) => ({ id: c.id, name: c.name, groupColor: g.color }))
+  )
+)
+
 // Search filter — VueUse debounce (200ms) over a UInput v-model, filters on name + category.
 const search = ref('')
 const debouncedSearch = useDebounce(search, 200)
@@ -98,6 +111,11 @@ const columns: TableColumn<any>[] = [
   { accessorKey: 'userCount',    header: sortHeader('Users'),        meta: { class: { th: 'w-[6rem] text-right', td: 'w-[6rem] text-right' } } },
   { accessorKey: 'studentCount', header: sortHeader('Students'),     meta: { class: { th: 'w-[6rem] text-right', td: 'w-[6rem] text-right' } } },
   { accessorKey: 'tags',         header: 'Tags',                     enableSorting: false, meta: { class: { th: 'w-[14rem]', td: 'w-[14rem]' } } },
+  // Plan 10-03 — narrow 3rem column hosting the compact per-row USelectMenu `+` trigger.
+  // accessorKey 'tagsAssign' has no matching Vendor field; the cell is overridden via the
+  // #tagsAssign-cell slot which reads row.original.vendorId directly. Carries Plan 10-01's
+  // ColumnMeta {th, td} shape deviation (plan §interfaces snippet had a plain string).
+  { accessorKey: 'tagsAssign',   header: '',                         enableSorting: false, meta: { class: { th: 'w-[3rem]', td: 'w-[3rem]' } } },
 ]
 
 // Row-select stub — Plan 10-01 captures the vendor ID only.
@@ -157,6 +175,32 @@ const drawerOpen = computed({
             :style="{ backgroundColor: tag.parentColor, color: '#ffffff' }"
           />
         </div>
+      </template>
+      <!--
+        Plan 10-03 — compact per-row USelectMenu in the narrow `tagsAssign` column.
+        Writes through the same `setVendorTags` Pinia action used by the drawer,
+        so both surfaces stay in sync via Pinia reactivity (research §6/§7).
+
+        Deviation (Rule 3 - Blocking): plan §interfaces specified
+        `:ui="{ trigger: 'w-auto' }"` but the installed Nuxt UI v4 SelectMenu theme
+        (node_modules/@nuxt/ui/dist/shared/ui.CoJ8bnb0.mjs lines ~5520-5544) defines
+        the trigger slot as `base`, NOT `trigger`. Using `:ui="{ base: 'w-auto' }"`
+        for the same intent (icon-only trigger shrinks inside the 3rem column).
+      -->
+      <template #tagsAssign-cell="{ row }">
+        <USelectMenu
+          :model-value="tagsStore.assignments[row.original.vendorId] ?? []"
+          :items="groupedTagItems"
+          value-key="id"
+          label-key="name"
+          multiple
+          size="xs"
+          color="neutral"
+          variant="ghost"
+          icon="i-lucide-plus"
+          :ui="{ base: 'w-auto' }"
+          @update:model-value="(ids) => tagsStore.setVendorTags(row.original.vendorId, ids)"
+        />
       </template>
       <template #empty>
         <div class="py-8 text-center">
