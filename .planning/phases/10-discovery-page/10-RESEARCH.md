@@ -1751,7 +1751,7 @@ For Phase 10, **type checking + build success + grep probes + dev-server SSR + m
 | PAGE-01 | USelectMenu uses array-of-arrays items shape | Static (grep) | `grep -q "tagGroups.map" app/components/VendorDrawer.vue` AND grep again in 10-03 for per-row context | ❌ Wave 2 + 3 |
 | PAGE-01 | Per-row USelectMenu cell exists | Static (grep) | `grep -q "tagsAssign-cell" app/pages/discovery.vue` | ❌ Wave 3 (10-03) |
 | PAGE-01 | setVendorTags action exists in store | Static (grep) | `grep -q "function setVendorTags" app/stores/tags.ts` | ❌ Wave 3 (10-03) |
-| PAGE-01 | setVendorTags called from both surfaces | Static (grep) | `grep -c "setVendorTags(" app/` — expect ≥ 2 (1 in discovery.vue per-row, 1 in VendorDrawer.vue) | ❌ Wave 3 (10-03) |
+| PAGE-01 | setVendorTags called from both surfaces | Static (grep) | `grep -roE "setVendorTags\(" app | wc -l` — expect ≥ 2 (1 in discovery.vue per-row, 1 in VendorDrawer.vue). Counts occurrences, not files; ripgrep-free; works in Git Bash on Windows. (Bare `grep -c "setVendorTags(" app` errors with "Is a directory".) | ❌ Wave 3 (10-03) |
 | PAGE-01 | Persistence — assignments survive reload (Pinia persist:true) | Manual UAT | Browser: assign tags → reload page → verify chips still appear | manual UAT |
 | PAGE-01 | Persistence — assignments survive navigation | Manual UAT | Browser: assign tag on Discovery → navigate to / → navigate back → chips still there | manual UAT |
 | PAGE-01 | Drawer interactions — open, close, dismiss-via-backdrop | Manual UAT | Visual inspection during /gsd:verify-work | manual UAT |
