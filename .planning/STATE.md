@@ -4,7 +4,7 @@ milestone: v1.0.0
 milestone_name: Nuxt Migration
 status: verifying
 stopped_at: Completed 08-01-PLAN.md (file-based routing + dark-sidebar shell + 5 page stubs; all 22 probes pass)
-last_updated: "2026-05-21T19:44:09.062Z"
+last_updated: "2026-05-21T19:51:27.733Z"
 last_activity: 2026-05-21
 progress:
   total_phases: 7
@@ -31,11 +31,11 @@ See: .planning/PROJECT.md (updated 2026-05-21)
 
 ## Current Position
 
-Phase: 08 (layout-routing) — COMPLETE
-Plan: 1 of 1 done
+Phase: 9
+Plan: Not started
 Plans: 3 of 3 done (cumulative across executed phases)
 Status: Phase complete — ready for verification
-Last activity: 2026-05-21 — Completed Plan 08-01 (file-based routing + persistent dark-sidebar shell + 5 page stubs)
+Last activity: 2026-05-21
 
 ---
 
