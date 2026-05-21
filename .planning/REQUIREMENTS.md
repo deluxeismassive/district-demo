@@ -21,7 +21,7 @@
 
 ### Data Layer
 
-- [ ] **DATA-01**: All mock data served through Nuxt server API routes (`server/api/vendors.get.ts`, `server/api/dpa.get.ts`, `server/api/edtech.get.ts`); source data in `server/data/*.ts`
+- [x] **DATA-01**: All mock data served through Nuxt server API routes (`server/api/vendors.get.ts`, `server/api/dpa.get.ts`, `server/api/edtech.get.ts`); source data in `server/data/*.ts`
 - [ ] **DATA-02**: Pages and components use `useFetch('/api/...')` exclusively to load data; no direct imports of data files from client-side code
 
 ### Pages

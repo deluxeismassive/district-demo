@@ -2,21 +2,21 @@
 gsd_state_version: 1.0
 milestone: v1.0.0
 milestone_name: Nuxt Migration
-status: verifying
-stopped_at: Completed 08-01-PLAN.md (file-based routing + dark-sidebar shell + 5 page stubs; all 22 probes pass)
-last_updated: "2026-05-21T19:51:27.733Z"
+status: executing
+stopped_at: Completed 09-01-PLAN.md (server/data + shared/types migration; 27 vendors with merged discovery; v0.5.0 src/data/*.js deleted; typecheck + build green)
+last_updated: "2026-05-21T20:42:41.961Z"
 last_activity: 2026-05-21
 progress:
   total_phases: 7
   completed_phases: 2
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 5
+  completed_plans: 4
 ---
 
 # Project State: District Demo Portal
 
 **Last updated:** 2026-05-21
-**Session:** Milestone v1.0.0 (Nuxt Migration) — Phase 8 (Layout & Routing) COMPLETE; Phase 9 (Data Layer) next
+**Session:** Milestone v1.0.0 (Nuxt Migration) — Phase 9-01 (typed data layer migration) COMPLETE; Phase 9-02 (server/api routes + useFetch wiring) next
 
 ---
 
@@ -25,16 +25,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-21)
 
 **Core value:** Sales reps can walk a district admin prospect through a realistic, data-rich portal that makes the value of the product immediately tangible — and any section can be changed within hours for a specific demo.
-**Current focus:** Phase 08 — layout-routing
+**Current focus:** Phase 09 — server-data-layer
 
 ---
 
 ## Current Position
 
-Phase: 9
-Plan: Not started
+Phase: 09 (server-data-layer) — EXECUTING
+Plan: 2 of 2
 Plans: 3 of 3 done (cumulative across executed phases)
-Status: Phase complete — ready for verification
+Status: Ready to execute
 Last activity: 2026-05-21
 
 ---
@@ -71,6 +71,11 @@ Last activity: 2026-05-21
 | Nav metadata source of truth | `definePageMeta({ nav, navLabel, navIcon, navOrder })` per page; sidebar iterates `useRouter().options.routes` filtered by `meta.nav===true`, sorted by `meta.navOrder` — zero hardcoded route names | Phase 8-01 |
 | navOrder gap convention | Use gaps of 10 (10/20/30/40/50) so future v1.1+ sections can slot in (e.g. 1EdTech at 25) without renumbering | Phase 8-01 |
 | PageMeta type augmentation location | `app/types/page-meta.d.ts` with `declare module '#app'` + `export {}` module marker — single source of truth; Phase 9+ should NOT redeclare | Phase 8-01 |
+| Discovery merged into Vendor interface (no /api/discovery route) | At-rest denormalization — eliminates the v0.5.0 client-side `Object.fromEntries(...)` join, reduces Discovery page fetches from 2 to 1; Vendor carries frequency/lastSeen/userCount/studentCount inline | Phase 9-01 |
+| Data type home: `shared/types/data.ts` | Auto-imports on both server and client via Nuxt 4 `shared/` convention; `server/utils/types.ts` rejected because it would force soft client→server dependencies for explicit annotations | Phase 9-01 |
+| Edtech orphan reconciliation: no-op | Research §4 anticipated 28 source records with one orphan to drop; actual `src/data/edtech.js` shipped with exactly 27 records and 0 vendorId orphans — migration verbatim; documented inline in `server/data/edtech.ts` | Phase 9-01 |
+| Explicit `Vendor[]` / `DpaRecord[]` / `EdtechRecord[]` annotation on data arrays | Forces compile-time validation against the interface — TypeScript only catches missing fields without explicit annotation (research Pitfall §7) | Phase 9-01 |
+| v0.5.0 `src/data/*.js` deleted in Plan 09-01 (not deferred) | typecheck + `npm run build` green without them; deferring would leave a dead-code graveyard. `src/views/` and `src/components/` still reference them on disk but live outside Nuxt's scan path — deleted incrementally by Phases 10-12 | Phase 9-01 |
 
 ### Active Blockers
 
@@ -80,9 +85,9 @@ None.
 
 ## Session Continuity
 
-**To resume:** Run `/gsd:verify-work` to verify Phase 8 deliverables, then `/gsd:plan-phase 9` to plan Phase 9 (Data Layer).
+**To resume:** Plan 09-02 next — create `server/api/{vendors,dpa,edtech}.get.ts` event handlers that import the typed `server/data/*.ts` arrays, and wire `useFetch('/api/vendors')` into `app/pages/discovery.vue` as the proof-of-typing demo.
 
-**Stopped at:** Completed 08-01-PLAN.md (file-based routing + dark-sidebar shell + 5 page stubs; all 22 probes pass)
+**Stopped at:** Completed 09-01-PLAN.md (server/data + shared/types migration; 27 vendors with merged discovery; v0.5.0 src/data/*.js deleted; typecheck + build green)
 
 **Context for next session:**
 
@@ -98,7 +103,8 @@ None.
 - nuxt-echarts SSR confirmed working from Phase 7-02 smoke test.
 - Dev server: port 3000 by default; if busy Nuxt picks the next free port (test machine got 3001 — same as Phase 7-02).
 - Dev-server log on Windows uses ANSI escape codes around port number — strip with `sed -r 's/\x1b\[[0-9;]*m//g'` before extracting via `grep -oE 'localhost:[0-9]+'`. Dev server kill via netstat-listener-PID + `taskkill /F /PID` (npm spawns nuxi as child so background-launcher PID is unreliable).
-- Phase 9 NEXT: `server/api/*.get.ts` mock data routes + `useFetch`/`useAsyncData` patterns in pages (DATA-01, DATA-02).
+- Phase 9-01 COMPLETE: typed data layer migrated — `shared/types/data.ts` (Vendor/DpaRecord/EdtechRecord interfaces, auto-imported on server+client), `shared/utils/riskLabels.ts` (5 color maps), `server/data/{vendors,dpa,edtech}.ts` (27 records each, explicit type annotations); discovery.js metrics merged into Vendor inline by vendorId; all 5 v0.5.0 `src/data/*.js` files deleted; typecheck + build green.
+- Phase 9-02 NEXT: 3 trivial `server/api/*.get.ts` event handlers + wire `useFetch('/api/vendors')` into `app/pages/discovery.vue` as proof-of-typing demo (closes DATA-01 and DATA-02).
 - Phase 10 (Discovery) proves all major patterns — UTable, USlideover, ECharts, USelectMenu.
 - Phase 11 (DPA + Dashboard) and Phase 12 (Risk + Tags) both depend on Phase 9 data layer only.
 - Deployment (Phase 13) is intentionally last — static generate confirmed working after all pages.

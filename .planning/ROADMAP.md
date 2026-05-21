@@ -76,8 +76,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 09-01: server/data/ migration — move vendor, DPA, 1EdTech data to TypeScript with typed interfaces
-- [ ] 09-02: server/api/ routes + useFetch integration — route handlers, composable wiring in pages
+- [x] 09-01-PLAN.md — server/data/ migration: shared/types/data.ts + server/data/{vendors,dpa,edtech}.ts (discovery merged into Vendor, edtech orphan reconciled), shared/utils/riskLabels.ts, delete v0.5.0 src/data/*.js
+- [ ] 09-02-PLAN.md — server/api/{vendors,dpa,edtech}.get.ts handlers + useFetch wiring into app/pages/discovery.vue (proof-of-typing demo) + dev-server curl panel
 
 ### Phase 10: Discovery Page
 **Goal**: The Discovery page is fully functional — vendor table with sort/filter, tag assignment, and the VendorDrawer drill-down with ECharts radar chart all work end to end
