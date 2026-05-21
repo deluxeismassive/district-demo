@@ -4,7 +4,7 @@ import { ref, watch } from 'vue'
 const TAG_GROUPS_KEY = 'schoolday-tag-groups'
 const ASSIGNMENTS_KEY = 'schoolday-tag-assignments'
 
-const SEED_TAG_GROUPS = [
+export const SEED_TAG_GROUPS = [
   {
     id: 'group-curriculum',
     name: 'Curriculum',
