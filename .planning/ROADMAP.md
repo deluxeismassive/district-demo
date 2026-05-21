@@ -14,7 +14,7 @@
 - [ ] **Phase 3: DPA View** - DPA page with status badges, signed/expiry dates, and "needs attention" headline count
 - [x] **Phase 4: 1EdTech View** - 1EdTech certification surfaced inside the VendorDrawer (status badge + standard + certified date); no standalone table; ReportsView '1EdTech' tab removed (completed 2026-05-13)
 - [x] **Phase 5: Risk Position View** - Risk tier calculation, donut chart showing vendor distribution by tier (completed 2026-05-13)
-- [ ] **Phase 6: Tags Management** - Tags page with full create/rename/delete and color assignment
+- [ ] **Phase 6: Tags Management** - Replace SettingsView skeleton with full Tags management page — inline rename, 8-color preset palette, cascade delete with confirm dialog, reset-to-defaults safety net
 
 ---
 
@@ -101,7 +101,9 @@
   2. A user can create a new tag with a name and color, and it immediately appears in the tag list and is available for assignment in Discovery
   3. A user can rename a tag and see the updated name reflected on all vendors that have it assigned
   4. A user can delete a tag and it is removed from all vendor assignments
-**Plans**: TBD
+**Plans**: 2 plans
+  - [ ] 06-tags-management/06-01-PLAN.md — Export SEED_TAG_GROUPS from src/stores/tags.js so SettingsView can deep-clone it for reset-to-defaults
+  - [ ] 06-tags-management/06-02-PLAN.md — Rewrite SettingsView.vue as the Tags management page (inline CRUD, 8-swatch palette, PrimeVue Dialog confirms, reset-to-defaults)
 **UI hint**: yes
 
 ---
@@ -115,7 +117,7 @@
 | 3. DPA View | 1/3 | In Progress|  |
 | 4. 1EdTech View | 2/2 | Complete   | 2026-05-13 |
 | 5. Risk Position View | 2/2 | Complete   | 2026-05-13 |
-| 6. Tags Management | 0/? | Not started | - |
+| 6. Tags Management | 1/2 | In Progress | - |
 
 ---
 
@@ -142,4 +144,4 @@
 
 ---
 *Roadmap created: 2026-05-13*
-*Last updated: 2026-05-13 after Phase 5 planning*
+*Last updated: 2026-05-21 after Phase 6 planning*
