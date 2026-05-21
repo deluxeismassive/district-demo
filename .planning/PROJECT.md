@@ -51,6 +51,7 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 - ✓ **LAYOUT-01**: Persistent app shell implemented as `app/layouts/default.vue` with dark sidebar nav, `NuxtLink` active highlighting — Validated in Phase 8
 - ✓ **DATA-01**: Mock data served through Nuxt server API routes (`server/api/vendors.get.ts`, `dpa.get.ts`, `edtech.get.ts`); typed source data in `server/data/*.ts` with `shared/types/data.ts` interfaces — Validated in Phase 9
 - ✓ **DATA-02**: `app/pages/discovery.vue` uses `useFetch('/api/vendors')` with full Nitro type inference; negative-grep boundary enforces no direct `server/data/` imports from `app/` — Validated in Phase 9
+- ✓ **PAGE-01**: Discovery page fully functional — `UTable` with sort/filter, `USlideover` `VendorDrawer.vue` with 10-axis ECharts radar in `<ClientOnly>`, per-row + drawer `USelectMenu` writing back to Pinia via `setVendorTags`/`clearVendorTags` actions — Validated in Phase 10
 
 ### Active (v1.0.0 — Nuxt Migration)
 - [ ] **DATA-02**: Pages use `useFetch` / `useAsyncData` to load data from server routes
@@ -84,7 +85,7 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 ## Context
 
 - **v1.0.0 in progress** — Nuxt 4 migration milestone
-- **Current state**: Phases 7-9 complete (foundation + layout/routing + server data layer). Discovery page proves the end-to-end useFetch pipeline; Phases 10-12 build the actual page UIs.
+- **Current state**: Phases 7-10 complete (foundation + layout/routing + server data layer + Discovery page). Discovery is the first fully-functional v1.0.0 demo screen; Phases 11-12 build DPA/Dashboard and Risk/Tags using the same patterns.
 - **v0.5.0 shipped 2026-05-21** — 6 phases, 15 plans, ~2,331 source LOC (Vue 3 + Vite SPA)
 - **Target stack**: Nuxt 4 + Nuxt UI v3 + Tailwind v4 + Pinia + ECharts (client-only) + TypeScript
 - **Deployment target**: AWS Amplify (dev / staging / prod), Nitro node-server preset
@@ -135,4 +136,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-21 — Phase 9 complete; data layer ready for page UIs (Phase 10+)*
+*Last updated: 2026-05-21 — Phase 10 complete; Discovery is the first fully-functional demo screen; Phase 11 (DPA + Dashboard) next*
