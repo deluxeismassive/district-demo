@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Nuxt 4
+.nuxt/
+.output/
+.data/
