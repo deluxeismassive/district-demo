@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { Vendor, DpaRecord, EdtechRecord } from '#shared/types/data'
 import { DPA_STATUS_COLORS, RISK_LABEL_COLORS, EDTECH_STATUS_COLORS } from '#shared/utils/riskLabels'
+// Deviation (Rule 3 - Blocking, carry-forward from 10-01 lesson #1):
+// @pinia/nuxt v0.11.3 does NOT auto-import store factories from app/stores/**.
+// Plan §interfaces claimed auto-import but typecheck fails without explicit import.
+import { useTagsStore } from '~/stores/tags'
 
 const props = defineProps<{ vendor: Vendor | null }>()
 const open = defineModel<boolean>('open', { default: false })
@@ -72,6 +76,18 @@ const radarOption = computed(() => {
     tooltip: { trigger: 'item' },
   }
 })
+
+// Plan 10-03 — Pinia tags store + grouped items shape for USelectMenu.
+// Array-of-arrays (NOT [{ label, items }]) is the Nuxt UI v4 grouped-items API
+// (research §6 + Pitfall #5; verified against
+// node_modules/@nuxt/ui/dist/runtime/components/SelectMenu.vue.d.ts).
+const tagsStore = useTagsStore()
+
+const groupedTagItems = computed(() =>
+  tagsStore.tagGroups.map((g) =>
+    g.children.map((c) => ({ id: c.id, name: c.name, groupColor: g.color }))
+  )
+)
 </script>
 
 <template>
@@ -193,7 +209,26 @@ const radarOption = computed(() => {
           </ClientOnly>
         </section>
 
-        <!-- Tags section reserved for Plan 10-03 — do NOT add USelectMenu here in Plan 10-02 -->
+        <!-- Tags section (Plan 10-03) — full-width USelectMenu bound to the
+             same setVendorTags Pinia action used by the per-row select in
+             discovery.vue. Both surfaces share the store as single source of
+             truth (research §6/§7). Explicit :model-value + @update:model-value
+             over v-model: the ?? [] fallback handles undefined assignments
+             pre-hydration, and the named action surface is grep-able for
+             verification + Phase 12 cascade-delete reuse. -->
+        <section>
+          <h3 class="text-sm font-semibold text-gray-900 mb-2">Tags</h3>
+          <USelectMenu
+            :model-value="vendor ? tagsStore.assignments[vendor.vendorId] ?? [] : []"
+            :items="groupedTagItems"
+            value-key="id"
+            label-key="name"
+            multiple
+            placeholder="Assign tags..."
+            class="w-full"
+            @update:model-value="(ids) => vendor && tagsStore.setVendorTags(vendor.vendorId, ids)"
+          />
+        </section>
       </div>
     </template>
   </USlideover>

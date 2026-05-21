@@ -61,7 +61,19 @@ export const useTagsStore = defineStore('tags', () => {
   const tagGroups = ref<TagGroup[]>(SEED_TAG_GROUPS)
   const assignments = ref<TagAssignments>({})
 
-  return { tagGroups, assignments }
+  function setVendorTags(vendorId: string, tagIds: string[]) {
+    if (tagIds.length === 0) {
+      delete assignments.value[vendorId]
+    } else {
+      assignments.value[vendorId] = tagIds
+    }
+  }
+
+  function clearVendorTags(vendorId: string) {
+    delete assignments.value[vendorId]
+  }
+
+  return { tagGroups, assignments, setVendorTags, clearVendorTags }
 }, {
   persist: true,
 })
