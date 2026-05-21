@@ -1,4 +1,14 @@
 <script setup lang="ts">
+import { h, resolveComponent } from 'vue'
+import { useDebounce } from '@vueuse/core'
+import type { TableColumn } from '@nuxt/ui'
+// Deviation (Rule 3 - Blocking): @pinia/nuxt v0.11.3 does NOT auto-import
+// store factories from app/stores. Plan §1 interface block said
+// "auto-imported via @pinia/nuxt — DO NOT redeclare", but the typecheck
+// surfaces "Cannot find name 'useTagsStore'". Adding an explicit relative
+// import; this is the canonical pattern from @pinia/nuxt v0.11 docs.
+import { useTagsStore } from '~/stores/tags'
+
 definePageMeta({
   nav: true,
   navLabel: 'Discovery',
@@ -6,10 +16,96 @@ definePageMeta({
   navOrder: 20,
 })
 
-// Phase 9: minimal useFetch demo. Phase 10 wires the full UTable + USlideover.
+// Phase 9 wiring — preserved verbatim. No manual generic; Nitro flow-types Vendor[].
 const { data: vendors } = await useFetch('/api/vendors', {
   default: () => [],
 })
+
+const tagsStore = useTagsStore()
+
+// Tag chip shape — used by both childTagIndex lookup and the row.tags array.
+type TagChip = { id: string; name: string; parentColor: string; parentId: string }
+
+// Build childId -> { name, parentColor, parentId } once, reactive on tagGroups.
+const childTagIndex = computed(() => {
+  const idx: Record<string, { name: string; parentColor: string; parentId: string }> = {}
+  for (const group of tagsStore.tagGroups) {
+    for (const child of group.children) {
+      idx[child.id] = { name: child.name, parentColor: group.color, parentId: group.id }
+    }
+  }
+  return idx
+})
+
+// Vendor rows extended with denormalized tag chips (resolved from assignments).
+// Deviation (Rule 3 - Blocking): explicit `(id: string)` etc. annotations — TS strict
+// mode rejects the implicit `any` on map/sort callbacks from the plan interface snippet.
+const tableRows = computed(() =>
+  vendors.value.map((v) => {
+    const ids = tagsStore.assignments[v.vendorId] ?? []
+    const tags: TagChip[] = ids
+      .map((id: string) => ({ id, ...childTagIndex.value[id] }))
+      .filter((t): t is TagChip => Boolean(t.name))
+      .sort((a: TagChip, b: TagChip) => a.parentId.localeCompare(b.parentId))
+    return { ...v, tags }
+  })
+)
+
+// Search filter — VueUse debounce (200ms) over a UInput v-model, filters on name + category.
+const search = ref('')
+const debouncedSearch = useDebounce(search, 200)
+
+const filteredRows = computed(() => {
+  const q = debouncedSearch.value.trim().toLowerCase()
+  if (!q) return tableRows.value
+  return tableRows.value.filter((r) =>
+    r.name.toLowerCase().includes(q) || r.category.toLowerCase().includes(q)
+  )
+})
+
+// Sort state — default name-ascending. v-model:sorting binding on UTable.
+const sorting = ref([{ id: 'name', desc: false }])
+
+// Sortable column header helper — render fn calling column.toggleSorting().
+// NB: TableColumn<any> over TableColumn<VendorRow> is deliberate — row shape
+// extends Vendor with a `tags` array; keeping `any` avoids a separate row type
+// (research Open Question #4).
+const UButton = resolveComponent('UButton')
+
+function sortHeader(label: string) {
+  return ({ column }: { column: any }) =>
+    h(UButton, {
+      label,
+      color: 'neutral',
+      variant: 'ghost',
+      class: '-mx-2.5',
+      icon: column.getIsSorted()
+        ? (column.getIsSorted() === 'asc' ? 'i-lucide-arrow-up-narrow-wide' : 'i-lucide-arrow-down-narrow-wide')
+        : 'i-lucide-arrow-up-down',
+      onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+    })
+}
+
+// Deviation (Rule 3 - Blocking): plan interface snippet had `meta: { class: '<str>' }`
+// but Nuxt UI v4 ColumnMeta requires `class: { th?, td? }` per
+// node_modules/@nuxt/ui/dist/runtime/components/Table.vue.d.ts lines 10-13.
+// Widths apply to both th and td so each column applies the same class to both.
+const columns: TableColumn<any>[] = [
+  { accessorKey: 'name',         header: sortHeader('Vendor Name'),  meta: { class: { th: 'min-w-[12rem]', td: 'min-w-[12rem]' } } },
+  { accessorKey: 'category',     header: sortHeader('Category'),     meta: { class: { th: 'w-[9rem]', td: 'w-[9rem]' } } },
+  { accessorKey: 'frequency',    header: sortHeader('Frequency'),    meta: { class: { th: 'w-[7rem]', td: 'w-[7rem]' } } },
+  { accessorKey: 'lastSeen',     header: sortHeader('Last Seen'),    meta: { class: { th: 'w-[8rem]', td: 'w-[8rem]' } } },
+  { accessorKey: 'userCount',    header: sortHeader('Users'),        meta: { class: { th: 'w-[6rem] text-right', td: 'w-[6rem] text-right' } } },
+  { accessorKey: 'studentCount', header: sortHeader('Students'),     meta: { class: { th: 'w-[6rem] text-right', td: 'w-[6rem] text-right' } } },
+  { accessorKey: 'tags',         header: 'Tags',                     enableSorting: false, meta: { class: { th: 'w-[14rem]', td: 'w-[14rem]' } } },
+]
+
+// Row-select stub — Plan 10-01 captures the vendor ID only.
+// Plan 10-02 will use this ref to drive the VendorDrawer mount.
+const selectedVendorId = ref<string | null>(null)
+function onRowSelect(_event: Event, row: any) {
+  selectedVendorId.value = row.original.vendorId
+}
 </script>
 
 <template>
