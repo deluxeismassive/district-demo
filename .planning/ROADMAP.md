@@ -91,7 +91,7 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 10-01-PLAN.md — Discovery UTable + search filter + tag chip cell (sort headers via render-fn helper; useDebounce filter; @vueuse/core hoisted explicit; @select stub for drawer handoff)
+- [x] 10-01-PLAN.md — Discovery UTable + search filter + tag chip cell (sort headers via render-fn helper; useDebounce filter; @vueuse/core hoisted explicit; @select stub for drawer handoff)
 - [ ] 10-02-PLAN.md — VendorDrawer USlideover extraction (DPA + 1EdTech via useFetch; 10-axis ECharts radar in ClientOnly with USkeleton fallback; v0.5.0 src/ cleanup)
 - [ ] 10-03-PLAN.md — Tag assignment via setVendorTags action (per-row compact USelectMenu + drawer USelectMenu; Pinia write-back; persists across navigation)
 **UI hint**: yes
@@ -156,7 +156,7 @@ Plans:
 | 7. Nuxt Scaffold | v1.0.0 | 2/2 | Complete | 2026-05-21 |
 | 8. Layout & Routing | v1.0.0 | 1/1 | Complete | 2026-05-21 |
 | 9. Server Data Layer | v1.0.0 | 2/2 | Complete | 2026-05-21 |
-| 10. Discovery Page | v1.0.0 | 0/3 | Not started | - |
+| 10. Discovery Page | v1.0.0 | 1/3 | In Progress|  |
 | 11. DPA + Dashboard | v1.0.0 | 0/2 | Not started | - |
 | 12. Risk Position + Tags | v1.0.0 | 0/2 | Not started | - |
 | 13. Deployment | v1.0.0 | 0/1 | Not started | - |
