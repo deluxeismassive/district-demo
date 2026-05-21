@@ -101,11 +101,25 @@ const columns: TableColumn<any>[] = [
 ]
 
 // Row-select stub — Plan 10-01 captures the vendor ID only.
-// Plan 10-02 will use this ref to drive the VendorDrawer mount.
+// Plan 10-02 wires this ref into the VendorDrawer mount below.
 const selectedVendorId = ref<string | null>(null)
 function onRowSelect(_event: Event, row: any) {
   selectedVendorId.value = row.original.vendorId
 }
+
+// Plan 10-02 — drawer state lifting (research §8).
+// `selectedVendor` looks up the full vendor object reactively from `vendors.value`.
+// `drawerOpen` is a computed get/set so `v-model:open` on the drawer derives from
+// `selectedVendorId` and clears it when the drawer closes (X / Escape / backdrop).
+const selectedVendor = computed(() =>
+  selectedVendorId.value
+    ? vendors.value.find((v) => v.vendorId === selectedVendorId.value) ?? null
+    : null
+)
+const drawerOpen = computed({
+  get: () => selectedVendorId.value !== null,
+  set: (v) => { if (!v) selectedVendorId.value = null },
+})
 </script>
 
 <template>
@@ -151,5 +165,11 @@ function onRowSelect(_event: Event, row: any) {
         </div>
       </template>
     </UTable>
+
+    <!--
+      Plan 10-02 — drawer mounted ONCE at the page level (not inside a row cell).
+      Auto-imported from app/components/VendorDrawer.vue — no manual import needed.
+    -->
+    <VendorDrawer v-model:open="drawerOpen" :vendor="selectedVendor" />
   </div>
 </template>
