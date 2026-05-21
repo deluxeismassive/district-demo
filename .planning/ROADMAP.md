@@ -91,9 +91,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 10-01: Discovery UTable — column sort, search filter, data via useFetch, tag chip display
-- [ ] 10-02: VendorDrawer USlideover — full vendor detail panel, ECharts radar chart in ClientOnly
-- [ ] 10-03: Tag assignment — USelectMenu in drawer/row, Pinia write-back, cascade tag display
+- [ ] 10-01-PLAN.md — Discovery UTable + search filter + tag chip cell (sort headers via render-fn helper; useDebounce filter; @vueuse/core hoisted explicit; @select stub for drawer handoff)
+- [ ] 10-02-PLAN.md — VendorDrawer USlideover extraction (DPA + 1EdTech via useFetch; 10-axis ECharts radar in ClientOnly with USkeleton fallback; v0.5.0 src/ cleanup)
+- [ ] 10-03-PLAN.md — Tag assignment via setVendorTags action (per-row compact USelectMenu + drawer USelectMenu; Pinia write-back; persists across navigation)
 **UI hint**: yes
 
 ### Phase 11: DPA + Dashboard
