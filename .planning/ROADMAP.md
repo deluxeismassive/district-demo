@@ -46,7 +46,7 @@
 **Plans**: 2 plans
 
 Plans:
-- [ ] 07-01-PLAN.md — Nuxt 4 scaffold: package.json rewrite, nuxt.config.ts + tsconfig.json + app/app.vue (UApp) + app/app.config.ts + app/assets/css/main.css; delete v0.5.0 entry points; Nuxt UI v4
+- [x] 07-01-PLAN.md — Nuxt 4 scaffold: package.json rewrite, nuxt.config.ts + tsconfig.json + app/app.vue (UApp) + app/app.config.ts + app/assets/css/main.css; delete v0.5.0 entry points; Nuxt UI v4
 - [ ] 07-02-PLAN.md — Pinia + ECharts SSR-safe wiring: migrate tags store to app/stores/tags.ts with persist:true, verify nuxt-echarts SSR via smoke test, phase-gate full verify
 
 ### Phase 8: Layout & Routing

@@ -2,23 +2,20 @@
 gsd_state_version: 1.0
 milestone: v1.0.0
 milestone_name: Nuxt Migration
-current_phase: not_started
-current_plan: not_started
-status: planning
-stopped_at: Roadmap created — ready to begin Phase 7
-last_updated: "2026-05-21T00:00:00.000Z"
+status: executing
+last_updated: "2026-05-21T16:59:05.993Z"
+last_activity: 2026-05-21
 progress:
   total_phases: 7
   completed_phases: 0
-  total_plans: 13
-  completed_plans: 0
-  percent: 0
+  total_plans: 2
+  completed_plans: 1
 ---
 
 # Project State: District Demo Portal
 
 **Last updated:** 2026-05-21
-**Session:** Milestone v1.0.0 (Nuxt Migration) — roadmap created, Phase 7 ready to plan
+**Session:** Milestone v1.0.0 (Nuxt Migration) — Phase 7 Plan 01 complete (Nuxt 4 scaffold), Plan 02 next
 
 ---
 
@@ -27,16 +24,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-21)
 
 **Core value:** Sales reps can walk a district admin prospect through a realistic, data-rich portal that makes the value of the product immediately tangible — and any section can be changed within hours for a specific demo.
-**Current focus:** v1.0.0 — Nuxt 4 migration (scaffold → layout → data layer → pages → deployment)
+**Current focus:** Phase 07 — nuxt-scaffold
 
 ---
 
 ## Current Position
 
-Phase: Not started (roadmap complete, beginning Phase 7)
-Plan: —
-Status: Planning
-Last activity: 2026-05-21 — v1.0.0 roadmap created (7 phases, 13 plans)
+Phase: 07 (nuxt-scaffold) — EXECUTING
+Plan: 2 of 2
+Status: Plan 01 complete (NUXT-01, NUXT-02); Plan 02 ready (Pinia stores + ECharts smoke test)
+Last activity: 2026-05-21 -- Completed 07-01-PLAN.md (Nuxt 4 scaffold)
 
 ---
 
@@ -64,6 +61,8 @@ Last activity: 2026-05-21 — v1.0.0 roadmap created (7 phases, 13 plans)
 | UBadge color strategy | `:style` binding with hex values from `riskLabels.ts` constants — no hardcoded Tailwind classes | Phase 11-12 |
 | AWS Amplify glidepath | 3-line switch in nuxt.config.ts: `ssr: true`, remove static target, add nitro aws-amplify preset | Phase 13 |
 | Pinia SSR persistence | `pinia-plugin-persistedstate` with `storesDirs: ['app/stores/**']` in nuxt.config.ts | Phase 7 |
+| In-place Nuxt 4 migration | Delete v0.5.0 entry points (src/main.js, src/App.vue, src/style.css, vite.config.js, index.html, dist/) but preserve src/data/, src/components/, src/views/, src/router/, src/stores/, public/ for later phases | Phase 7-01 |
+| Brand color migration | 11-shade palette (50-950) migrated verbatim from v0.5.0 SchoolDayPreset into app/assets/css/main.css @theme static; Nuxt UI maps via ui.colors.primary: 'brand' in app/app.config.ts | Phase 7-01 |
 
 ### Active Blockers
 
@@ -73,16 +72,20 @@ None.
 
 ## Session Continuity
 
-**To resume:** Run `/gsd:plan-phase 7` to begin Phase 7 (Nuxt Scaffold).
+**To resume:** Run `/gsd:execute-phase 7` to execute Plan 07-02 (Pinia stores + ECharts smoke test).
+
+**Stopped at:** Completed 07-01-PLAN.md (Nuxt 4 scaffold)
 
 **Context for next session:**
 
-- v0.5.0 complete and archived — all 6 phases, 15 plans shipped
-- v1.0.0 roadmap: 7 phases (7–13), 13 plans, all 14 requirements mapped
-- Phase 7 must resolve SSR blockers BEFORE any page work: localStorage crash and ECharts window reference
-- PrimeVue must be fully removed in Phase 7 before page migration begins
-- `<UApp>` in `app/app.vue` is required for USlideover and UModal to render
-- `storesDirs: ['app/stores/**']` must be set in nuxt.config.ts for Pinia auto-import
+- Plan 07-01 COMPLETE: Nuxt 4 scaffold ready — `npm install`, `npm run typecheck`, `npm run build` all exit 0
+- NUXT-01 (Nuxt 4 + TS + no PrimeVue) and NUXT-02 (Nuxt UI v4 + `<UApp>` wrapping root) both verified
+- All four Nuxt modules registered: @nuxt/ui, @pinia/nuxt, pinia-plugin-persistedstate/nuxt, nuxt-echarts
+- Brand palette and accent vars live in app/assets/css/main.css @theme static; app.config.ts maps ui.colors.primary: 'brand'
+- v0.5.0 entry points deleted (src/main.js, src/App.vue, src/style.css, vite.config.js, index.html, dist/)
+- Preserved for later phases: src/data/, src/components/, src/views/, src/router/, src/stores/, public/
+- Plan 07-02 NEXT: migrate src/stores/tags.js to app/stores/tags.ts (SSR-safe + persist: true), wire ECharts smoke test
+- Phase 7 must resolve SSR blockers BEFORE any page work: localStorage crash and ECharts window reference (covered in Plan 07-02)
 - Phase 10 (Discovery) proves all major patterns — UTable, USlideover, ECharts, USelectMenu
 - Phase 11 (DPA + Dashboard) and Phase 12 (Risk + Tags) both depend on Phase 9 data layer only
 - Deployment (Phase 13) is intentionally last — static generate confirmed working after all pages
