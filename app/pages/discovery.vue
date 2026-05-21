@@ -109,11 +109,47 @@ function onRowSelect(_event: Event, row: any) {
 </script>
 
 <template>
-  <div class="p-8">
-    <h1 class="text-2xl font-semibold text-gray-900">Discovery</h1>
-    <p class="text-gray-600 mt-2">
-      Loaded {{ vendors.length }} vendors from <code>/api/vendors</code>.
-      (Phase 10 wires the UTable + USlideover.)
-    </p>
+  <div class="p-6">
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-xl font-semibold text-gray-900">Discovery</h1>
+      <span class="text-sm text-gray-500">{{ filteredRows.length }} vendors</span>
+    </div>
+
+    <div class="mb-4 max-w-sm">
+      <UInput
+        v-model="search"
+        placeholder="Search vendors..."
+        icon="i-lucide-search"
+        class="w-full"
+      />
+    </div>
+
+    <UTable
+      v-model:sorting="sorting"
+      :data="filteredRows"
+      :columns="columns"
+      class="bg-white"
+      @select="onRowSelect"
+    >
+      <template #tags-cell="{ row }">
+        <div class="flex flex-wrap gap-1">
+          <UBadge
+            v-for="tag in row.original.tags"
+            :key="tag.id"
+            :label="tag.name"
+            color="neutral"
+            variant="solid"
+            size="sm"
+            :style="{ backgroundColor: tag.parentColor, color: '#ffffff' }"
+          />
+        </div>
+      </template>
+      <template #empty>
+        <div class="py-8 text-center">
+          <div class="text-sm font-semibold text-gray-900">No vendors match your search</div>
+          <div class="text-sm text-gray-500 mt-1">Try a different search term or clear the filter.</div>
+        </div>
+      </template>
+    </UTable>
   </div>
 </template>
