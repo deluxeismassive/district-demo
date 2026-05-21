@@ -61,7 +61,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 08-01-PLAN.md — File-based routing + default.vue layout: replace app/app.vue with UApp/NuxtLayout/NuxtPage; create app/types/page-meta.d.ts (PageMeta augmentation); 5 page stubs under app/pages/ with definePageMeta nav metadata; app/layouts/default.vue dark sidebar driven by useRouter().options.routes; dev-server curl probes for all 5 routes
+- [x] 08-01-PLAN.md — File-based routing + default.vue layout: replace app/app.vue with UApp/NuxtLayout/NuxtPage; create app/types/page-meta.d.ts (PageMeta augmentation); 5 page stubs under app/pages/ with definePageMeta nav metadata; app/layouts/default.vue dark sidebar driven by useRouter().options.routes; dev-server curl probes for all 5 routes
 **UI hint**: yes
 
 ### Phase 9: Server Data Layer

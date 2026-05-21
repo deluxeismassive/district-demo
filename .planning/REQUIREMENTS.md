@@ -13,11 +13,11 @@
 - [x] **NUXT-01**: App runs as a Nuxt 4 project with TypeScript (`compatibilityVersion: 4`, `compatibilityDate: '2025-07-01'`); all PrimeVue dependencies removed from `package.json`
 - [x] **NUXT-02**: `@nuxt/ui` v4 is the sole component library; `<UApp>` wraps the app root in `app/app.vue` so overlays (USlideover, UModal) render correctly
 - [ ] **NUXT-03**: Pinia tags store works without SSR crashes; `@pinia/nuxt` module configured with `storesDirs: ['app/stores/**']`; localStorage persistence via `pinia-plugin-persistedstate`
-- [ ] **NUXT-04**: All 5 demo sections resolve via file-based routing in `app/pages/`; no manual Vue Router config remains; hash history (`createWebHashHistory`) removed
+- [x] **NUXT-04**: All 5 demo sections resolve via file-based routing in `app/pages/`; no manual Vue Router config remains; hash history (`createWebHashHistory`) removed
 
 ### Layout
 
-- [ ] **LAYOUT-01**: Persistent app shell implemented as `app/layouts/default.vue` with dark sidebar nav; `NuxtLink` replaces `RouterLink`; active route highlighting works on all pages
+- [x] **LAYOUT-01**: Persistent app shell implemented as `app/layouts/default.vue` with dark sidebar nav; `NuxtLink` replaces `RouterLink`; active route highlighting works on all pages
 
 ### Data Layer
 
