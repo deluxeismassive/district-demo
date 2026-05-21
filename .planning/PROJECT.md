@@ -31,9 +31,9 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 - ✓ At-risk vendor surface: "Top 8 Vendors Needing Attention" card on Dashboard + VendorDrawer DPA section — Validated in Phase 3: DPA View
 - ✓ Risk Position page: donut chart (ECharts) + sortable 5-column vendor table with computed risk tiers (High/Medium/Low) derived from DPA status, usage volume, and 1EdTech certification — Validated in Phase 5: Risk Position View
 - ✓ 1EdTech certification data: visible in VendorDrawer (status badge, standard, certified date) — Validated in Phase 4: 1EdTech View
-- [ ] Tags management: users can create, edit, and delete tags used to categorize vendors/domains
-- [ ] All data backed by editable mock data files (JSON/JS config) for same-day sales iteration
-- [ ] Section structure flexible — easy to add or remove pages without structural rework
+- ✓ Tags management: users can create, edit, and delete tags used to categorize vendors/domains — Validated in Phase 6: Tags Management
+- ✓ All data backed by editable mock data files (JSON/JS config) for same-day sales iteration — Validated in Phase 6: Tags Management
+- ✓ Section structure flexible — easy to add or remove pages without structural rework — Validated in Phase 1: Shell & Routing
 
 ### Out of Scope
 
@@ -45,6 +45,7 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 
 ## Context
 
+- Phase 6 complete — Tags Management: SettingsView.vue rewritten as full Tags CRUD page; SEED_TAG_GROUPS exported from tags.js; inline group/tag rename; 8-swatch preset color palette; PrimeVue Dialog confirms for delete + reset; cascade delete cleans assignments; reset-to-defaults restores seed data; v1 milestone complete
 - Phase 5 complete — Risk Position View: ReportsView rewritten as live Risk Position page; RISK_TIER_COLORS constant added to riskLabels.js; PieChart + LegendComponent registered in main.js; donut chart (ECharts) shows High:2 / Medium:7 / Low:18 tier distribution; sortable 5-column vendor table with calcTier formula (DPA status + usage + 1EdTech modifier); VendorDrawer drill-down on row click; DPA tab skeleton removed
 - Phase 4 complete — 1EdTech View: edtech.js enriched with certificationStandard + certifiedDate (27 records, 5 real standards), EDTECH_STATUS_COLORS added to riskLabels.js, VendorDrawer 1EdTech section (between DPA and Privacy Score), dead '1EdTech' tab removed from ReportsView
 - Phase 3 complete — DPA View: Discovery|DPA tab bar, DpaGrid with 6-column sortable table + badge colors, riskLabels.js constants, VendorDrawer DPA section, Dashboard Top 8 Vendors Needing Attention card with KPI tiles
@@ -92,4 +93,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-13 after Phase 5: Risk Position View*
+*Last updated: 2026-05-21 after Phase 6: Tags Management — v1 milestone complete*
