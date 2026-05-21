@@ -61,7 +61,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 08-01: File-based routing + default.vue layout — pages/ stubs, sidebar nav with NuxtLink and definePageMeta
+- [ ] 08-01-PLAN.md — File-based routing + default.vue layout: replace app/app.vue with UApp/NuxtLayout/NuxtPage; create app/types/page-meta.d.ts (PageMeta augmentation); 5 page stubs under app/pages/ with definePageMeta nav metadata; app/layouts/default.vue dark sidebar driven by useRouter().options.routes; dev-server curl probes for all 5 routes
 **UI hint**: yes
 
 ### Phase 9: Server Data Layer
@@ -154,7 +154,7 @@ Plans:
 | 5. Risk Position View | v0.5.0 | 2/2 | Complete | 2026-05-13 |
 | 6. Tags Management | v0.5.0 | 2/2 | Complete | 2026-05-21 |
 | 7. Nuxt Scaffold | v1.0.0 | 2/2 | Complete | 2026-05-21 |
-| 8. Layout & Routing | v1.0.0 | 0/1 | Not started | - |
+| 8. Layout & Routing | v1.0.0 | 0/1 | Planned | - |
 | 9. Server Data Layer | v1.0.0 | 0/2 | Not started | - |
 | 10. Discovery Page | v1.0.0 | 0/3 | Not started | - |
 | 11. DPA + Dashboard | v1.0.0 | 0/2 | Not started | - |
@@ -163,4 +163,4 @@ Plans:
 
 ---
 
-*Last updated: 2026-05-21 — Phase 7 (Nuxt Scaffold) complete; Phase 8 next*
+*Last updated: 2026-05-21 — Phase 8 (Layout & Routing) plan created; ready for `/gsd:execute-phase 8`*
