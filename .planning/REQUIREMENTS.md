@@ -12,7 +12,7 @@
 
 - [x] **NUXT-01**: App runs as a Nuxt 4 project with TypeScript (`compatibilityVersion: 4`, `compatibilityDate: '2025-07-01'`); all PrimeVue dependencies removed from `package.json`
 - [x] **NUXT-02**: `@nuxt/ui` v4 is the sole component library; `<UApp>` wraps the app root in `app/app.vue` so overlays (USlideover, UModal) render correctly
-- [ ] **NUXT-03**: Pinia tags store works without SSR crashes; `@pinia/nuxt` module configured with `storesDirs: ['app/stores/**']`; localStorage persistence via `pinia-plugin-persistedstate`
+- [x] **NUXT-03**: Pinia tags store works without SSR crashes; `@pinia/nuxt` module configured with `storesDirs: ['app/stores/**']`; localStorage persistence via `pinia-plugin-persistedstate`
 - [x] **NUXT-04**: All 5 demo sections resolve via file-based routing in `app/pages/`; no manual Vue Router config remains; hash history (`createWebHashHistory`) removed
 
 ### Layout
@@ -77,11 +77,11 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| NUXT-01 | Phase 7 | Not started |
-| NUXT-02 | Phase 7 | Not started |
-| NUXT-03 | Phase 7 | Not started |
-| NUXT-04 | Phase 8 | Not started |
-| LAYOUT-01 | Phase 8 | Not started |
+| NUXT-01 | Phase 7 | Complete (2026-05-21) |
+| NUXT-02 | Phase 7 | Complete (2026-05-21) |
+| NUXT-03 | Phase 7 | Complete (2026-05-21) |
+| NUXT-04 | Phase 8 | Complete (2026-05-21) |
+| LAYOUT-01 | Phase 8 | Complete (2026-05-21) |
 | DATA-01 | Phase 9 | Not started |
 | DATA-02 | Phase 9 | Not started |
 | PAGE-01 | Phase 10 | Not started |

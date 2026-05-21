@@ -42,13 +42,16 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 - ✓ Risk Position page: sortable 5-column vendor table with computed risk tiers — v0.5.0 Phase 5
 - ✓ Tags management page: full CRUD (inline rename, 8-color palette, cascade delete, reset-to-defaults) — v0.5.0 Phase 6
 
+### Validated (v1.0.0 — in progress)
+
+- ✓ **NUXT-01**: App runs as a Nuxt 4 SSR project with TypeScript and `compatibilityVersion: 4` — Validated in Phase 7
+- ✓ **NUXT-02**: Nuxt UI v4 is the sole component library — no PrimeVue dependency remains — Validated in Phase 7
+- ✓ **NUXT-03**: Pinia tags store works with SSR-safe hydration via `@pinia/nuxt` — Validated in Phase 7
+- ✓ **NUXT-04**: All 5 demo sections resolve via file-based routing in `app/pages/` — Validated in Phase 8
+- ✓ **LAYOUT-01**: Persistent app shell implemented as `app/layouts/default.vue` with dark sidebar nav, `NuxtLink` active highlighting — Validated in Phase 8
+
 ### Active (v1.0.0 — Nuxt Migration)
 
-- [ ] **NUXT-01**: App runs as a Nuxt 4 SSR project with TypeScript and `compatibilityVersion: 4`
-- [ ] **NUXT-02**: Nuxt UI v3 is the sole component library — no PrimeVue dependency remains
-- [ ] **NUXT-03**: Pinia tags store works with SSR-safe hydration via `@pinia/nuxt`
-- [ ] **NUXT-04**: All 5 demo sections resolve via file-based routing in `app/pages/`
-- [ ] **NUXT-05**: Persistent app shell implemented as `app/layouts/default.vue` with dark sidebar nav
 - [ ] **DATA-01**: Mock data served through Nuxt server API routes (`server/api/`)
 - [ ] **DATA-02**: Pages use `useFetch` / `useAsyncData` to load data from server routes
 - [ ] **PAGE-01**: Discovery page fully functional — sortable/filterable vendor table, tag assignment, VendorDrawer drill-down
@@ -81,6 +84,7 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 ## Context
 
 - **v1.0.0 in progress** — Nuxt 4 migration milestone
+- **Current state**: Phases 7-8 complete (foundation + layout/routing). Pages exist as SSR-rendered stubs awaiting data wiring.
 - **v0.5.0 shipped 2026-05-21** — 6 phases, 15 plans, ~2,331 source LOC (Vue 3 + Vite SPA)
 - **Target stack**: Nuxt 4 + Nuxt UI v3 + Tailwind v4 + Pinia + ECharts (client-only) + TypeScript
 - **Deployment target**: AWS Amplify (dev / staging / prod), Nitro node-server preset
@@ -131,4 +135,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-21 — v1.0.0 Nuxt Migration milestone started*
+*Last updated: 2026-05-21 — Phase 8 complete; foundation + routing shell ready for data layer (Phase 9)*
