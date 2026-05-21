@@ -82,8 +82,8 @@
 | NUXT-03 | Phase 7 | Complete (2026-05-21) |
 | NUXT-04 | Phase 8 | Complete (2026-05-21) |
 | LAYOUT-01 | Phase 8 | Complete (2026-05-21) |
-| DATA-01 | Phase 9 | Not started |
-| DATA-02 | Phase 9 | Not started |
+| DATA-01 | Phase 9 | Complete (2026-05-21) |
+| DATA-02 | Phase 9 | Complete (2026-05-21) |
 | PAGE-01 | Phase 10 | Not started |
 | PAGE-02 | Phase 11 | Not started |
 | PAGE-05 | Phase 11 | Not started |

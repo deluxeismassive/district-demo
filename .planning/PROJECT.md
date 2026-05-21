@@ -49,10 +49,10 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 - ✓ **NUXT-03**: Pinia tags store works with SSR-safe hydration via `@pinia/nuxt` — Validated in Phase 7
 - ✓ **NUXT-04**: All 5 demo sections resolve via file-based routing in `app/pages/` — Validated in Phase 8
 - ✓ **LAYOUT-01**: Persistent app shell implemented as `app/layouts/default.vue` with dark sidebar nav, `NuxtLink` active highlighting — Validated in Phase 8
+- ✓ **DATA-01**: Mock data served through Nuxt server API routes (`server/api/vendors.get.ts`, `dpa.get.ts`, `edtech.get.ts`); typed source data in `server/data/*.ts` with `shared/types/data.ts` interfaces — Validated in Phase 9
+- ✓ **DATA-02**: `app/pages/discovery.vue` uses `useFetch('/api/vendors')` with full Nitro type inference; negative-grep boundary enforces no direct `server/data/` imports from `app/` — Validated in Phase 9
 
 ### Active (v1.0.0 — Nuxt Migration)
-
-- [ ] **DATA-01**: Mock data served through Nuxt server API routes (`server/api/`)
 - [ ] **DATA-02**: Pages use `useFetch` / `useAsyncData` to load data from server routes
 - [ ] **PAGE-01**: Discovery page fully functional — sortable/filterable vendor table, tag assignment, VendorDrawer drill-down
 - [ ] **PAGE-02**: DPA page fully functional — sortable/filterable table with color-coded status badges
@@ -84,7 +84,7 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 ## Context
 
 - **v1.0.0 in progress** — Nuxt 4 migration milestone
-- **Current state**: Phases 7-8 complete (foundation + layout/routing). Pages exist as SSR-rendered stubs awaiting data wiring.
+- **Current state**: Phases 7-9 complete (foundation + layout/routing + server data layer). Discovery page proves the end-to-end useFetch pipeline; Phases 10-12 build the actual page UIs.
 - **v0.5.0 shipped 2026-05-21** — 6 phases, 15 plans, ~2,331 source LOC (Vue 3 + Vite SPA)
 - **Target stack**: Nuxt 4 + Nuxt UI v3 + Tailwind v4 + Pinia + ECharts (client-only) + TypeScript
 - **Deployment target**: AWS Amplify (dev / staging / prod), Nitro node-server preset
@@ -135,4 +135,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-21 — Phase 8 complete; foundation + routing shell ready for data layer (Phase 9)*
+*Last updated: 2026-05-21 — Phase 9 complete; data layer ready for page UIs (Phase 10+)*
