@@ -1,181 +1,639 @@
-# Features Research
+# Features Research: Nuxt 4 Migration Patterns
 
-**Domain:** Edtech school district data privacy / compliance portal
-**Audience:** District IT administrators (shown by sales rep during demo)
-**Researched:** 2026-05-13
-**Confidence:** MEDIUM — based on training knowledge of edtech compliance platforms (Lightspeed Systems, GoGuardian, Privacy Vaults Online, Student DPA consortium, CoSN, ClassLink, Clever) through Aug 2025. No live verification available this session.
-
----
-
-## Table Stakes
-
-Features district IT admins expect to see. Their absence makes the portal feel like a toy or an unfinished alpha. These features establish credibility with the audience.
-
-| Feature | Why Expected | Complexity | Notes |
-|---------|--------------|------------|-------|
-| Vendor list with searchable/filterable table | Every compliance tool leads with this. Without it, admins can't orient themselves. | Low | Name, category, status columns at minimum |
-| Per-vendor detail view or expandable row | Admins drill into a vendor to see the full picture. Flat lists feel insufficient. | Low-Med | Modal, drawer, or expand-in-row all work |
-| DPA status badge/indicator | Pass/Fail/Pending visual is the first thing IT admins look for. Text-only status feels antiquated. | Low | Color-coded pill or icon; not just a text column |
-| Signed date + expiry date columns | DPA contract currency is a compliance liability. Missing dates signals incomplete data. | Low | ISO date format preferred; flag overdue visually |
-| Vendor count / coverage summary | "X of Y vendors covered" is the KPI every district tracks. Show it prominently. | Low | Headline stat, not buried in a table |
-| Column sorting on data tables | Admins sort by risk, by date, by vendor name. Static tables feel broken without it. | Low | Client-side sort is fine for a demo |
-| Basic filtering (status, category) | Filtering to "unsigned DPAs" or "high-risk" is a core workflow. | Low | Dropdown or button-group filter |
-| Usage metrics per vendor | Frequency, last-seen date, and user/student count — standard in network monitoring tools | Low | Raw numbers are fine; sparklines are a bonus |
-| Clear section navigation | Admins expect distinct views for Discovery, DPA, Risk, Certification — mixing them is confusing | Low | Sidebar or top nav with active state |
-| Empty state handling | Tables that load with nothing shown look broken during a live demo | Low | Show placeholder copy or synthetic "no results" state when filters reduce to zero |
+**Domain:** Vue 3 + Vite + PrimeVue SPA → Nuxt 4 SSR + Nuxt UI v3 + TypeScript
+**Milestone:** v1.0.0 Nuxt Migration
+**Researched:** 2026-05-21
+**Overall confidence:** HIGH — verified against Nuxt 4 official docs, Nuxt UI v3 docs, Pinia docs
 
 ---
 
-## Differentiators
+## Directory Structure Migration
 
-Features that are not universally present in competitive tools but would visibly impress a district IT admin in a demo setting.
+### src/ → app/
 
-| Feature | Value Proposition | Complexity | Notes |
-|---------|-------------------|------------|-------|
-| Risk Position page (converged view) | Competing tools show discovery and DPA in silos. A single converged risk view is rare and highly valued. | Med | This is the demo's centerpiece — invest here |
-| Risk score or risk tier per vendor | Moving beyond status flags to a synthesized score (e.g. "High / Medium / Low") demonstrates analytical depth | Low-Med | Calculated from discovery volume + DPA gaps + addendum absence |
-| Visual risk distribution (chart) | A donut/bar chart of vendors by risk tier communicates the district's posture at a glance — executives love it | Med | One chart is sufficient; avoid dashboard clutter |
-| Addendum presence indicator | "DPA signed but addendum missing" is a known compliance gap. Calling it out explicitly shows domain expertise | Low | Boolean flag surfaced visually, not hidden in details |
-| Version currency indicator | "DPA is for v1.2 but vendor is on v2.0" is a subtle but real risk. Few tools surface this clearly. | Low | "Current" / "Outdated" label next to DPA version |
-| 1EdTech certification status | This is an emerging compliance layer most tools don't yet show. Its presence signals forward-looking coverage. | Low | Simple certification badge / status column |
-| Tagging / classification by admin | Letting admins label vendors (e.g. "Curriculum", "Assessment", "IT Infrastructure") mirrors real workflows in mature districts | Low-Med | Tag creation + assignment is in scope; tag-based filtering is a bonus |
-| Highlight bar / annotation on risk page | A text callout that explains why a specific vendor is risky reinforces the sales narrative ("here's what your data is telling you") | Low | Static per-vendor annotation in mock data |
-| Consistent vendor cross-referencing | The same vendor appearing in Discovery, DPA, and 1EdTech pages with consistent naming shows data coherence | Low | Mock data discipline, not a new feature |
+Nuxt 4's `srcDir` defaults to `app/`. All application code moves into this directory. Server code stays at project root level under `server/`. This is the single biggest structural change.
 
----
+```
+v0.5.0 (src/)                    v1.0.0 (app/ + server/)
+─────────────────────────────    ────────────────────────────────────
+src/
+  views/DashboardView.vue     →  app/pages/index.vue
+  views/DiscoveryView.vue     →  app/pages/discovery.vue
+  views/ReportsView.vue       →  app/pages/risk.vue
+  views/SettingsView.vue      →  app/pages/tags.vue
+  views/DpaView.vue           →  (DPA is a tab in discovery.vue, not a page)
+  components/layout/
+    AppShell.vue              →  app/layouts/default.vue
+    SidebarNav.vue            →  app/components/layout/SidebarNav.vue
+  components/
+    VendorDrawer.vue          →  app/components/VendorDrawer.vue
+    DpaGrid.vue               →  app/components/DpaGrid.vue
+  stores/tags.js              →  app/stores/tags.ts
+  data/vendors.js             →  server/data/vendors.ts
+  data/discovery.js           →  server/data/discovery.ts
+  data/dpa.js                 →  server/data/dpa.ts
+  data/edtech.js              →  server/data/edtech.ts
+  data/riskLabels.js          →  app/utils/riskLabels.ts  (or server/utils/)
+  router/index.js             →  DELETED (replaced by file-based routing)
+  main.js                     →  DELETED (replaced by nuxt.config.ts + app.vue)
+  App.vue                     →  app/app.vue
+  style.css                   →  app/assets/css/main.css
+                                  server/
+                                    api/
+                                      vendors.get.ts
+                                      discovery.get.ts
+                                      dpa.get.ts
+                                      edtech.get.ts
+```
 
-## Anti-Features
+### nuxt.config.ts (project root)
 
-Things to deliberately not build in a demo context. Building these wastes time, adds demo-breaking complexity, or confuses the audience.
+Nuxt 4 requires a `nuxt.config.ts` at the root. The `app/` directory is the default `srcDir`. No custom `srcDir` config is needed.
 
-| Anti-Feature | Why Avoid | What to Do Instead |
-|--------------|-----------|-------------------|
-| Real-time data refresh / live sync | No backend exists; simulating it with timers is fragile and distracts from the compliance story | Static mock data that looks current (recent dates in fixtures) |
-| User account management / roles | Admins seeing login screens or permission dialogs in a demo lose focus on the product value | No auth; portal opens directly |
-| Bulk import / export (CSV, PDF) | Useful in production; in a demo it pulls attention to operational workflows vs. the insight story | Don't show; mention verbally if asked |
-| Audit log / change history | Legitimate compliance feature, but adds UI complexity that dilutes the demo's focus | Out of scope for this iteration |
-| Email notifications / alerts | Backend dependency; a demo stub that doesn't send email is worse than not showing the feature at all | Don't show |
-| Multi-district switcher | One fixture district is the right demo scope; a switcher implies unfinished data for each district | Single district, show district name in header |
-| Full CRUD on vendor records | Demo admins don't need to create vendors; it raises "is this real data?" questions | Read-only vendor data; tag CRUD only |
-| Paginated API calls with loading states | No backend means simulating network latency; it looks broken not realistic | All data loads instantly from local fixtures |
-| Compliance workflow / remediation tracking | Valuable in production (ticket creation, DPA request workflows), but adds scope that obscures the portal's observability value | Out of scope; describe verbally as "next step after seeing the data" |
-| Mobile layout | Sales demos are conducted on desktop; responsive breakpoints add build time with no demo payoff | Desktop-only layouts acceptable |
+```ts
+// nuxt.config.ts
+export default defineNuxtConfig({
+  modules: [
+    '@nuxt/ui',
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
+  ],
+  css: ['~/assets/css/main.css'],
+  ssr: true,
+  compatibilityDate: '2025-01-01',
+})
+```
 
----
-
-## Risk Position Visualization Options
-
-The Risk Position page is deliberately undefined — it needs a design decision. These are the viable options for displaying the converged discovery + DPA risk view, ordered by demo impact.
-
-### Option A: Risk Tier Table with Score Column (Recommended baseline)
-Each vendor gets a calculated risk tier (High / Medium / Low / Unknown) shown as a colored badge. A score or contributing factors column (e.g. "Unsigned DPA + High Usage") explains the rating inline. This is the safest option — familiar table UI, easy to scan, works even when an admin wants to dig in.
-
-**Pros:** Familiar pattern, easy to explain during demo, filterable
-**Cons:** Less visually striking than a chart; doesn't communicate overall posture at a glance
-**Implementation:** Risk tier badge column + filter by tier + sortable score column
-
-### Option B: Summary Chart + Risk Table (Recommended)
-A donut or stacked bar chart showing vendor distribution by risk tier sits above the vendor table. Provides an executive-level "posture view" before the admin drills down. This is the closest analog to what security posture dashboards (Tenable, Qualys) use — an audience that district IT admins often have prior exposure to.
-
-**Pros:** Visually impactful for a demo; immediately communicates scope of problem; shows both overview and detail
-**Cons:** Chart requires a charting library (lightweight — Chart.js or Vue-chartjs); slight added build time
-**Implementation:** Donut chart (vendor count by tier) + risk table below. Chart segments are clickable to filter the table.
-
-### Option C: Risk Matrix / Heat Map
-A 2x2 or 3x3 grid plotting vendors by (Usage Volume) x (DPA Coverage gap). High-usage / low-coverage vendors appear in the "red zone." Common in enterprise security GRC tools.
-
-**Pros:** Sophisticated appearance; communicates two dimensions simultaneously
-**Cons:** Harder to build correctly; hard to read with many vendors; unfamiliar to some IT admins who expect tables
-**Implementation:** SVG or CSS grid with vendor dots positioned by computed coordinates
-
-### Option D: Vendor Cards with Risk Color Coding
-Grid of cards, each representing a vendor, color-coded by risk tier. Good for visual demos, poor for data density.
-
-**Pros:** Visually engaging; easy to point at during a demo
-**Cons:** Poor scalability (20+ vendors becomes unnavigable); hard to sort/filter mentally
-**Recommendation:** Do not use as primary view; could work as a secondary "visual" toggle
-
-### Design Decision Recommendation
-**Use Option B (Summary Chart + Risk Table).** It gives sales reps a compelling visual to open with ("here's your district's risk at a glance") and then a detailed table to drill into. The chart investment is minimal with Vue-chartjs. The donut chart segmented by High / Medium / Low / No DPA tier is immediately legible and matches the mental model district admins already have from security dashboards.
-
-### Risk Score Calculation (suggested logic for mock data)
-A vendor's risk tier can be derived from:
-- **High**: Active usage (high frequency or high user count) AND no signed DPA, OR signed DPA is expired
-- **Medium**: Active usage AND DPA signed but outdated version, OR DPA signed but no addendum where required
-- **Low**: Active usage AND current DPA AND addendum present
-- **Unknown/Unreviewed**: No DPA data exists for vendor; usage detected but not yet evaluated
-
-This logic can live in a computed property or a utility function, applied to mock data at render time — no backend required.
+**Note:** `compatibilityVersion: 4` in the `future` key was a Nuxt 3 migration flag. In a fresh Nuxt 4 install, the `app/` directory structure is the default — no flag needed.
 
 ---
 
-## DPA-Specific Patterns
+## Routing Migration
 
-How edtech DPA data is conventionally displayed in tools like Student DPA consortium portal, Lightspeed Filter, and Privacy Vaults Online.
+### Vue Router config → file-based routing
 
-### Standard Column Set
-District admins expect to see, at minimum:
-- **Vendor Name** — normalized, not raw domain
-- **DPA Status** — Signed / Unsigned / Expired / Pending (color-coded)
-- **Signed Date** — when the DPA was executed
-- **Expiry Date** — when it lapses; expired dates should be flagged visually (red or warning icon)
-- **DPA Version** — version of the agreement on file
-- **Version Currency** — whether the on-file version matches the vendor's current version ("Current" / "Outdated")
-- **Addendum Present** — yes/no flag; addendums are district-specific supplements common in K-12 compliance
-- **DPA Type** — some tools distinguish "custom DPA" vs "standard template" vs "Student DPA consortium agreement"
+**Remove:** `src/router/index.js` entirely. No `createRouter`, no `createWebHashHistory`, no manual route definitions.
 
-### Visual Conventions in the Industry
-- Status badges use a 3-color system: green (signed/current), yellow/amber (expiring soon or version outdated), red (expired, unsigned, or high-risk gap)
-- Expiry dates within 90 days are commonly flagged with an amber indicator even if not yet expired
-- A "needs attention" count in the page header ("4 vendors need DPA review") is standard in mature tools and drives admin action
-- Sorting by "most urgent" (expired first, then expiring soon, then outdated version) is the most-used sort in real workflows
-- Addendum presence is often shown as a simple checkmark / dash rather than a full boolean column — it's a visual scan item, not a sortable field
+**Replace with:** files in `app/pages/`. Each `.vue` file becomes a route automatically.
 
-### What the Student DPA Consortium Model Looks Like
-The Student Data Privacy Consortium (SDPC) and similar orgs maintain a registry where districts can see if a vendor has a pre-negotiated template DPA. The UI pattern is: vendor search → status summary → agreement document link → district customization notes. This is the mental model many IT admins carry into product demos.
+| v0.5.0 Route | v1.0.0 File | URL path |
+|---|---|---|
+| `path: '/', name: 'dashboard'` | `app/pages/index.vue` | `/` |
+| `path: '/discovery', name: 'discovery'` | `app/pages/discovery.vue` | `/discovery` |
+| `path: '/reports', name: 'reports'` | `app/pages/risk.vue` | `/risk` |
+| `path: '/settings', name: 'settings'` | `app/pages/tags.vue` | `/tags` |
+
+**Note on hash history:** v0.5.0 used `createWebHashHistory` for GitHub Pages. Nuxt 4 with SSR on AWS Amplify uses standard HTML5 history (`/path`). No hash needed.
+
+### definePageMeta replaces router.meta
+
+Each page file declares its own nav metadata using the `definePageMeta` compiler macro:
+
+```ts
+// app/pages/discovery.vue
+definePageMeta({
+  nav: true,
+  label: 'Discovery',
+  icon: 'i-heroicons-magnifying-glass'
+})
+```
+
+### SidebarNav: router.getRoutes() still works
+
+`useRouter().getRoutes()` is available in Nuxt 4 — same API as Vue Router. The existing pattern of filtering by `r.meta?.nav` works directly:
+
+```ts
+// app/components/layout/SidebarNav.vue
+const router = useRouter()
+const navRoutes = router.getRoutes().filter(r => r.meta?.nav)
+```
+
+**Caveat:** `getRoutes()` during SSR returns all routes. The filter by `meta.nav` still works; icon class strings change from PrimeIcons (`pi pi-home`) to Heroicons (`i-heroicons-home`) since Nuxt UI v3 uses `@nuxt/icon` with Heroicons by default.
+
+### NuxtLink replaces RouterLink
+
+```html
+<!-- v0.5.0 -->
+<RouterLink :to="route.path" active-class="bg-primary text-white">
+
+<!-- v1.0.0 -->
+<NuxtLink :to="route.path" active-class="bg-primary text-white">
+```
+
+`NuxtLink` is auto-imported. `RouterLink` also works but `NuxtLink` is the Nuxt convention.
 
 ---
 
-## Tag/Classification Patterns
+## Layout Migration
 
-How data categorization UX works in compliance and IT governance tools, applied to the edtech vendor tagging use case.
+### AppShell.vue + SidebarNav.vue → app/layouts/default.vue
 
-### Standard Tag UX Conventions
-- Tags are displayed as small colored pills on the vendor row or detail view
-- Tag creation happens inline (type-to-create in a combobox input, "Create 'Curriculum'" affordance)
-- Tags are not exclusive — a vendor can have multiple tags
-- Tag color is either user-assigned or auto-assigned from a predefined palette
-- Tag management (rename, delete, merge) lives in a dedicated settings/admin page, not inline
-- Deleting a tag prompts: "This will remove the tag from X vendors. Continue?"
+In Nuxt 4, `app/layouts/default.vue` wraps all pages automatically. The `<slot />` renders the current page.
 
-### Filtering by Tag
-- Tag-based filtering uses a multi-select pattern (show vendors with ANY of the selected tags, or ALL — "any" is more common)
-- Selected filter tags appear as dismissible chips above the table
-- "Clear all filters" is always present when filters are active
+**v0.5.0 AppShell.vue pattern:**
+```html
+<div class="flex h-screen overflow-hidden">
+  <SidebarNav />
+  <div class="flex flex-col flex-1 overflow-hidden">
+    <header>...</header>
+    <main><RouterView /></main>
+  </div>
+</div>
+```
 
-### What to Show in the Demo (Minimal Viable Tag UX)
-Given the scope (tag creation + editing, not full taxonomy management), the right UX pattern is:
-1. Tags column in the vendor table showing existing tag pills
-2. Click a vendor row → tag assignment interface (multi-select combobox with "create new" affordance)
-3. Tags page (or settings section) with a list of all tags, editable name/color, and delete
-4. Filter-by-tag affordance on the Discovery page (at minimum)
+**v1.0.0 app/layouts/default.vue pattern:**
+```html
+<template>
+  <div class="flex h-screen overflow-hidden">
+    <SidebarNav />
+    <div class="flex flex-col flex-1 overflow-hidden">
+      <header class="flex items-center h-14 bg-white border-b border-gray-200 pl-6 shrink-0">
+        <span class="text-sm text-gray-700">Lakewood Unified School District</span>
+      </header>
+      <main class="flex-1 overflow-y-auto bg-gray-50">
+        <slot />  <!-- <-- replaces <RouterView /> -->
+      </main>
+    </div>
+  </div>
+</template>
+```
 
-Do not build a full taxonomy hierarchy (parent/child tags). Flat tags are the industry norm for this audience and scope.
+**app/app.vue** wires layout + page together:
+```html
+<template>
+  <UApp>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </UApp>
+</template>
+```
 
-### Tag Color Assignment
-Pre-define 8-10 distinct colors in mock data. When a user creates a new tag, auto-assign the next available color from the palette. This keeps the UI visually coherent without requiring a color picker in the demo.
+`<UApp>` is required for Nuxt UI overlays (Toast, Tooltip) to work. `<NuxtLayout>` wraps `<NuxtPage />` so that `default.vue` wraps every page.
+
+---
+
+## Component Migration Map
+
+### PrimeVue → Nuxt UI v3
+
+| PrimeVue Component | Nuxt UI v3 Equivalent | Migration Notes |
+|---|---|---|
+| `DataTable` + `Column` | `UTable` | API is completely different — see detailed section below |
+| `Dialog` (modal confirm) | `UModal` | `v-model:visible` → `v-model:open` |
+| `Drawer` (slide-over) | `USlideover` | `position="right"` is default; `v-model:visible` → `v-model:open` |
+| `MultiSelect` (grouped) | `USelectMenu multiple` | `optionGroupLabel/Children` → array-of-arrays structure; chips need custom slot |
+| `Tag` (colored pill) | `UBadge` with inline `:style` | UBadge color prop only accepts design tokens; use `:style` for arbitrary hex |
+| `Button` | `UButton` | `severity="danger"` → `color="error"`; `text` prop → `variant="ghost"` |
+| `InputText` | `UInput` | `v-model` is identical; add `class="w-full"` manually (block layout removed in v3) |
+| `IconField` / `InputIcon` | `UInput icon` prop | Use `icon="i-heroicons-magnifying-glass"` on `UInput` directly |
+| `Divider` | `USeparator` | Divider renamed to Separator in v3 |
+| `Skeleton` | `USkeleton` | Same concept, different prop names |
+| `Tag` (status badge) | `UBadge :style` | No change in approach; must use `:style` for dynamic hex colors |
+
+**Important — UBadge custom colors:**
+UBadge's `color` prop is restricted to design system tokens (`primary`, `error`, `warning`, `success`, `neutral`). The existing pattern of binding hex values via `:style="{ backgroundColor: COLOR_MAP[status], color: '#ffffff' }"` still works because UBadge is a standard HTML element that accepts `:style`. This is the correct approach for dynamic semantic colors from `riskLabels.ts`.
+
+### UTable detailed migration
+
+UTable is built on TanStack Table. The API diverges significantly from PrimeVue DataTable.
+
+**Column definition — before (PrimeVue):**
+```html
+<Column field="name" header="Vendor Name" sortable :style="{ minWidth: '12rem' }" />
+<Column field="status" header="Status" sortable>
+  <template #body="{ data }">
+    <Tag :value="data.status" :style="{ backgroundColor: DPA_STATUS_COLORS[data.status] }" />
+  </template>
+</Column>
+```
+
+**Column definition — after (UTable):**
+```ts
+const columns: TableColumn<VendorRow>[] = [
+  { accessorKey: 'name', header: 'Vendor Name', enableSorting: true },
+  { accessorKey: 'status', header: 'Status', enableSorting: true },
+]
+```
+
+**Custom cell rendering — after (UTable slots):**
+```html
+<UTable :data="tableRows" :columns="columns" @select="onRowSelect">
+  <template #status-cell="{ row }">
+    <UBadge
+      :label="row.original.status"
+      :style="{ backgroundColor: DPA_STATUS_COLORS[row.original.status], color: '#ffffff' }"
+    />
+  </template>
+</UTable>
+```
+
+**Slot naming:** `#<accessorKey>-cell` (not `-body` as in PrimeVue).
+
+**Row click event:** `@select` fires with `(event, row)`. Access data as `row.original`.
+
+**Global filter:** `v-model:global-filter="filterValue"` — pass a plain string ref.
+
+**Sorting:** `v-model:sorting` — TanStack sorting array. Default sort set as initial value.
+
+**DataTable props that map directly:**
+- `:value` → `:data`
+- `dataKey` → not needed (TanStack uses index by default; use `getRowId` for stable keys)
+- `rowHover` → add `class="[&_tr:hover]:bg-gray-50"` via `ui` prop or Tailwind
+- `removableSort` → no direct equivalent; omit sort state for same effect
+- `#empty` slot → `empty` prop (string) or `#empty` slot
+
+### USlideover detailed migration
+
+**Before (PrimeVue Drawer):**
+```html
+<Drawer v-model:visible="drawerVisible" position="right" :style="{ width: '480px' }">
+  <template v-if="vendor">...</template>
+</Drawer>
+```
+
+**After (USlideover):**
+```html
+<USlideover v-model:open="drawerVisible" side="right" :ui="{ content: 'max-w-[480px]' }">
+  <template #content>
+    <template v-if="vendor">...</template>
+  </template>
+</USlideover>
+```
+
+Key differences:
+- `v-model:visible` → `v-model:open`
+- `position` → `side` (same values: `right`, `left`, `top`, `bottom`)
+- `:style="{ width }"` → `:ui="{ content: 'max-w-[480px]' }"` (Tailwind class)
+- Content goes in `#content` slot, not default slot
+
+### UModal detailed migration
+
+**Before (PrimeVue Dialog):**
+```html
+<Dialog v-model:visible="deleteDialogVisible" modal header="Confirm delete" :style="{ width: '24rem' }">
+  <p>...</p>
+  <template #footer>
+    <Button label="Cancel" text @click="deleteDialogVisible = false" />
+    <Button label="Delete" severity="danger" @click="confirmDelete" />
+  </template>
+</Dialog>
+```
+
+**After (UModal):**
+```html
+<UModal v-model:open="deleteDialogVisible" :ui="{ content: 'max-w-sm' }">
+  <template #header>
+    <h3>Confirm delete</h3>
+  </template>
+  <template #body>
+    <p>...</p>
+  </template>
+  <template #footer>
+    <div class="flex justify-end gap-2">
+      <UButton label="Cancel" variant="ghost" @click="deleteDialogVisible = false" />
+      <UButton label="Delete" color="error" @click="confirmDelete" />
+    </div>
+  </template>
+</UModal>
+```
+
+Key differences:
+- `v-model:visible` → `v-model:open`
+- `header` prop → `#header` slot
+- `#footer` slot → `#footer` slot (same name)
+- `:style="{ width }"` → `:ui="{ content: 'max-w-sm' }"`
+- `severity="danger"` → `color="error"`
+- `text` prop → `variant="ghost"`
+- `prevent-close` → `:dismissible="false"`
+
+### USelectMenu grouped multi-select
+
+PrimeVue MultiSelect had first-class support for `optionGroupLabel`/`optionGroupChildren`. USelectMenu uses an **array-of-arrays** structure where each sub-array is a group.
+
+**Data transformation required.** The existing `tagGroups` structure (`[{ id, name, color, children: [{id, name}] }]`) must be flattened to nested arrays for USelectMenu:
+
+```ts
+// Transform tagGroups for USelectMenu items prop
+const selectItems = computed(() =>
+  tagsStore.tagGroups.map(group =>
+    group.children.map(child => ({
+      label: child.name,
+      value: child.id,
+      // USelectMenu uses 'label' for display and 'value' for v-model
+    }))
+  )
+)
+```
+
+**Chip display:** USelectMenu does not render selected items as chips by default (comma-separated text). Custom `#leading` slot needed for chip display, or use the `trigger` slot to render selected items as UBadge elements. This is a **non-trivial difference** from PrimeVue's `display="chip"`.
+
+**Alternative approach:** Render selected tags inline outside the USelectMenu (below the component) using `v-for` over `selectedTagIds`, displaying each as a `UBadge` with a remove button. This is simpler than overriding the USelectMenu trigger slot and more predictable.
+
+### Icons migration
+
+PrimeVue used PrimeIcons (`pi pi-search`, `pi pi-home`). Nuxt UI uses `@nuxt/icon` with Heroicons.
+
+| PrimeIcons class | Heroicons equivalent (UIcon name) |
+|---|---|
+| `pi pi-home` | `i-heroicons-home` |
+| `pi pi-search` | `i-heroicons-magnifying-glass` |
+| `pi pi-chart-bar` | `i-heroicons-chart-bar` |
+| `pi pi-cog` | `i-heroicons-cog-6-tooth` |
+| `pi pi-plus` | `i-heroicons-plus` |
+| `pi pi-pencil` | `i-heroicons-pencil` |
+| `pi pi-trash` | `i-heroicons-trash` |
+
+Use `<UIcon name="i-heroicons-magnifying-glass" />` or pass the name string to component `icon` props.
+
+---
+
+## Data Layer Migration
+
+### src/data/*.js → server/data/ + server/api/
+
+Mock data files move from `src/data/` to `server/data/`, and each gets a corresponding API handler in `server/api/`. This establishes the API contract that real backend calls will follow later.
+
+**File structure:**
+```
+server/
+  data/
+    vendors.ts          # raw array (migrated from src/data/vendors.js)
+    discovery.ts        # raw array
+    dpa.ts              # raw array
+    edtech.ts           # raw array
+  api/
+    vendors.get.ts      # GET /api/vendors → returns vendors array
+    discovery.get.ts    # GET /api/discovery → returns discovery array
+    dpa.get.ts          # GET /api/dpa → returns dpa array
+    edtech.get.ts       # GET /api/edtech → returns edtech array
+```
+
+**Server route pattern:**
+```ts
+// server/api/vendors.get.ts
+import vendorsData from '../data/vendors'
+
+export default defineEventHandler(() => {
+  return vendorsData
+})
+```
+
+**Key convention:** `.get.ts` suffix makes the route respond to GET only. `defineEventHandler` is auto-imported in server routes — no explicit import needed.
+
+### riskLabels.js → shared utility
+
+`riskLabels.js` contains only constants (no Node-only APIs). It can live in `app/utils/riskLabels.ts` and be auto-imported into components. Alternatively, place in `shared/utils/riskLabels.ts` (Nuxt 4's `shared/` directory is accessible from both `app/` and `server/`).
+
+**Recommendation:** `app/utils/riskLabels.ts` — constants are display-layer concerns, used only in components.
+
+---
+
+## State Migration
+
+### src/stores/tags.js → app/stores/tags.ts with @pinia/nuxt
+
+**Installation:**
+```bash
+npm install @pinia/nuxt pinia-plugin-persistedstate
+```
+
+**nuxt.config.ts:**
+```ts
+modules: [
+  '@nuxt/ui',
+  '@pinia/nuxt',
+  'pinia-plugin-persistedstate/nuxt',
+],
+```
+
+**Store migration — before (src/stores/tags.js):**
+```js
+export const useTagsStore = defineStore('tags', () => {
+  const tagGroups = ref(loadOrDefault(TAG_GROUPS_KEY, SEED_TAG_GROUPS))
+  const assignments = ref(loadOrDefault(ASSIGNMENTS_KEY, {}))
+
+  watch(tagGroups, (val) => localStorage.setItem(...), { deep: true })
+  watch(assignments, (val) => localStorage.setItem(...), { deep: true })
+
+  return { tagGroups, assignments }
+})
+```
+
+**Store migration — after (app/stores/tags.ts):**
+```ts
+export const useTagsStore = defineStore('tags', () => {
+  const tagGroups = ref<TagGroup[]>(SEED_TAG_GROUPS)
+  const assignments = ref<Record<string, string[]>>({})
+
+  return { tagGroups, assignments }
+}, {
+  persist: [
+    { key: 'schoolday-tag-groups', paths: ['tagGroups'], storage: piniaPluginPersistedstate.localStorage() },
+    { key: 'schoolday-tag-assignments', paths: ['assignments'], storage: piniaPluginPersistedstate.localStorage() },
+  ]
+})
+```
+
+**SSR safety:** `pinia-plugin-persistedstate` with `localStorage()` storage is client-only. On the server, the store initializes from `SEED_TAG_GROUPS`. On client hydration, localStorage values overwrite the seed if present. The manual `loadOrDefault()` + `watch()` pattern from v0.5.0 is replaced entirely by the plugin.
+
+**Critical:** The existing `watch()` + `localStorage.setItem()` pattern in `tags.js` will cause SSR errors (localStorage is undefined on the server). The plugin handles this safely — do not port the watch pattern directly.
+
+**SEED_TAG_GROUPS export:** Still needed for the reset-to-defaults feature. Keep the export in `app/stores/tags.ts`.
+
+**Auto-import behavior:** With `@pinia/nuxt`, `defineStore` is auto-imported. The store file does NOT need `import { defineStore } from 'pinia'`. Composables from `app/stores/` ARE auto-imported by Nuxt's scanner — `useTagsStore()` can be called in any component without a manual import.
+
+---
+
+## Auto-imports
+
+Nuxt 4 auto-imports the following — no manual import statements needed:
+
+| Category | What is auto-imported | Source |
+|---|---|---|
+| Vue APIs | `ref`, `computed`, `watch`, `shallowRef`, `nextTick`, `onMounted`, etc. | Vue 3 core |
+| Nuxt composables | `useFetch`, `useAsyncData`, `useRoute`, `useRouter`, `navigateTo`, `useState`, `useNuxtApp` | Nuxt runtime |
+| Nuxt utilities | `definePageMeta`, `defineNuxtConfig`, `defineEventHandler` | Nuxt compiler macros |
+| Components in `app/components/` | All `.vue` files, recursively | Nuxt scanner |
+| Composables in `app/composables/` | Top-level files only (not nested) | Nuxt scanner |
+| Utils in `app/utils/` | Top-level files only (not nested) | Nuxt scanner |
+| Stores in `app/stores/` | Composable functions matching `use*` naming | @pinia/nuxt + Nuxt scanner |
+| Nuxt UI components | All `U*` components (`UTable`, `UModal`, etc.) | @nuxt/ui module |
+| Pinia | `defineStore`, `storeToRefs` | @pinia/nuxt module |
+
+**What is NOT auto-imported:**
+- `FilterMatchMode` from `@primevue/core/api` (PrimeVue is gone — this import disappears entirely)
+- Components imported from third-party packages (e.g., `VChart` from `vue-echarts` — must be registered manually or wrapped in a plugin)
+- Named exports from files outside `composables/`, `utils/`, `components/`, `stores/`
+- Deeply nested files (only top-level of each directory is scanned by default)
+
+**Component auto-import naming:** `app/components/VendorDrawer.vue` → used as `<VendorDrawer>` with no import. `app/components/layout/SidebarNav.vue` → used as `<LayoutSidebarNav>` (directory prefix added) or rename the file.
+
+**Recommendation:** Keep layout components in `app/components/` without a subdirectory to avoid the prefixed name (`SidebarNav.vue` → `<SidebarNav>`, not `<LayoutSidebarNav>`). Or place them in `app/layouts/` if they are layout-only.
+
+---
+
+## Data Fetching Pattern
+
+### useFetch vs useAsyncData
+
+Both are SSR-safe and prevent double-fetching (data from server render is passed to client in the Nuxt payload — no second HTTP request on hydration).
+
+| | `useFetch` | `useAsyncData` |
+|---|---|---|
+| Use case | Single endpoint, straightforward GET | Multiple endpoints, custom logic, non-HTTP sources |
+| Key generation | Automatic (from URL + options) | Manual key required |
+| Type inference | Auto-infers from server route TypeScript types | Manual generic type annotation |
+| Recommendation | Use this for all server route calls in this project | Use only if combining multiple data sources |
+
+**For this project, use `useFetch` throughout.** All pages call single server routes. The server route types flow through automatically.
+
+**Page data fetching pattern:**
+```ts
+// app/pages/discovery.vue
+const { data: vendors } = await useFetch('/api/vendors')
+const { data: discovery } = await useFetch('/api/discovery')
+```
+
+**`await` at top level:** In Nuxt 4 pages, `await useFetch()` is valid in `<script setup>`. Nuxt suspends rendering until data is ready (SSR) or shows the page shell while fetching (client nav).
+
+**Do NOT import data files directly in components.** The v0.5.0 pattern of `import vendorsData from '../data/vendors.js'` worked in a SPA but bypasses the server route layer. In Nuxt 4, all data must flow through `server/api/` routes to establish the real API contract.
+
+**Joins still happen at the page level.** The `Object.fromEntries(discoveryData.map(d => [d.vendorId, d]))` join pattern from v0.5.0 is preserved — it runs in a `computed()` after `useFetch` returns the arrays. No change to join logic.
+
+---
+
+## ECharts / ClientOnly Migration
+
+### Problem
+
+ECharts uses browser APIs (`canvas`, `ResizeObserver`) that are not available during SSR. `VChart` from `vue-echarts` will throw on the server without protection.
+
+### Solution: wrap in `<ClientOnly>`
+
+```html
+<ClientOnly>
+  <VChart :option="chartOption" autoresize style="height: 280px; width: 100%" />
+</ClientOnly>
+```
+
+`<ClientOnly>` is a built-in Nuxt component (auto-imported). It renders nothing on the server and mounts the chart only in the browser. This is the standard Nuxt pattern — confirmed in official docs.
+
+### Alternative: nuxt-echarts module
+
+A `nuxt-echarts` community module exists (HIGH confidence — official Nuxt modules directory) that wraps VChart and handles SSR registration automatically. It adds `VChart`, `VChartServer`, and `VChartFull` components. However, it adds another dependency and indirection. For this project's two simple charts (donut + radar), wrapping `vue-echarts` in `<ClientOnly>` is simpler and sufficient.
+
+**Recommendation:** Keep `vue-echarts` + manual `<ClientOnly>` wrapping. Register ECharts components in a Nuxt plugin (`app/plugins/echarts.client.ts`) — the `.client.ts` suffix ensures the plugin only runs in the browser.
+
+```ts
+// app/plugins/echarts.client.ts
+import { use } from 'echarts/core'
+import { CanvasRenderer } from 'echarts/renderers'
+import { RadarChart, PieChart } from 'echarts/charts'
+import { RadarComponent, TooltipComponent, LegendComponent } from 'echarts/components'
+import VChart from 'vue-echarts'
+
+use([CanvasRenderer, RadarChart, PieChart, RadarComponent, TooltipComponent, LegendComponent])
+
+export default defineNuxtPlugin((nuxtApp) => {
+  nuxtApp.vueApp.component('VChart', VChart)
+})
+```
+
+The `.client.ts` suffix replaces the manual `import.meta.client` guard — Nuxt will not load this plugin during SSR.
+
+---
+
+## Nuxt UI Color Theme Migration
+
+### PrimeVue SchoolDay Aura preset → Nuxt UI CSS variables
+
+v0.5.0 defined a custom `SchoolDayPreset` using `definePreset(Aura, { semantic: { primary: { 500: '#484ce6' } } })`.
+
+Nuxt UI v3 uses CSS custom properties for theming. Override the primary color in `app/assets/css/main.css`:
+
+```css
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+:root {
+  --ui-primary: var(--color-indigo-500);  /* or define custom hex */
+}
+```
+
+For exact brand color `#484ce6`, define a custom Tailwind color and reference it. Alternatively, use `--ui-primary: 72 76 230` (RGB channel values that Tailwind's opacity modifiers expect).
+
+**The `bg-primary` Tailwind class:** Used in `SidebarNav.vue` for active nav links. In Nuxt UI, `primary` is a CSS-variable-backed color. `bg-primary` still works if the CSS variable is set.
+
+**`darkModeSelector: false`:** This v0.5.0 setting disabled system dark mode. In Nuxt UI, dark mode is controlled by `@nuxtjs/color-mode` (auto-installed by `@nuxt/ui`). Set `colorMode: { preference: 'light' }` in `nuxt.config.ts` to lock to light mode.
+
+---
+
+## Known Migration Challenges
+
+### Challenge 1: USelectMenu chip display (HIGH effort)
+
+PrimeVue MultiSelect's `display="chip"` showed selected tags as colored pills inside the input. USelectMenu in Nuxt UI v3 shows comma-separated text by default. Multi-chip display requires custom slot implementation.
+
+**Mitigation:** Render selected tags as `UBadge` elements below the USelectMenu instead of inside it. This is a visual change but functionally equivalent and simpler to implement.
+
+### Challenge 2: UBadge arbitrary colors (LOW effort)
+
+UBadge `color` prop only accepts design tokens. The color maps in `riskLabels.ts` use hex values. Apply colors via `:style` attribute directly on UBadge — standard HTML attribute binding still works.
+
+### Challenge 3: UTable column sorting defaults (MEDIUM effort)
+
+PrimeVue DataTable accepted `sortField` and `:sortOrder` as props for default sort state. UTable uses `v-model:sorting` with a TanStack sorting array: `[{ id: 'name', desc: false }]`. Default sort must be set as the initial value of the sorting ref.
+
+### Challenge 4: UTable row hover (LOW effort)
+
+PrimeVue DataTable had a `rowHover` boolean prop. UTable needs a Tailwind hover class via the `ui` prop: `:ui="{ tr: 'cursor-pointer hover:bg-gray-50' }"`.
+
+### Challenge 5: UTable getRowId (LOW effort)
+
+PrimeVue's `dataKey="vendorId"` told the table which field is the stable row ID. UTable uses TanStack's `getRowId` option passed to `useVueTable`. For this project with 27 static rows, this is not critical but prevents React-key-style warnings.
+
+---
+
+## Confidence Assessment
+
+| Area | Level | Source | Notes |
+|---|---|---|---|
+| Directory structure | HIGH | Nuxt 4 official docs | Verified at nuxt.com/docs/4.x/directory-structure |
+| File-based routing | HIGH | Nuxt 4 official docs | definePageMeta, getRoutes confirmed |
+| Layout system | HIGH | Nuxt 4 official docs | NuxtLayout + default.vue pattern confirmed |
+| Auto-imports | HIGH | Nuxt 4 official docs | All categories verified |
+| Server routes | HIGH | Nuxt 4 official docs | .get.ts pattern, defineEventHandler confirmed |
+| useFetch pattern | HIGH | Nuxt 4 official docs | SSR payload behavior confirmed |
+| @pinia/nuxt | HIGH | Pinia + @pinia/nuxt official docs | Module setup confirmed |
+| pinia-plugin-persistedstate | HIGH | Official plugin docs | Nuxt module, localStorage storage confirmed |
+| UTable API | HIGH | Nuxt UI v3 official docs | #<key>-cell slot, @select event confirmed |
+| USlideover API | HIGH | Nuxt UI v3 official docs | v-model:open, side prop, #content slot confirmed |
+| UModal API | HIGH | Nuxt UI v3 migration guide | v-model:open, slot names confirmed |
+| USelectMenu grouped | MEDIUM | Nuxt UI v3 official docs | Array-of-arrays structure confirmed; chip display workaround not officially documented |
+| UBadge :style custom colors | MEDIUM | Nuxt UI badge docs + GitHub issues | color prop limited to tokens; :style works but not officially recommended |
+| ECharts ClientOnly | HIGH | Nuxt official docs + nuxt-echarts module page | `<ClientOnly>` pattern is standard Nuxt |
+| .client.ts plugin pattern | HIGH | Nuxt 4 official docs | Plugin filename suffix confirmed |
 
 ---
 
 ## Sources
 
-**Confidence note:** All findings based on training knowledge of the following platforms and resources (no live verification this session):
-- Student Data Privacy Consortium (SDPC) portal patterns
-- Privacy Vaults Online feature set
-- Lightspeed Systems Filter/Analytics UI conventions
-- GoGuardian Admin console patterns
-- CoSN (Consortium for School Networking) privacy toolkit documentation
-- 1EdTech (formerly IMS Global) certification registry patterns
-- General enterprise GRC/compliance dashboard UI conventions (Tenable, Qualys posture views)
-
-**Confidence level: MEDIUM** — These patterns are stable and well-established in the edtech compliance space as of the knowledge cutoff. The 1EdTech section reflects conventions as of mid-2024; the certification registry format may have evolved.
+- Nuxt 4 directory structure: https://nuxt.com/docs/4.x/directory-structure
+- Nuxt 4 routing: https://nuxt.com/docs/4.x/getting-started/routing
+- Nuxt 4 layouts: https://nuxt.com/docs/4.x/directory-structure/app/layouts
+- Nuxt 4 pages + definePageMeta: https://nuxt.com/docs/4.x/directory-structure/app/pages
+- Nuxt 4 server routes: https://nuxt.com/docs/4.x/directory-structure/server
+- Nuxt 4 auto-imports: https://nuxt.com/docs/4.x/guide/concepts/auto-imports
+- Nuxt 4 data fetching: https://nuxt.com/docs/4.x/getting-started/data-fetching
+- Nuxt 4 useRouter: https://nuxt.com/docs/4.x/api/composables/use-router
+- Nuxt UI v3 installation: https://ui.nuxt.com/docs/getting-started/installation/nuxt
+- Nuxt UI v3 migration guide (v2→v3): https://ui.nuxt.com/docs/getting-started/migration/v3
+- Nuxt UI v3 UTable: https://ui.nuxt.com/docs/components/table
+- Nuxt UI v3 USlideover: https://ui.nuxt.com/docs/components/slideover
+- Nuxt UI v3 UModal: https://ui.nuxt.com/docs/components/modal
+- Nuxt UI v3 USelectMenu: https://ui.nuxt.com/docs/components/select-menu
+- Nuxt UI v3 UBadge: https://ui.nuxt.com/docs/components/badge
+- Pinia + Nuxt: https://pinia.vuejs.org/ssr/nuxt.html
+- pinia-plugin-persistedstate Nuxt: https://prazdevs.github.io/pinia-plugin-persistedstate/frameworks/nuxt.html
+- nuxt-echarts module: https://echarts.nuxt.dev/
