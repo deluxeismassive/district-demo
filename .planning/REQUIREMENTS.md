@@ -75,29 +75,27 @@
 
 ## Traceability
 
-To be filled by roadmapper.
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| NUXT-01 | — | Not started |
-| NUXT-02 | — | Not started |
-| NUXT-03 | — | Not started |
-| NUXT-04 | — | Not started |
-| LAYOUT-01 | — | Not started |
-| DATA-01 | — | Not started |
-| DATA-02 | — | Not started |
-| PAGE-01 | — | Not started |
-| PAGE-02 | — | Not started |
-| PAGE-03 | — | Not started |
-| PAGE-04 | — | Not started |
-| PAGE-05 | — | Not started |
-| DEPLOY-01 | — | Not started |
-| DEPLOY-02 | — | Not started |
+| NUXT-01 | Phase 7 | Not started |
+| NUXT-02 | Phase 7 | Not started |
+| NUXT-03 | Phase 7 | Not started |
+| NUXT-04 | Phase 8 | Not started |
+| LAYOUT-01 | Phase 8 | Not started |
+| DATA-01 | Phase 9 | Not started |
+| DATA-02 | Phase 9 | Not started |
+| PAGE-01 | Phase 10 | Not started |
+| PAGE-02 | Phase 11 | Not started |
+| PAGE-05 | Phase 11 | Not started |
+| PAGE-03 | Phase 12 | Not started |
+| PAGE-04 | Phase 12 | Not started |
+| DEPLOY-01 | Phase 13 | Not started |
+| DEPLOY-02 | Phase 13 | Not started |
 
 **Coverage:**
 - v1.0.0 requirements: 14 total
-- Mapped to phases: 0 (roadmap pending)
-- Unmapped: 14
+- Mapped to phases: 14
+- Unmapped: 0
 
 ---
 
