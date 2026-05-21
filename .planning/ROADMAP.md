@@ -1,147 +1,34 @@
 # Roadmap: District Demo Portal
 
-**Created:** 2026-05-13
-**Milestone:** v1
-**Granularity:** Standard
-**Coverage:** 14/14 v1 requirements mapped
+## Milestones
 
----
+- ✅ **v0.5.0 MVP** — Phases 1–6 (shipped 2026-05-21) — [archive](milestones/v0.5.0-ROADMAP.md)
 
 ## Phases
 
-- [x] **Phase 1: Shell & Routing** - Working SPA with sidebar nav, all routes registered, Pinia store initialized, shared component foundations in place (completed 2026-05-13)
-- [x] **Phase 2: Data Layer + Discovery** - Mock data files seeded with realistic vendors, Discovery view fully functional with sortable/filterable table, vendor detail, and tag assignment (completed 2026-05-13)
-- [ ] **Phase 3: DPA View** - DPA page with status badges, signed/expiry dates, and "needs attention" headline count
-- [x] **Phase 4: 1EdTech View** - 1EdTech certification surfaced inside the VendorDrawer (status badge + standard + certified date); no standalone table; ReportsView '1EdTech' tab removed (completed 2026-05-13)
-- [x] **Phase 5: Risk Position View** - Risk tier calculation, donut chart showing vendor distribution by tier (completed 2026-05-13)
-- [x] **Phase 6: Tags Management** - Replace SettingsView skeleton with full Tags management page — inline rename, 8-color preset palette, cascade delete with confirm dialog, reset-to-defaults safety net (completed 2026-05-21)
+<details>
+<summary>✅ v0.5.0 MVP (Phases 1–6) — SHIPPED 2026-05-21</summary>
 
----
+- [x] Phase 1: Shell & Routing (2/2 plans) — completed 2026-05-13
+- [x] Phase 2: Data Layer + Discovery (4/4 plans) — completed 2026-05-13
+- [x] Phase 3: DPA View (3/3 plans) — completed 2026-05-13
+- [x] Phase 4: 1EdTech View (2/2 plans) — completed 2026-05-13
+- [x] Phase 5: Risk Position View (2/2 plans) — completed 2026-05-13
+- [x] Phase 6: Tags Management (2/2 plans) — completed 2026-05-21
 
-## Phase Details
-
-### Phase 1: Shell & Routing
-**Goal**: The app has a working SPA skeleton — all routes resolve, the persistent sidebar nav is visible on every page, and the Pinia store is wired up for tags state
-**Depends on**: Nothing (first phase)
-**Requirements**: FOUND-01, FOUND-02, FOUND-04
-**Success Criteria** (what must be TRUE):
-  1. Navigating between all section links in the sidebar loads the correct stub view without a page reload or 404
-  2. The sidebar nav is visible and shows an active highlight on every route
-  3. Refreshing the browser on any route (e.g., `/#/dpa`) returns to that same view, not a 404
-  4. The Pinia tags store is initialized and accessible from any component
-**Plans**: 2 plans
-  - [ ] 01-shell-routing/01-PLAN-A.md — Install deps and wire foundation (router + Pinia + PrimeVue + Tailwind v4)
-  - [ ] 01-shell-routing/01-PLAN-B.md — Build AppShell, SidebarNav, and 4 stub views with skeletons
-**UI hint**: yes
-
-### Phase 2: Data Layer + Discovery
-**Goal**: All mock data schemas are established in `src/data/*.js` and the Discovery page is fully functional — vendors are browsable, sortable, filterable, drillable, and taggable
-**Depends on**: Phase 1
-**Requirements**: FOUND-03, DISC-01, DISC-02, DISC-03, TAGS-02
-**Success Criteria** (what must be TRUE):
-  1. The Discovery table displays 20+ realistic vendors with name, category, usage metrics, and user/student counts loaded from `src/data/` files
-  2. Clicking any column header sorts the table by that column
-  3. Typing in the filter input narrows the vendor list in real time
-  4. Clicking a vendor row opens a detail view showing full usage data for that vendor
-  5. A user can assign and remove tags on a vendor row directly from the Discovery table
-**Plans**: 4 plans
-  - [ ] 02-data-layer-discovery/02-01-PLAN.md — Install ECharts + seed 4 data files (vendors, discovery, dpa, edtech) with 27 vendors
-  - [ ] 02-data-layer-discovery/02-02-PLAN.md — Restructure tags store with tagGroups + localStorage; register VChart globally
-  - [ ] 02-data-layer-discovery/02-03-PLAN.md — Build VendorDrawer with usage detail, 10-axis radar chart, and grouped tag MultiSelect
-  - [ ] 02-data-layer-discovery/02-04-PLAN.md — Replace DiscoveryView skeleton with sortable/filterable table mounting the drawer
-**UI hint**: yes
-
-### Phase 3: DPA View
-**Goal**: District admins can review every vendor's DPA status at a glance, with the most pressing items surfaced in the page header
-**Depends on**: Phase 2
-**Requirements**: DPA-01, DPA-02
-**Success Criteria** (what must be TRUE):
-  1. The DPA table displays all vendors with a color-coded status badge (Signed / Unsigned / Expired / Pending), signed date, and expiry date
-  2. Clicking a column header sorts the DPA table by that column; the filter input narrows results in real time
-  3. The page header shows an accurate count of vendors that need DPA review (unsigned or expired)
-**Plans**: 3 plans
-  - [ ] 03-dpa-view/03-01-PLAN.md — Add riskLabel field to dpa.js (27 records) + create shared riskLabels.js constants module
-  - [ ] 03-dpa-view/03-02-PLAN.md — Build DpaGrid.vue component + add Discovery|DPA tab bar to DiscoveryView
-  - [ ] 03-dpa-view/03-03-PLAN.md — Extend VendorDrawer with DPA section + replace Dashboard skeleton with Top 8 At-Risk card
-
-### Phase 4: 1EdTech View
-**Goal**: District admins can see each vendor's 1EdTech certification status, standard, and certified date inside the VendorDrawer — no standalone 1EdTech page; the drawer is the single 1EdTech surface
-**Depends on**: Phase 2
-**Requirements**: EDTECH-01
-**Success Criteria** (what must be TRUE):
-  1. Opening the VendorDrawer for any vendor shows a 1EdTech section between DPA and Privacy Policy Score
-  2. The section shows a color-coded status badge for Certified / Not Certified / In Review / Expired
-  3. Certified and Expired vendors display the 1EdTech standard name and certified date; Not Certified and In Review vendors show only the badge
-  4. Vendors with no 1EdTech record show the fallback message 'No 1EdTech record on file.'
-  5. The ReportsView tab bar no longer contains a '1EdTech' tab
-**Plans**: 2 plans
-  - [ ] 04-1edtech-view/04-01-PLAN.md — Enrich edtech.js with certificationStandard + certifiedDate; add EDTECH_STATUS_COLORS to riskLabels.js; remove '1EdTech' from ReportsView tabs
-  - [ ] 04-1edtech-view/04-02-PLAN.md — Add 1EdTech section to VendorDrawer.vue (between DPA and Privacy Policy Score) with status badge + conditional standard/date rows + empty fallback
-**UI hint**: yes
-
-### Phase 5: Risk Position View
-**Goal**: District admins can see a converged picture of vendor risk — a summary chart and per-vendor risk tiers derived from DPA status and usage volume
-**Depends on**: Phase 3, Phase 4
-**Requirements**: RISK-01, RISK-02
-**Success Criteria** (what must be TRUE):
-  1. Every vendor in the portal has a calculated risk tier (High / Medium / Low) visible on the Risk Position page
-  2. A donut chart above the table shows the count and proportion of vendors in each risk tier
-  3. Risk tiers are derived from real mock data fields — a vendor with no signed DPA and high usage volume appears as High risk
-**Plans**: 2 plans
-  - [ ] 05-risk-position-view/05-01-PLAN.md — Add RISK_TIER_COLORS to riskLabels.js + register PieChart and LegendComponent in main.js
-  - [ ] 05-risk-position-view/05-02-PLAN.md — Rewrite ReportsView.vue as the Risk Position page (donut chart + sortable 5-column vendor table + VendorDrawer drill-down)
-**UI hint**: yes
-
-### Phase 6: Tags Management
-**Goal**: Users can manage the full tag library — create new tags, rename existing ones, change colors, and delete tags — from a dedicated settings page
-**Depends on**: Phase 2
-**Requirements**: TAGS-01
-**Success Criteria** (what must be TRUE):
-  1. The Tags page lists all existing tags with their name and assigned color
-  2. A user can create a new tag with a name and color, and it immediately appears in the tag list and is available for assignment in Discovery
-  3. A user can rename a tag and see the updated name reflected on all vendors that have it assigned
-  4. A user can delete a tag and it is removed from all vendor assignments
-**Plans**: 2 plans
-  - [ ] 06-tags-management/06-01-PLAN.md — Export SEED_TAG_GROUPS from src/stores/tags.js so SettingsView can deep-clone it for reset-to-defaults
-  - [ ] 06-tags-management/06-02-PLAN.md — Rewrite SettingsView.vue as the Tags management page (inline CRUD, 8-swatch palette, PrimeVue Dialog confirms, reset-to-defaults)
-**UI hint**: yes
-
----
+</details>
 
 ## Progress
 
-| Phase | Plans Complete | Status | Completed |
-|-------|----------------|--------|-----------|
-| 1. Shell & Routing | 2/2 | Complete   | 2026-05-13 |
-| 2. Data Layer + Discovery | 4/4 | Complete   | 2026-05-13 |
-| 3. DPA View | 1/3 | In Progress|  |
-| 4. 1EdTech View | 2/2 | Complete   | 2026-05-13 |
-| 5. Risk Position View | 2/2 | Complete   | 2026-05-13 |
-| 6. Tags Management | 2/2 | Complete   | 2026-05-21 |
+| Phase | Milestone | Plans Complete | Status | Completed |
+|-------|-----------|----------------|--------|-----------|
+| 1. Shell & Routing | v0.5.0 | 2/2 | Complete | 2026-05-13 |
+| 2. Data Layer + Discovery | v0.5.0 | 4/4 | Complete | 2026-05-13 |
+| 3. DPA View | v0.5.0 | 3/3 | Complete | 2026-05-13 |
+| 4. 1EdTech View | v0.5.0 | 2/2 | Complete | 2026-05-13 |
+| 5. Risk Position View | v0.5.0 | 2/2 | Complete | 2026-05-13 |
+| 6. Tags Management | v0.5.0 | 2/2 | Complete | 2026-05-21 |
 
 ---
 
-## Coverage
-
-| Requirement | Phase |
-|-------------|-------|
-| FOUND-01 | Phase 1 |
-| FOUND-02 | Phase 1 |
-| FOUND-04 | Phase 1 |
-| FOUND-03 | Phase 2 |
-| DISC-01 | Phase 2 |
-| DISC-02 | Phase 2 |
-| DISC-03 | Phase 2 |
-| TAGS-02 | Phase 2 |
-| DPA-01 | Phase 3 |
-| DPA-02 | Phase 3 |
-| EDTECH-01 | Phase 4 |
-| RISK-01 | Phase 5 |
-| RISK-02 | Phase 5 |
-| TAGS-01 | Phase 6 |
-
-**v1 requirements: 14/14 mapped**
-
----
-*Roadmap created: 2026-05-13*
-*Last updated: 2026-05-21 after Phase 6 planning*
+*Last updated: 2026-05-21 — v0.5.0 milestone archived*

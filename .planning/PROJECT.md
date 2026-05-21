@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A sales demo web portal for edtech that displays school district data across multiple sections — discovery (app/domain usage), DPA status, risk position, and 1EdTech compliance data. Built as a clickable mockup with fully synthetic data, shown by sales reps to district admin prospects. Needs to iterate same-day as sales requirements change.
+A sales demo web portal for edtech that displays school district data across five sections — Discovery (vendor/domain usage), DPA status, Risk Position, and 1EdTech compliance data. Built as a clickable mockup with fully synthetic data (27 vendors, all `src/data/*.js`), shown by sales reps to district admin prospects. Deployed as a static SPA to GitHub Pages; no server, no auth.
 
 ## Core Value
 
@@ -10,53 +10,51 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 
 ## Requirements
 
-### Validated
+### Validated (v0.5.0)
 
-- ✓ Vue 3 + Vite project scaffold configured — existing
-- ✓ GitHub Pages deployment pipeline (`npm run deploy`) — existing
-- ✓ Base path configured for `/district-demo/` — existing
+- ✓ Multi-page SPA routing with a persistent sidebar nav (Dashboard / Discovery / DPA / Risk / Settings) — v0.5.0 Phase 1
+- ✓ Consistent app shell (sidebar + header + content area) renders on every route — v0.5.0 Phase 1
+- ✓ Pinia `useTagsStore` initialized and accessible from all components — v0.5.0 Phase 1
+- ✓ All display data lives in `src/data/*.js` files, editable without touching components — v0.5.0 Phase 2
+- ✓ Discovery page: 27-vendor sortable/filterable DataTable (name, category, usage metrics, user/student counts) — v0.5.0 Phase 2
+- ✓ Discovery page: users can assign and remove tags on vendors — v0.5.0 Phase 2
+- ✓ VendorDrawer: slide-over with full usage data, 10-axis ECharts radar chart, grouped tag MultiSelect — v0.5.0 Phase 2
+- ✓ DPA page: sortable/filterable table with status badge (Signed/Unsigned/Expired/Pending), signed/expiry dates — v0.5.0 Phase 3
+- ✓ Dashboard: "Top 8 Vendors Needing Attention" card surfacing unsigned/expired DPAs — v0.5.0 Phase 3
+- ✓ VendorDrawer: DPA section (status, dates, risk label) — v0.5.0 Phase 3
+- ✓ VendorDrawer: 1EdTech section (status badge, standard name, certified date; empty fallback) — v0.5.0 Phase 4
+- ✓ Risk Position page: ECharts donut chart with tier distribution (High/Medium/Low) — v0.5.0 Phase 5
+- ✓ Risk Position page: sortable 5-column vendor table with computed risk tiers — v0.5.0 Phase 5
+- ✓ Tags management page: full CRUD (inline rename, 8-color palette, cascade delete, reset-to-defaults) — v0.5.0 Phase 6
 
-### Validated
+### Active (v2.0 candidates)
 
-- ✓ Multi-page SPA routing with a persistent sidebar nav (Dashboard / Discovery / Reports / Settings) — Validated in Phase 1: Shell & Routing
-- ✓ Consistent app shell (sidebar + header + content area) renders on every route — Validated in Phase 1: Shell & Routing
-- ✓ Pinia `useTagsStore` initialized and accessible from all components — Validated in Phase 1: Shell & Routing
-- ✓ Discovery page: display vendor/domain name, usage metrics (frequency, last seen), and user/student counts from mocked data — Validated in Phase 2: Data Layer + Discovery
-- ✓ Discovery page: users can assign tags to vendors/domains — Validated in Phase 2: Data Layer + Discovery
-- ✓ All data backed by editable mock data files (`src/data/*.js`) for same-day sales iteration — Validated in Phase 2: Data Layer + Discovery
-
-### Active
-
-- ✓ DPA page: sortable/filterable DataTable with status badge, signed/expiry dates, and risk labels — Validated in Phase 3: DPA View
-- ✓ At-risk vendor surface: "Top 8 Vendors Needing Attention" card on Dashboard + VendorDrawer DPA section — Validated in Phase 3: DPA View
-- ✓ Risk Position page: donut chart (ECharts) + sortable 5-column vendor table with computed risk tiers (High/Medium/Low) derived from DPA status, usage volume, and 1EdTech certification — Validated in Phase 5: Risk Position View
-- ✓ 1EdTech certification data: visible in VendorDrawer (status badge, standard, certified date) — Validated in Phase 4: 1EdTech View
-- ✓ Tags management: users can create, edit, and delete tags used to categorize vendors/domains — Validated in Phase 6: Tags Management
-- ✓ All data backed by editable mock data files (JSON/JS config) for same-day sales iteration — Validated in Phase 6: Tags Management
-- ✓ Section structure flexible — easy to add or remove pages without structural rework — Validated in Phase 1: Shell & Routing
+- [ ] DPA expiry warning — amber highlight for DPAs expiring within 90 days
+- [ ] Risk table with contributing factors — show what drives each vendor's tier
+- [ ] Click donut chart segment to filter the risk table below
+- [ ] Filter Discovery table by one or more tags
+- [ ] 1EdTech detail — which standards/tiers a vendor holds
+- [ ] Cross-reference 1EdTech certified vendors with Discovery active usage
 
 ### Out of Scope
 
 - Real backend / live data connections — demo uses synthetic data only
-- Authentication / login screen — portal opens directly
-- Student/user PII — all data is synthetic and non-identifying
-- Multi-district support — one fixture district for the demo
+- Authentication / login screen — portal opens directly; login adds friction with no demo benefit
 - Mobile optimization — sales demos happen on desktop/laptop
+- Multi-district support — single fixture district is the right demo scope
+- Bulk import / export (CSV, PDF) — pulls demo attention to operational workflows vs. insight story
+- Full CRUD on vendor records — raises "is this real data?" questions; tag CRUD only
+- Student/user PII — all data is synthetic and non-identifying
 
 ## Context
 
-- Phase 6 complete — Tags Management: SettingsView.vue rewritten as full Tags CRUD page; SEED_TAG_GROUPS exported from tags.js; inline group/tag rename; 8-swatch preset color palette; PrimeVue Dialog confirms for delete + reset; cascade delete cleans assignments; reset-to-defaults restores seed data; v1 milestone complete
-- Phase 5 complete — Risk Position View: ReportsView rewritten as live Risk Position page; RISK_TIER_COLORS constant added to riskLabels.js; PieChart + LegendComponent registered in main.js; donut chart (ECharts) shows High:2 / Medium:7 / Low:18 tier distribution; sortable 5-column vendor table with calcTier formula (DPA status + usage + 1EdTech modifier); VendorDrawer drill-down on row click; DPA tab skeleton removed
-- Phase 4 complete — 1EdTech View: edtech.js enriched with certificationStandard + certifiedDate (27 records, 5 real standards), EDTECH_STATUS_COLORS added to riskLabels.js, VendorDrawer 1EdTech section (between DPA and Privacy Score), dead '1EdTech' tab removed from ReportsView
-- Phase 3 complete — DPA View: Discovery|DPA tab bar, DpaGrid with 6-column sortable table + badge colors, riskLabels.js constants, VendorDrawer DPA section, Dashboard Top 8 Vendors Needing Attention card with KPI tiles
-- Phase 2 complete — Discovery page fully functional: 27-vendor DataTable (sortable, filterable), VendorDrawer slide-over with 10-axis ECharts radar chart, tag assignment via grouped MultiSelect, localStorage persistence, all data from `src/data/*.js`
-- Phase 1 complete — SPA shell with Vue Router (hash history), Pinia, PrimeVue 4 (Aura preset, `#484CE6` primary), Tailwind v4, and 4 stub views with skeleton placeholders
-- Existing codebase is a bare Vue 3 + Vite starter (default scaffold, `HelloWorld.vue` only) — all portal features are net-new
-- Deployed as a static SPA to GitHub Pages; no server-side runtime
-- Sales reps are the primary operators; district admins are the audience
-- The number of portal sections is not fixed — expect it to grow or shrink as the product story evolves
-- Risk Position visualization approach is deliberately undefined — needs a design decision during Phase planning
-- Same-day iteration requirement means mock data must live in standalone files (not hardcoded in components)
+- **v0.5.0 shipped 2026-05-21** — 6 phases, 15 plans, 8 days, ~2,331 source LOC
+- **Stack**: Vue 3.5 + Vite 8 (rolldown) + PrimeVue 4.5 + Tailwind v4 + Pinia 3 + ECharts / vue-echarts
+- **Data**: 27 vendors across 4 `src/data/*.js` files (vendors, discovery, dpa, edtech); `vendorId` is the stable join key across all files
+- **Routing**: `createWebHashHistory` — mandatory for GitHub Pages static hosting
+- **Theme**: PrimeVue Aura preset, SchoolDay primary `#484ce6`, dark sidebar `#111827`
+- Sales reps are the primary operators; district admins are the demo audience
+- Same-day iteration requirement met — any section's data is editable in `src/data/*.js` without touching components
 
 ## Constraints
 
@@ -70,10 +68,16 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Separate pages/routes per section | User confirmed — each section is its own page | — Pending |
-| Mock data in config/JSON files | Same-day iteration requires data decoupled from components | — Pending |
-| No authentication | Demo is guided by a sales rep; login adds friction with no benefit | — Pending |
-| Risk Position visualization | Donut chart (ECharts) + sortable DataTable with RISK_TIER_COLORS badge palette | — Implemented in Phase 5 |
+| `createWebHashHistory` for routing | GitHub Pages cannot serve HTML5 pushstate fallbacks | ✓ Good |
+| Mock data in `src/data/*.js` files | Same-day iteration requires data decoupled from components | ✓ Good |
+| `vendorId` stable join key | Cross-file joins without brittle display-name matching | ✓ Good |
+| `darkModeSelector: false` in PrimeVue | Portal uses structural dark sidebar, not system dark mode | ✓ Good |
+| Risk visualization: donut + table | Donut shows distribution; table enables per-vendor drill-down | ✓ Good |
+| 1EdTech in VendorDrawer only | No standalone 1EdTech page — drawer is the single surface | ✓ Good |
+| Separate pages/routes per section | Each section is its own page for clear navigation | ✓ Good |
+| No authentication | Demo is guided by a sales rep; login adds friction with no benefit | ✓ Good |
+| Vite 8 stub views created early | Rolldown resolves lazy imports at build time; stubs required before Phase 2 | ✓ Good |
+| `@primeuix/themes` import path | Correct PrimeVue 4.x path (not legacy `@primevue/themes` alias) | ✓ Good |
 
 ## Evolution
 
@@ -93,4 +97,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-21 after Phase 6: Tags Management — v1 milestone complete*
+*Last updated: 2026-05-21 after v0.5.0 milestone*

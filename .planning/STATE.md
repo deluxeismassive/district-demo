@@ -1,6 +1,6 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
+milestone: v0.5.0
 milestone_name: milestone
 current_phase: 06
 current_plan: Not started
@@ -24,9 +24,10 @@ progress:
 
 ## Project Reference
 
-**Core value:** Sales reps can walk a district admin prospect through a realistic, data-rich portal that makes the value of the product immediately tangible — and any section can be changed within hours for a specific demo.
+See: .planning/PROJECT.md (updated 2026-05-21)
 
-**Current focus:** Phase 06 — tags-management
+**Core value:** Sales reps can walk a district admin prospect through a realistic, data-rich portal that makes the value of the product immediately tangible — and any section can be changed within hours for a specific demo.
+**Current focus:** Planning next milestone (v2.0)
 
 ---
 
