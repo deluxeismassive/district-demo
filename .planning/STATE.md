@@ -3,19 +3,19 @@ gsd_state_version: 1.0
 milestone: v1.0.0
 milestone_name: Nuxt Migration
 status: executing
-last_updated: "2026-05-21T16:59:05.993Z"
+last_updated: "2026-05-21T20:00:00.000Z"
 last_activity: 2026-05-21
 progress:
   total_phases: 7
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State: District Demo Portal
 
 **Last updated:** 2026-05-21
-**Session:** Milestone v1.0.0 (Nuxt Migration) — Phase 7 Plan 01 complete (Nuxt 4 scaffold), Plan 02 next
+**Session:** Milestone v1.0.0 (Nuxt Migration) — Phase 7 (Nuxt Scaffold) COMPLETE; Phase 8 (Layout & Routing) next
 
 ---
 
@@ -24,16 +24,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-21)
 
 **Core value:** Sales reps can walk a district admin prospect through a realistic, data-rich portal that makes the value of the product immediately tangible — and any section can be changed within hours for a specific demo.
-**Current focus:** Phase 07 — nuxt-scaffold
+**Current focus:** Phase 08 — layout-routing (next)
 
 ---
 
 ## Current Position
 
-Phase: 07 (nuxt-scaffold) — EXECUTING
-Plan: 2 of 2
-Status: Plan 01 complete (NUXT-01, NUXT-02); Plan 02 ready (Pinia stores + ECharts smoke test)
-Last activity: 2026-05-21 -- Completed 07-01-PLAN.md (Nuxt 4 scaffold)
+Phase: 07 (nuxt-scaffold) — COMPLETE
+Plans: 2 of 2 done
+Status: All 5 Phase 7 ROADMAP success criteria empirically verified; NUXT-01/02/03 closed
+Last activity: 2026-05-21 -- Completed 07-02-PLAN.md (Pinia SSR-safe + ECharts smoke test + phase-gate)
 
 ---
 
@@ -72,23 +72,23 @@ None.
 
 ## Session Continuity
 
-**To resume:** Run `/gsd:execute-phase 7` to execute Plan 07-02 (Pinia stores + ECharts smoke test).
+**To resume:** Run `/gsd:plan-phase 8` to plan Phase 8 (Layout & Routing).
 
-**Stopped at:** Completed 07-01-PLAN.md (Nuxt 4 scaffold)
+**Stopped at:** Completed 07-02-PLAN.md (Pinia SSR-safe + ECharts smoke test + clean-install phase gate)
 
 **Context for next session:**
 
-- Plan 07-01 COMPLETE: Nuxt 4 scaffold ready — `npm install`, `npm run typecheck`, `npm run build` all exit 0
-- NUXT-01 (Nuxt 4 + TS + no PrimeVue) and NUXT-02 (Nuxt UI v4 + `<UApp>` wrapping root) both verified
-- All four Nuxt modules registered: @nuxt/ui, @pinia/nuxt, pinia-plugin-persistedstate/nuxt, nuxt-echarts
-- Brand palette and accent vars live in app/assets/css/main.css @theme static; app.config.ts maps ui.colors.primary: 'brand'
-- v0.5.0 entry points deleted (src/main.js, src/App.vue, src/style.css, vite.config.js, index.html, dist/)
-- Preserved for later phases: src/data/, src/components/, src/views/, src/router/, src/stores/, public/
-- Plan 07-02 NEXT: migrate src/stores/tags.js to app/stores/tags.ts (SSR-safe + persist: true), wire ECharts smoke test
-- Phase 7 must resolve SSR blockers BEFORE any page work: localStorage crash and ECharts window reference (covered in Plan 07-02)
-- Phase 10 (Discovery) proves all major patterns — UTable, USlideover, ECharts, USelectMenu
-- Phase 11 (DPA + Dashboard) and Phase 12 (Risk + Tags) both depend on Phase 9 data layer only
-- Deployment (Phase 13) is intentionally last — static generate confirmed working after all pages
+- Phase 7 COMPLETE: All 5 ROADMAP success criteria empirically verified on a clean reinstall.
+- NUXT-01, NUXT-02, NUXT-03 all closed.
+- `app/stores/tags.ts` is the canonical Pinia store — typed, persist:true, SEED_TAG_GROUPS exported with 4 groups + 12 children, hex colors `#484ce6`/`#da8231`/`#16a34a`/`#dc2626` preserved from v0.5.0.
+- `src/stores/tags.js` DELETED; `src/stores/` directory is empty (kept for historical clarity, not crawled by Nuxt).
+- `app/app.vue` is the Plan 07-01 stub (template-only, no script). Phase 8 will replace contents with `<NuxtPage />`.
+- nuxt-echarts SSR is confirmed working: smoke test (build + dev) showed `VChartIsland.server` chunk emitted, no `window is not defined`.
+- Dev server uses port 3000 by default; if 3000 is busy locally Nuxt picks the next free port (test machine got 3001).
+- Phase 8 NEXT: create `app/layouts/default.vue` with dark sidebar nav using NuxtLink + definePageMeta; stub pages for `/`, `/discovery`, `/dpa`, `/risk`, `/tags`.
+- Phase 10 (Discovery) proves all major patterns — UTable, USlideover, ECharts, USelectMenu.
+- Phase 11 (DPA + Dashboard) and Phase 12 (Risk + Tags) both depend on Phase 9 data layer only.
+- Deployment (Phase 13) is intentionally last — static generate confirmed working after all pages.
 
 ---
 *State initialized: 2026-05-13 | Reset for v1.0.0: 2026-05-21 | Roadmap created: 2026-05-21*

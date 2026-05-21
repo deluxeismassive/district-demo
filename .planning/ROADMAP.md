@@ -23,7 +23,7 @@
 
 **Milestone Goal:** Migrate from Vue 3 + Vite SPA to Nuxt 4 SSR app — TypeScript throughout, Nuxt UI v3, server/api/ mock data layer, AWS Amplify deployment config. All existing demo features preserved.
 
-- [ ] **Phase 7: Nuxt Scaffold** - Nuxt 4 project with TypeScript, Nuxt UI v3 replacing PrimeVue, Pinia SSR-safe with localStorage persistence
+- [x] **Phase 7: Nuxt Scaffold** - Nuxt 4 project with TypeScript, Nuxt UI v3 replacing PrimeVue, Pinia SSR-safe with localStorage persistence (2/2 plans) — completed 2026-05-21
 - [ ] **Phase 8: Layout & Routing** - File-based routing for all 5 sections, default.vue app shell with dark sidebar
 - [ ] **Phase 9: Server Data Layer** - server/api/ routes serving mock data; pages use useFetch exclusively
 - [ ] **Phase 10: Discovery Page** - Fully functional Discovery with UTable, USlideover VendorDrawer, ECharts radar (ClientOnly), USelectMenu tag assignment
@@ -47,7 +47,7 @@
 
 Plans:
 - [x] 07-01-PLAN.md — Nuxt 4 scaffold: package.json rewrite, nuxt.config.ts + tsconfig.json + app/app.vue (UApp) + app/app.config.ts + app/assets/css/main.css; delete v0.5.0 entry points; Nuxt UI v4
-- [ ] 07-02-PLAN.md — Pinia + ECharts SSR-safe wiring: migrate tags store to app/stores/tags.ts with persist:true, verify nuxt-echarts SSR via smoke test, phase-gate full verify
+- [x] 07-02-PLAN.md — Pinia + ECharts SSR-safe wiring: migrate tags store to app/stores/tags.ts with persist:true, verify nuxt-echarts SSR via smoke test, phase-gate full verify
 
 ### Phase 8: Layout & Routing
 **Goal**: All 5 demo sections resolve via file-based routing and the persistent app shell renders correctly on every page
@@ -153,7 +153,7 @@ Plans:
 | 4. 1EdTech View | v0.5.0 | 2/2 | Complete | 2026-05-13 |
 | 5. Risk Position View | v0.5.0 | 2/2 | Complete | 2026-05-13 |
 | 6. Tags Management | v0.5.0 | 2/2 | Complete | 2026-05-21 |
-| 7. Nuxt Scaffold | v1.0.0 | 0/2 | Not started | - |
+| 7. Nuxt Scaffold | v1.0.0 | 2/2 | Complete | 2026-05-21 |
 | 8. Layout & Routing | v1.0.0 | 0/1 | Not started | - |
 | 9. Server Data Layer | v1.0.0 | 0/2 | Not started | - |
 | 10. Discovery Page | v1.0.0 | 0/3 | Not started | - |
@@ -163,4 +163,4 @@ Plans:
 
 ---
 
-*Last updated: 2026-05-21 — v1.0.0 Nuxt Migration roadmap created*
+*Last updated: 2026-05-21 — Phase 7 (Nuxt Scaffold) complete; Phase 8 next*
