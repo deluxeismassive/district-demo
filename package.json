@@ -10,6 +10,7 @@
     "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
+    "@nuxt/ui": "^4.8.0",
     "@primeuix/themes": "^2.0.3",
     "echarts": "^6.0.0",
     "pinia": "^3.0.4",
