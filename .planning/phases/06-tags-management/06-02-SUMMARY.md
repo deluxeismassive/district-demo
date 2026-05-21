@@ -33,6 +33,8 @@ key-decisions:
   - "swatchOpenForGroupId set on startEditGroup so color dot is always clickable — both swatch toggle and edit open the palette"
   - "pickColor does not close swatch panel — user may audition multiple colors; panel closes only on confirmEdit"
 
+requirements-completed: [TAGS-01]
+
 # Metrics
 duration: 3min
 completed: 2026-05-21
@@ -46,8 +48,8 @@ completed: 2026-05-21
 
 - **Duration:** 3min
 - **Started:** 2026-05-21T14:53:26Z
-- **Completed:** 2026-05-21T14:56:30Z (Task 1 — awaiting human verify for Task 2)
-- **Tasks:** 1 of 2 complete (Task 2 is human-verify checkpoint)
+- **Completed:** 2026-05-21T14:56:30Z
+- **Tasks:** 2 of 2 complete (Task 2 human-verify approved)
 - **Files modified:** 1
 
 ## Accomplishments
@@ -68,6 +70,7 @@ completed: 2026-05-21
 Each task was committed atomically:
 
 1. **Task 1: Rewrite SettingsView.vue** - `4c4dcf8` (feat)
+2. **Task 2: Human smoke test of the Tags management page** - `f4a56f2` (checkpoint commit) — human-verify approved, all 11 checklist steps passed
 
 ## Files Created/Modified
 
@@ -97,14 +100,15 @@ None — no external service configuration required.
 
 ## Next Phase Readiness
 
-- Task 2 (human-verify) is pending — user must smoke test the Tags page in the browser
-- After user approval: Phase 6 complete; TAGS-01 satisfied; v1 milestone complete
-- Dev server running at http://localhost:5179/district-demo/
+- Phase 6 complete; TAGS-01 satisfied; v1 milestone complete
+- All 14 v1 requirements covered across Phases 1-6
+- Human smoke test approved all 11 checklist steps: initial render, inline rename (group + tag), color swatch, add tag, add group, empty name rollback, delete tag (cascade), delete group (cascade), reset to defaults, Discovery integration
 
 ## Self-Check: PASSED
 
 - `src/views/SettingsView.vue` exists: FOUND (317 lines, >= 150 minimum)
-- Commit `4c4dcf8` exists: FOUND
+- Commit `4c4dcf8` (Task 1) exists: FOUND
+- Commit `f4a56f2` (checkpoint docs) exists: FOUND
 - All 8 hex colors present: FOUND
 - `@mousedown.prevent` count >= 2: FOUND (2)
 - `nextTick(` count >= 2: FOUND (4)
@@ -114,6 +118,7 @@ None — no external service configuration required.
 - `tagsStore.assignments = {}` present: FOUND
 - No `import Skeleton`: CONFIRMED absent
 - No old `Settings` h1: CONFIRMED absent
+- Human smoke test (Task 2): APPROVED — all 11 checklist steps passed
 
 ---
 *Phase: 06-tags-management*
