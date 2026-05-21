@@ -1,5 +1,5 @@
 <script setup>
-import { ref, nextTick } from 'vue'
+import { shallowRef, nextTick } from 'vue'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import { useTagsStore, SEED_TAG_GROUPS } from '../stores/tags.js'
@@ -16,27 +16,34 @@ const PRESET_COLORS = [
 ]
 
 const tagsStore = useTagsStore()
-const editingId = ref(null)               // id of group OR tag currently being renamed (null = no edit)
-const editingName = ref('')               // draft name while editing
-const swatchOpenForGroupId = ref(null)    // which group has its swatch palette open (only one at a time)
-const deleteDialogVisible = ref(false)
-const resetDialogVisible = ref(false)
-const pendingDelete = ref(null)           // { type: 'tag' | 'group', group, tag? }
-const pendingDeleteCount = ref(0)
+const editingId = shallowRef(null)               // id of group OR tag currently being renamed (null = no edit)
+const editingName = shallowRef('')               // draft name while editing
+const swatchOpenForGroupId = shallowRef(null)    // which group has its swatch palette open (only one at a time)
+const deleteDialogVisible = shallowRef(false)
+const resetDialogVisible = shallowRef(false)
+const pendingDelete = shallowRef(null)           // { type: 'tag' | 'group', group, tag? }
+const pendingDeleteCount = shallowRef(0)
 
 // --- Edit lifecycle (RESEARCH Pattern 1) ---
+
+const editInputRefs = {}
+
+function registerEditRef(id, el) {
+  if (el) editInputRefs[id] = el
+  else delete editInputRefs[id]
+}
 
 function startEditGroup(group) {
   editingId.value = group.id
   editingName.value = group.name
   swatchOpenForGroupId.value = group.id   // show swatch while renaming a group
-  nextTick(() => document.getElementById(`edit-${group.id}`)?.focus())
+  nextTick(() => editInputRefs[group.id]?.focus())
 }
 
 function startEditTag(tag) {
   editingId.value = tag.id
   editingName.value = tag.name
-  nextTick(() => document.getElementById(`edit-${tag.id}`)?.focus())
+  nextTick(() => editInputRefs[tag.id]?.focus())
 }
 
 function confirmEdit(item, parentGroup = null) {
@@ -203,7 +210,7 @@ function confirmReset() {
         </template>
         <template v-else>
           <input
-            :id="`edit-${group.id}`"
+            :ref="el => registerEditRef(group.id, el)"
             v-model="editingName"
             class="text-base font-semibold border-b border-primary outline-none bg-transparent px-1"
             placeholder="Group name..."
@@ -255,7 +262,7 @@ function confirmReset() {
           </template>
           <template v-else>
             <input
-              :id="`edit-${tag.id}`"
+              :ref="el => registerEditRef(tag.id, el)"
               v-model="editingName"
               class="text-sm border-b border-primary outline-none bg-transparent px-1"
               placeholder="Tag name..."

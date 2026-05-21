@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { shallowRef, ref, computed } from 'vue'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import InputText from 'primevue/inputtext'
@@ -17,36 +17,14 @@ const tagsStore = useTagsStore()
 
 // Tab state — Discovery tab is the default
 const tabs = ['Discovery', 'DPA']
-const activeTab = ref('Discovery')
+const activeTab = shallowRef('Discovery')
 
 // Join vendors with discovery by vendorId (Pattern 2 — view-level join)
 const discoveryMap = Object.fromEntries(
   discoveryData.map((d) => [d.vendorId, d])
 )
 
-const tableRows = computed(() =>
-  vendorsData.map((v) => ({
-    ...v,
-    ...discoveryMap[v.vendorId]
-  }))
-)
-
-// Global filter — Name + Category only (per RESEARCH.md anti-pattern note)
-const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS }
-})
-
-// Drawer state
-const drawerVisible = ref(false)
-const selectedVendor = ref(null)
-
-function onRowClick(event) {
-  selectedVendor.value = event.data
-  drawerVisible.value = true
-}
-
-// Tag pill helpers
-// Build a flat childId -> { name, parentColor, parentName } map for O(1) lookup
+// Build a flat childId -> { name, parentColor, parentId } map for O(1) lookup
 const childTagIndex = computed(() => {
   const idx = {}
   for (const group of tagsStore.tagGroups) {
@@ -61,13 +39,33 @@ const childTagIndex = computed(() => {
   return idx
 })
 
-function tagsForVendor(vendorId) {
-  const ids = tagsStore.assignments[vendorId] ?? []
-  // Resolve to { name, parentColor, parentId }, then group/sort by parentId for visual clustering (D-18)
-  return ids
-    .map((id) => ({ id, ...childTagIndex.value[id] }))
-    .filter((t) => t.name)
-    .sort((a, b) => a.parentId.localeCompare(b.parentId))
+const tableRows = computed(() =>
+  vendorsData.map((v) => {
+    const ids = tagsStore.assignments[v.vendorId] ?? []
+    const tags = ids
+      .map((id) => ({ id, ...childTagIndex.value[id] }))
+      .filter((t) => t.name)
+      .sort((a, b) => a.parentId.localeCompare(b.parentId))
+    return {
+      ...v,
+      ...discoveryMap[v.vendorId],
+      tags
+    }
+  })
+)
+
+// Global filter — Name + Category only (per RESEARCH.md anti-pattern note)
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS }
+})
+
+// Drawer state
+const drawerVisible = shallowRef(false)
+const selectedVendor = shallowRef(null)
+
+function onRowClick(event) {
+  selectedVendor.value = event.data
+  drawerVisible.value = true
 }
 
 // Vendor count reflects filtered view — DataTable exposes filtered length via @value-change but
@@ -150,7 +148,7 @@ const filteredCount = computed(() => {
           <template #body="{ data }">
             <div class="flex flex-wrap gap-1">
               <Tag
-                v-for="t in tagsForVendor(data.vendorId)"
+                v-for="t in data.tags"
                 :key="t.id"
                 :value="t.name"
                 :style="{ backgroundColor: t.parentColor, color: '#ffffff' }"

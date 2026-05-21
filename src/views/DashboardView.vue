@@ -49,7 +49,7 @@ const needsReviewCount = computed(
       </div>
       <div class="bg-white border border-gray-200 rounded-lg p-4">
         <div class="text-sm text-gray-500">Needs Review</div>
-        <div class="text-2xl font-semibold mt-1" style="color: #dc2626;">{{ needsReviewCount }}</div>
+        <div class="text-2xl font-semibold mt-1 text-red-600">{{ needsReviewCount }}</div>
       </div>
     </div>
 

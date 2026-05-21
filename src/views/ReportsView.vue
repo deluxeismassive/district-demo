@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { shallowRef, computed } from 'vue'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Tag from 'primevue/tag'
@@ -88,8 +88,8 @@ const chartOption = computed(() => ({
 }))
 
 // Drawer state — pattern lifted from DiscoveryView.
-const drawerVisible = ref(false)
-const selectedVendor = ref(null)
+const drawerVisible = shallowRef(false)
+const selectedVendor = shallowRef(null)
 
 function onRowClick(event) {
   selectedVendor.value = event.data

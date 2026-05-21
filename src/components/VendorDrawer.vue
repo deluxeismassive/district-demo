@@ -10,11 +10,10 @@ import edtechData from '../data/edtech.js'
 import { DPA_STATUS_COLORS, RISK_LABEL_COLORS, EDTECH_STATUS_COLORS } from '../data/riskLabels.js'
 
 const props = defineProps({
-  vendor: { type: Object, default: null },
-  visible: { type: Boolean, default: false }
+  vendor: { type: Object, default: null }
 })
 
-const emit = defineEmits(['update:visible'])
+const visible = defineModel('visible', { type: Boolean, default: false })
 
 const tagsStore = useTagsStore()
 
@@ -29,11 +28,6 @@ const edtechMap = Object.fromEntries(edtechData.map((d) => [d.vendorId, d]))
 const vendorEdtech = computed(() =>
   props.vendor ? edtechMap[props.vendor.vendorId] ?? null : null
 )
-
-const visibleProxy = computed({
-  get: () => props.visible,
-  set: (val) => emit('update:visible', val)
-})
 
 const totalPrivacyScore = computed(() =>
   props.vendor
@@ -96,7 +90,7 @@ const radarOption = computed(() => {
 
 <template>
   <Drawer
-    v-model:visible="visibleProxy"
+    v-model:visible="visible"
     position="right"
     :style="{ width: '480px' }"
   >
