@@ -2,21 +2,21 @@
 gsd_state_version: 1.0
 milestone: v1.0.0
 milestone_name: Nuxt Migration
-status: executing
-stopped_at: Completed 09-01-PLAN.md (server/data + shared/types migration; 27 vendors with merged discovery; v0.5.0 src/data/*.js deleted; typecheck + build green)
-last_updated: "2026-05-21T20:42:41.961Z"
+status: verifying
+stopped_at: Completed 09-02-PLAN.md (server/api routes + useFetch wiring; Phase 9 done)
+last_updated: "2026-05-21T20:51:50.114Z"
 last_activity: 2026-05-21
 progress:
   total_phases: 7
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 5
-  completed_plans: 4
+  completed_plans: 5
 ---
 
 # Project State: District Demo Portal
 
 **Last updated:** 2026-05-21
-**Session:** Milestone v1.0.0 (Nuxt Migration) — Phase 9-01 (typed data layer migration) COMPLETE; Phase 9-02 (server/api routes + useFetch wiring) next
+**Session:** Milestone v1.0.0 (Nuxt Migration) — Phase 9 COMPLETE; server/api routes + useFetch demo wired; Phase 10 (Discovery UTable + USlideover + ECharts) next after `/gsd:verify-work`
 
 ---
 
@@ -31,10 +31,10 @@ See: .planning/PROJECT.md (updated 2026-05-21)
 
 ## Current Position
 
-Phase: 09 (server-data-layer) — EXECUTING
-Plan: 2 of 2
-Plans: 3 of 3 done (cumulative across executed phases)
-Status: Ready to execute
+Phase: 09 (server-data-layer) — COMPLETE (pending /gsd:verify-work)
+Plan: 2 of 2 done
+Plans: 5 of 5 done (cumulative across executed phases — Phases 7, 8, 9)
+Status: Phase complete — ready for verification
 Last activity: 2026-05-21
 
 ---
@@ -76,6 +76,10 @@ Last activity: 2026-05-21
 | Edtech orphan reconciliation: no-op | Research §4 anticipated 28 source records with one orphan to drop; actual `src/data/edtech.js` shipped with exactly 27 records and 0 vendorId orphans — migration verbatim; documented inline in `server/data/edtech.ts` | Phase 9-01 |
 | Explicit `Vendor[]` / `DpaRecord[]` / `EdtechRecord[]` annotation on data arrays | Forces compile-time validation against the interface — TypeScript only catches missing fields without explicit annotation (research Pitfall §7) | Phase 9-01 |
 | v0.5.0 `src/data/*.js` deleted in Plan 09-01 (not deferred) | typecheck + `npm run build` green without them; deferring would leave a dead-code graveyard. `src/views/` and `src/components/` still reference them on disk but live outside Nuxt's scan path — deleted incrementally by Phases 10-12 | Phase 9-01 |
+| Nitro event handler shape | `server/api/X.get.ts` is 3 lines: `import X from '~~/server/data/X'` + `export default defineEventHandler(() => X)`. `defineEventHandler` auto-imported by Nuxt 4 (no `from 'h3'`); return plain typed array (no `new Response(...)` wrapping — kills type inference per research Pitfall #2) | Phase 9-02 |
+| useFetch with zero manual generics | Nitro's typed-routes inference flows the handler return type to `useFetch('/api/vendors')` automatically; `useFetch<Vendor[]>(...)` explicitly avoided as a drift risk (research §3, §10) | Phase 9-02 |
+| `default: () => []` on useFetch | Promotes data ref from `Ref<Vendor[] \| null>` to `Ref<Vendor[]>`; eliminates template null guard so `{{ vendors.length }}` renders safely under SSR (research §7, Pitfall #4) | Phase 9-02 |
+| Phase 9 wires ONE page (`app/pages/discovery.vue`) as proof-of-typing demo | Other 4 page stubs untouched until Phases 10-12 own them; ROADMAP success criterion 4 satisfied by single wiring (research §9) | Phase 9-02 |
 
 ### Active Blockers
 
@@ -85,9 +89,9 @@ None.
 
 ## Session Continuity
 
-**To resume:** Plan 09-02 next — create `server/api/{vendors,dpa,edtech}.get.ts` event handlers that import the typed `server/data/*.ts` arrays, and wire `useFetch('/api/vendors')` into `app/pages/discovery.vue` as the proof-of-typing demo.
+**To resume:** Run `/gsd:verify-work` to manually verify Phase 9 ROADMAP success criteria 2 (DevTools Network tab on /discovery shows /api/vendors XHR) and 3 (hot-swap server/data/dpa.ts → reload → see change). Then proceed to Phase 10 — Discovery page UTable + USlideover + ECharts radar + USelectMenu tag assignment, extending the existing `useFetch('/api/vendors')` wiring in `app/pages/discovery.vue`.
 
-**Stopped at:** Completed 09-01-PLAN.md (server/data + shared/types migration; 27 vendors with merged discovery; v0.5.0 src/data/*.js deleted; typecheck + build green)
+**Stopped at:** Completed 09-02-PLAN.md (server/api routes + useFetch wiring; Phase 9 done)
 
 **Context for next session:**
 
@@ -101,11 +105,11 @@ None.
 - `app/types/page-meta.d.ts` augments PageMeta with `nav?`, `navLabel?`, `navIcon?`, `navOrder?` — single source of truth, Phase 9+ MUST NOT redeclare.
 - 5 page stubs exist at `app/pages/{index,discovery,dpa,risk,tags}.vue` with `<h1>` + one-line `<p>` placeholders; ready to receive `useFetch` content in Phase 9.
 - nuxt-echarts SSR confirmed working from Phase 7-02 smoke test.
-- Dev server: port 3000 by default; if busy Nuxt picks the next free port (test machine got 3001 — same as Phase 7-02).
+- Dev server: port 3000 by default; if busy Nuxt picks the next free port (test machine got 3001 in earlier phases; Phase 9-02 run bound 3000 cleanly).
 - Dev-server log on Windows uses ANSI escape codes around port number — strip with `sed -r 's/\x1b\[[0-9;]*m//g'` before extracting via `grep -oE 'localhost:[0-9]+'`. Dev server kill via netstat-listener-PID + `taskkill /F /PID` (npm spawns nuxi as child so background-launcher PID is unreliable).
 - Phase 9-01 COMPLETE: typed data layer migrated — `shared/types/data.ts` (Vendor/DpaRecord/EdtechRecord interfaces, auto-imported on server+client), `shared/utils/riskLabels.ts` (5 color maps), `server/data/{vendors,dpa,edtech}.ts` (27 records each, explicit type annotations); discovery.js metrics merged into Vendor inline by vendorId; all 5 v0.5.0 `src/data/*.js` files deleted; typecheck + build green.
-- Phase 9-02 NEXT: 3 trivial `server/api/*.get.ts` event handlers + wire `useFetch('/api/vendors')` into `app/pages/discovery.vue` as proof-of-typing demo (closes DATA-01 and DATA-02).
-- Phase 10 (Discovery) proves all major patterns — UTable, USlideover, ECharts, USelectMenu.
+- Phase 9-02 COMPLETE: 3 Nitro event handlers added at `server/api/{vendors,dpa,edtech}.get.ts` (3 lines each); `app/pages/discovery.vue` rewired to `useFetch('/api/vendors', { default: () => [] })` with no manual generic; live dev-server curl panel green (all 3 routes → 200 + application/json + 27 records; `/discovery` SSR HTML contains `Loaded 27 vendors`); `npm run typecheck` and `npm run build` exit 0; DATA-01 + DATA-02 closed.
+- Phase 10 (Discovery) NEXT after `/gsd:verify-work`: extend `app/pages/discovery.vue`'s existing `useFetch` with UTable columns, USlideover VendorDrawer, ECharts radar, USelectMenu tag assignment. NO changes needed to the fetch wiring itself — the typed `Vendor[]` is already flowing.
 - Phase 11 (DPA + Dashboard) and Phase 12 (Risk + Tags) both depend on Phase 9 data layer only.
 - Deployment (Phase 13) is intentionally last — static generate confirmed working after all pages.
 
