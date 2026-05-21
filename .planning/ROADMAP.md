@@ -26,7 +26,7 @@
 - [x] **Phase 7: Nuxt Scaffold** - Nuxt 4 project with TypeScript, Nuxt UI v3 replacing PrimeVue, Pinia SSR-safe with localStorage persistence (2/2 plans) — completed 2026-05-21
 - [x] **Phase 8: Layout & Routing** - File-based routing for all 5 sections, default.vue app shell with dark sidebar (1/1 plans) — completed 2026-05-21
 - [x] **Phase 9: Server Data Layer** - server/api/ routes serving mock data; pages use useFetch exclusively (2/2 plans) — completed 2026-05-21
-- [ ] **Phase 10: Discovery Page** - Fully functional Discovery with UTable, USlideover VendorDrawer, ECharts radar (ClientOnly), USelectMenu tag assignment
+- [x] **Phase 10: Discovery Page** - Fully functional Discovery with UTable, USlideover VendorDrawer, ECharts radar (ClientOnly), USelectMenu tag assignment (completed 2026-05-21)
 - [ ] **Phase 11: DPA + Dashboard** - DPA table with UBadge color-coded statuses; Dashboard "Top 8 Vendors Needing Attention" card
 - [ ] **Phase 12: Risk Position + Tags** - Risk donut chart (ClientOnly) + vendor tier UTable; Tags Management CRUD with UModal
 - [ ] **Phase 13: Deployment** - Static generate for GitHub Pages; nuxt.config.ts Amplify glidepath (3-line switch to SSR)
@@ -93,7 +93,7 @@ Plans:
 Plans:
 - [x] 10-01-PLAN.md — Discovery UTable + search filter + tag chip cell (sort headers via render-fn helper; useDebounce filter; @vueuse/core hoisted explicit; @select stub for drawer handoff)
 - [x] 10-02-PLAN.md — VendorDrawer USlideover extraction (DPA + 1EdTech via useFetch; 10-axis ECharts radar in ClientOnly with USkeleton fallback; v0.5.0 src/ cleanup)
-- [ ] 10-03-PLAN.md — Tag assignment via setVendorTags action (per-row compact USelectMenu + drawer USelectMenu; Pinia write-back; persists across navigation)
+- [x] 10-03-PLAN.md — Tag assignment via setVendorTags action (per-row compact USelectMenu + drawer USelectMenu; Pinia write-back; persists across navigation)
 **UI hint**: yes
 
 ### Phase 11: DPA + Dashboard
@@ -156,7 +156,7 @@ Plans:
 | 7. Nuxt Scaffold | v1.0.0 | 2/2 | Complete | 2026-05-21 |
 | 8. Layout & Routing | v1.0.0 | 1/1 | Complete | 2026-05-21 |
 | 9. Server Data Layer | v1.0.0 | 2/2 | Complete | 2026-05-21 |
-| 10. Discovery Page | v1.0.0 | 2/3 | In Progress|  |
+| 10. Discovery Page | v1.0.0 | 3/3 | Complete   | 2026-05-21 |
 | 11. DPA + Dashboard | v1.0.0 | 0/2 | Not started | - |
 | 12. Risk Position + Tags | v1.0.0 | 0/2 | Not started | - |
 | 13. Deployment | v1.0.0 | 0/1 | Not started | - |

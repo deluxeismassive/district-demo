@@ -26,7 +26,7 @@
 
 ### Pages
 
-- [ ] **PAGE-01**: Discovery page fully functional — `UTable` with column sort and search filter, `USlideover` VendorDrawer with ECharts radar chart (client-only via `<ClientOnly>` or `nuxt-echarts`), `USelectMenu` tag assignment with tag display
+- [x] **PAGE-01**: Discovery page fully functional — `UTable` with column sort and search filter, `USlideover` VendorDrawer with ECharts radar chart (client-only via `<ClientOnly>` or `nuxt-echarts`), `USelectMenu` tag assignment with tag display
 - [ ] **PAGE-02**: DPA page fully functional — `UTable` with column sort and filter, color-coded `UBadge` status badges for Signed/Unsigned/Expired/Pending
 - [ ] **PAGE-03**: Risk Position page fully functional — donut chart (`<VChartFull>` or `<ClientOnly>` wrapped) + `UTable` sortable vendor tier table with `UBadge` tier badges
 - [ ] **PAGE-04**: Tags Management page fully functional — inline CRUD, `UModal` delete confirmation dialog, cascade delete cleans vendor assignments, reset-to-defaults
@@ -84,7 +84,7 @@
 | LAYOUT-01 | Phase 8 | Complete (2026-05-21) |
 | DATA-01 | Phase 9 | Complete (2026-05-21) |
 | DATA-02 | Phase 9 | Complete (2026-05-21) |
-| PAGE-01 | Phase 10 | Not started |
+| PAGE-01 | Phase 10 | Complete (2026-05-21) |
 | PAGE-02 | Phase 11 | Not started |
 | PAGE-05 | Phase 11 | Not started |
 | PAGE-03 | Phase 12 | Not started |

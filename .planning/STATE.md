@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0.0
 milestone_name: Nuxt Migration
-status: executing
-stopped_at: Completed 10-02-PLAN.md (Drawer surface live; tag-assign still open via 10-03)
-last_updated: "2026-05-21T22:43:17.365Z"
+status: verifying
+stopped_at: Completed 10-03-PLAN.md (Phase 10 complete; PAGE-01 closed)
+last_updated: "2026-05-21T22:53:04.781Z"
 last_activity: 2026-05-21
 progress:
   total_phases: 7
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 8
-  completed_plans: 7
+  completed_plans: 8
 ---
 
 # Project State: District Demo Portal
@@ -34,7 +34,7 @@ See: .planning/PROJECT.md (updated 2026-05-21)
 Phase: 10 (discovery-page) — EXECUTING
 Plan: 3 of 3
 Plans: 5 of 5 done (cumulative across executed phases — Phases 7, 8, 9)
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-05-21
 
 ---
@@ -80,6 +80,12 @@ Last activity: 2026-05-21
 | useFetch with zero manual generics | Nitro's typed-routes inference flows the handler return type to `useFetch('/api/vendors')` automatically; `useFetch<Vendor[]>(...)` explicitly avoided as a drift risk (research §3, §10) | Phase 9-02 |
 | `default: () => []` on useFetch | Promotes data ref from `Ref<Vendor[] \| null>` to `Ref<Vendor[]>`; eliminates template null guard so `{{ vendors.length }}` renders safely under SSR (research §7, Pitfall #4) | Phase 9-02 |
 | Phase 9 wires ONE page (`app/pages/discovery.vue`) as proof-of-typing demo | Other 4 page stubs untouched until Phases 10-12 own them; ROADMAP success criterion 4 satisfied by single wiring (research §9) | Phase 9-02 |
+| Discovery table chip cell + sortHeader helper + manual debounced filter pattern | sortHeader closure + useDebounce(search, 200) + UBadge `color="neutral" :style="{backgroundColor: hex}"` — reused by Phase 11 DPA table verbatim | Phase 10-01 |
+| Drawer state lifting via single page-level selectedVendorId + selectedVendor + drawerOpen get/set | One drawer instance at page level (not per-row); USlideover v-model:open via computed bridge; clears selectedVendorId on close — Phase 11 DPA view reuses VendorDrawer.vue as-is | Phase 10-02 |
+| ClientOnly wrap for interaction-mounted ECharts; NOT wrapped for initial-SSR ECharts | Drawer radar (interaction-mounted) → ClientOnly + USkeleton fallback; Phase 12 Risk donut (initial SSR) → no wrap, let nuxt-echarts handle SVG fallback. Formalizes Phase 7 anti-pattern reconciliation | Phase 10-02 |
+| Pinia setup-store action pattern (named fn inside callback + included in return) | `setVendorTags(vendorId, tagIds)` + empty-array delete branch + `clearVendorTags(vendorId)` — grep-able write path; enables Phase 12 cascade-delete reuse; keeps localStorage JSON tidy | Phase 10-03 |
+| Two-surface single-action pattern for USelectMenu (per-row + drawer share one Pinia action) | Both surfaces call `tagsStore.setVendorTags(vendorId, ids)` via explicit `:model-value` + `@update:model-value` binding; reactivity flows back to #tags-cell chip slot through tableRows computed | Phase 10-03 |
+| USelectMenu :ui slot key is `base` not `trigger` (verified vs installed theme) | Plan §interfaces snippet had `:ui="{ trigger: 'w-auto' }"` — invalid; the SelectMenu theme (extends Select) uses `base` for the trigger button. Documented as Plan 10-03 deviation; carry-forward: always cross-check Nuxt UI v4 :ui slot keys against `node_modules/@nuxt/ui/dist/shared/ui.*.mjs` before authoring | Phase 10-03 |
 
 ### Active Blockers
 
@@ -89,9 +95,9 @@ None.
 
 ## Session Continuity
 
-**To resume:** Run `/gsd:verify-work` to manually verify Phase 9 ROADMAP success criteria 2 (DevTools Network tab on /discovery shows /api/vendors XHR) and 3 (hot-swap server/data/dpa.ts → reload → see change). Then proceed to Phase 10 — Discovery page UTable + USlideover + ECharts radar + USelectMenu tag assignment, extending the existing `useFetch('/api/vendors')` wiring in `app/pages/discovery.vue`.
+**To resume:** Run `/gsd:verify-work` to manually verify Phase 10 ROADMAP success criteria (UTable sort + filter, drawer + radar, USelectMenu tag assign + persistence). Per Plan 10-03 SUMMARY § "Manual UAT" — assign tags via per-row `+` trigger → chips appear; open drawer → same selection visible; add tag from drawer → row chip updates live; reload `/discovery` → chips still present; navigate to `/` then back → chips still present; remove all tags → localStorage entry deleted. After verify-work, proceed to Phase 11 (DPA + Dashboard).
 
-**Stopped at:** Completed 10-02-PLAN.md (Drawer surface live; tag-assign still open via 10-03)
+**Stopped at:** Completed 10-03-PLAN.md (Phase 10 complete; PAGE-01 closed)
 
 **Context for next session:**
 
@@ -109,7 +115,16 @@ None.
 - Dev-server log on Windows uses ANSI escape codes around port number — strip with `sed -r 's/\x1b\[[0-9;]*m//g'` before extracting via `grep -oE 'localhost:[0-9]+'`. Dev server kill via netstat-listener-PID + `taskkill /F /PID` (npm spawns nuxi as child so background-launcher PID is unreliable).
 - Phase 9-01 COMPLETE: typed data layer migrated — `shared/types/data.ts` (Vendor/DpaRecord/EdtechRecord interfaces, auto-imported on server+client), `shared/utils/riskLabels.ts` (5 color maps), `server/data/{vendors,dpa,edtech}.ts` (27 records each, explicit type annotations); discovery.js metrics merged into Vendor inline by vendorId; all 5 v0.5.0 `src/data/*.js` files deleted; typecheck + build green.
 - Phase 9-02 COMPLETE: 3 Nitro event handlers added at `server/api/{vendors,dpa,edtech}.get.ts` (3 lines each); `app/pages/discovery.vue` rewired to `useFetch('/api/vendors', { default: () => [] })` with no manual generic; live dev-server curl panel green (all 3 routes → 200 + application/json + 27 records; `/discovery` SSR HTML contains `Loaded 27 vendors`); `npm run typecheck` and `npm run build` exit 0; DATA-01 + DATA-02 closed.
-- Phase 10 (Discovery) NEXT after `/gsd:verify-work`: extend `app/pages/discovery.vue`'s existing `useFetch` with UTable columns, USlideover VendorDrawer, ECharts radar, USelectMenu tag assignment. NO changes needed to the fetch wiring itself — the typed `Vendor[]` is already flowing.
+- Phase 10 COMPLETE: PAGE-01 closed; all 4 ROADMAP Phase 10 success criteria green.
+  - Plan 10-01: UTable with 27 rows + 6 sortable columns (sortHeader helper) + debounced filter (useDebounce 200ms) + `#tags-cell` chip slot reading from `tagsStore.assignments`; `@vueuse/core` hoisted to explicit dep.
+  - Plan 10-02: `app/components/VendorDrawer.vue` extracted (USlideover 480px right side + 10-axis ECharts radar in ClientOnly + USkeleton fallback + DPA / 1EdTech sections); page-level selectedVendorId + selectedVendor + drawerOpen get/set computed trio; v0.5.0 PrimeVue Discovery+Drawer dead-code swept.
+  - Plan 10-03: Pinia setup-store actions `setVendorTags(vendorId, tagIds)` + `clearVendorTags(vendorId)` with empty-array cleanup branch; per-row USelectMenu (compact `+` icon trigger in 3rem column) + drawer USelectMenu both write through the same action; reactivity flows back to chip slot via `tableRows` computed; `persist: true` + persistedstate plugin handles localStorage automatically; SSR HTML grew to 120,055 bytes (27 trigger renders).
+- Phase 10 deviation lessons (carry-forward for Phase 11+):
+  1. `@pinia/nuxt v0.11.3` does NOT auto-import store factories; always add explicit `import { useTagsStore } from '~/stores/tags'` (10-01 + 10-03).
+  2. Nuxt UI v4 `TableColumn.meta.class` shape is `{ th?, td? }`, not a plain string (10-01).
+  3. Nuxt UI v4 USelectMenu `:ui` slot key for the trigger button is **`base`**, not `trigger` (10-03 — cross-check `node_modules/@nuxt/ui/dist/shared/ui.*.mjs` before authoring `:ui` overrides).
+  4. ClientOnly wrap only for interaction-mounted ECharts (drawer/modal); never for initial-SSR charts (let nuxt-echarts handle SVG fallback) — formalized 10-02.
+  5. SSR `<tr` counting on Nuxt's single-line HTML uses `grep -oE '<tr[ >]' | wc -l`, not `grep -c '<tr'` (10-02).
 - Phase 11 (DPA + Dashboard) and Phase 12 (Risk + Tags) both depend on Phase 9 data layer only.
 - Deployment (Phase 13) is intentionally last — static generate confirmed working after all pages.
 
