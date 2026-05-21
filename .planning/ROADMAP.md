@@ -14,7 +14,7 @@
 - [ ] **Phase 3: DPA View** - DPA page with status badges, signed/expiry dates, and "needs attention" headline count
 - [x] **Phase 4: 1EdTech View** - 1EdTech certification surfaced inside the VendorDrawer (status badge + standard + certified date); no standalone table; ReportsView '1EdTech' tab removed (completed 2026-05-13)
 - [x] **Phase 5: Risk Position View** - Risk tier calculation, donut chart showing vendor distribution by tier (completed 2026-05-13)
-- [ ] **Phase 6: Tags Management** - Replace SettingsView skeleton with full Tags management page — inline rename, 8-color preset palette, cascade delete with confirm dialog, reset-to-defaults safety net
+- [x] **Phase 6: Tags Management** - Replace SettingsView skeleton with full Tags management page — inline rename, 8-color preset palette, cascade delete with confirm dialog, reset-to-defaults safety net (completed 2026-05-21)
 
 ---
 
@@ -117,7 +117,7 @@
 | 3. DPA View | 1/3 | In Progress|  |
 | 4. 1EdTech View | 2/2 | Complete   | 2026-05-13 |
 | 5. Risk Position View | 2/2 | Complete   | 2026-05-13 |
-| 6. Tags Management | 1/2 | In Progress | - |
+| 6. Tags Management | 2/2 | Complete   | 2026-05-21 |
 
 ---
 
