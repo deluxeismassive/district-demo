@@ -9,7 +9,9 @@
     "generate": "nuxi generate",
     "preview": "nuxi preview",
     "typecheck": "nuxi typecheck",
-    "postinstall": "nuxi prepare"
+    "postinstall": "nuxi prepare",
+    "deploy": "nuxi generate && gh-pages -d .output/public --nojekyll",
+    "postdeploy": "node scripts/smoke.mjs"
   },
   "dependencies": {
     "@nuxt/ui": "^4.8.0",
