@@ -125,8 +125,60 @@ const drawerOpen = computed({
 </script>
 
 <template>
-  <div class="p-8">
-    <h1 class="text-2xl font-semibold text-gray-900">DPA</h1>
-    <p class="text-gray-600 mt-2">Data Privacy Agreement status by vendor. (Phase 11 wires table + badges.)</p>
+  <div class="p-6">
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-xl font-semibold text-gray-900">DPA</h1>
+      <span class="text-sm text-gray-500">{{ needsReviewCount }} vendors need DPA review</span>
+    </div>
+
+    <div class="mb-4 max-w-sm">
+      <UInput
+        v-model="search"
+        placeholder="Search vendors..."
+        icon="i-lucide-search"
+        class="w-full"
+      />
+    </div>
+
+    <UTable
+      v-model:sorting="sorting"
+      :data="filteredRows"
+      :columns="columns"
+      class="bg-white"
+      @select="onRowSelect"
+    >
+      <template #status-cell="{ row }">
+        <UBadge
+          :label="row.original.status"
+          color="neutral"
+          variant="solid"
+          :style="{ backgroundColor: DPA_STATUS_COLORS[row.original.status], color: '#ffffff' }"
+        />
+      </template>
+      <template #signedDate-cell="{ row }">{{ row.original.signedDate ?? '—' }}</template>
+      <template #expiryDate-cell="{ row }">{{ row.original.expiryDate ?? '—' }}</template>
+      <template #riskLabel-cell="{ row }">
+        <UBadge
+          v-if="row.original.riskLabel"
+          :label="row.original.riskLabel"
+          color="neutral"
+          variant="solid"
+          :style="{ backgroundColor: RISK_LABEL_COLORS[row.original.riskLabel], color: '#ffffff' }"
+        />
+        <span v-else class="text-gray-400">—</span>
+      </template>
+      <template #empty>
+        <div class="py-8 text-center">
+          <div class="text-sm font-semibold text-gray-900">No vendors match your search</div>
+          <div class="text-sm text-gray-500 mt-1">Try a different search term or clear the filter.</div>
+        </div>
+      </template>
+    </UTable>
+
+    <!--
+      Plan 11-01 — drawer mounted ONCE at the page level (Plan 10-02 carry-forward).
+      Auto-imported from app/components/VendorDrawer.vue — no manual import needed.
+    -->
+    <VendorDrawer v-model:open="drawerOpen" :vendor="selectedVendor" />
   </div>
 </template>
