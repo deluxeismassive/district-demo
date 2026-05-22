@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.0.0
 milestone_name: Nuxt Migration
-status: verifying
-stopped_at: "Completed 12-02-PLAN.md (PAGE-04 closed, Phase 12 done; Phases 11 + 12 verify-work deferred — run /gsd:verify-work to catch up before Phase 13 deploy)"
-last_updated: "2026-05-21T00:00:00.000Z"
-last_activity: 2026-05-21 -- Resumed session: Phase 12 confirmed complete on disk (both plans + summaries committed); STATE.md synced
+status: ready_for_next_phase
+stopped_at: "Phases 11 + 12 UAT complete (12/12 tests passed: 9 user-clicked, 3 auto-probed); ready for /gsd:plan-phase 13 (Deployment)"
+last_updated: "2026-05-21T01:00:00.000Z"
+last_activity: 2026-05-21 -- Phase 11 + Phase 12 UAT walked end-to-end, all tests passed, committed (cd43c32, 69d7f41)
 progress:
   total_phases: 7
   completed_phases: 6
@@ -16,7 +16,7 @@ progress:
 # Project State: District Demo Portal
 
 **Last updated:** 2026-05-21
-**Session:** Milestone v1.0.0 (Nuxt Migration) — Phase 12 COMPLETE; PAGE-03 + PAGE-04 closed; Risk Position (donut + sortable tier table + drawer) and Tags Management (full CRUD via 8 new Pinia actions + UModal confirmations) shipped. Next: `/gsd:verify-work` to catch up on deferred Phase 11 + Phase 12 verification before Phase 13 (deploy).
+**Session:** Milestone v1.0.0 (Nuxt Migration) — Phases 11 + 12 verify-work caught up. All 5 user-facing pages (/, /discovery, /dpa, /risk, /tags) confirmed working; only Phase 13 (Deployment) remains.
 
 ---
 
@@ -25,17 +25,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-21)
 
 **Core value:** Sales reps can walk a district admin prospect through a realistic, data-rich portal that makes the value of the product immediately tangible — and any section can be changed within hours for a specific demo.
-**Current focus:** Phases 11 + 12 verification (deferred verify-work) → Phase 13 deploy
+**Current focus:** Phase 13 — Deployment (final v1.0.0 phase)
 
 ---
 
 ## Current Position
 
-Phase: 12 (risk-position-tags) — COMPLETE
-Plan: 2 of 2 (both shipped)
+Phase: 12 (risk-position-tags) — COMPLETE + VERIFIED
+Plan: 2 of 2 (both shipped + UAT passed)
 Plans: 12 of 12 done (cumulative across executed phases — Phases 7, 8, 9, 10, 11, 12)
-Status: Awaiting `/gsd:verify-work` for Phases 11 + 12 before Phase 13 (deploy)
-Last activity: 2026-05-21 -- Session resumed; STATE.md synced to actual disk state
+Status: Ready for `/gsd:plan-phase 13` (or `/gsd:discuss-phase 13` to gather deployment context first)
+Last activity: 2026-05-21 -- Phase 11 + 12 UAT both passed (12/12)
 
 ---
 
@@ -100,29 +100,14 @@ None.
 
 ## Session Continuity
 
-**To resume:** Run `/gsd:verify-work` to catch up on deferred Phase 11 + Phase 12 verification before Phase 13 (deploy).
+**To resume:** Phase 13 (Deployment) is the final v1.0.0 phase. Start with `/gsd:plan-phase 13` (or `/gsd:discuss-phase 13` if deployment context still needs to be gathered).
 
-### Phase 11 verification (DPA + Dashboard surfaces — deferred from earlier)
+Phase 13 scope per ROADMAP:
+- `nuxi generate` static output for GitHub Pages with base path `/district-demo/`
+- `npm run deploy` wired through `gh-pages` package (already in dependencies)
+- 3-line Amplify glidepath comment block in `nuxt.config.ts`: enable `ssr: true`, remove static target, add `nitro: { preset: 'aws-amplify' }` — no page-level edits
 
-1. `/dpa` shows UTable with 27 rows + 6 sortable columns; click each header to confirm asc → desc → unsorted cycle.
-2. Type "google" in the filter input — confirm only matching rows visible; clear → all 27 return.
-3. Confirm DPA status badges show correct hex colors per `shared/utils/riskLabels.ts`: Signed (#16a34a green), Expired (#dc2626 red), Pending (#f59e0b amber), Unsigned (#6b7280 gray).
-4. Visit `/` — confirm 3 KPI tiles read "27", "16", "9" and the Top-8 UCard lists 8 vendors (Zoom, Kahoot, Quizlet, Flip, Prodigy, Renaissance, Naviance, Infinite Campus) with color-coded risk-label badges (3x red-700, 3x red-500, 2x amber-600).
-5. Click a DPA row → drawer slides in with that vendor's detail; click a Top-8 row → same drawer mounts with the row's vendor.
-6. DevTools Network: navigate `/dpa` → `/` (or reverse) — confirm zero additional `/api/dpa` and `/api/vendors` fetches (URL-key dedup).
-
-### Phase 12 verification (Risk Position + Tags Management — newly shipped)
-
-7. `/risk` shows the ECharts donut chart with risk-tier slices and the sortable tier table beneath; click each tier header to cycle asc → desc → unsorted; click a row → vendor drawer mounts.
-8. `/tags` shows the full Tags CRUD surface: 4 groups + child tags; inline rename works on group + tag (autofocus UInput, blur or Enter commits); 8-swatch color palette popover changes group color.
-9. Delete a tag with vendors assigned → UModal confirmation shows vendor count; confirm → tag disappears from chips on `/discovery`, `/dpa`, etc. (cascade-delete via setVendorTags).
-10. Delete a group → UModal confirms; group + its tags removed.
-11. "Reset to defaults" → UModal confirms; SEED_TAG_GROUPS restored (4 groups, 12 children with original hex colors).
-12. "Add group" and "Add tag" affordances create new entries inline; persistedstate survives a hard refresh.
-
-After verify-work, proceed to Phase 13 (deploy — final phase).
-
-**Stopped at:** Completed 12-02-PLAN.md (PAGE-04 closed, Phase 12 done; Phases 11 + 12 verify-work deferred — run /gsd:verify-work to catch up before Phase 13 deploy)
+**Stopped at:** Phases 11 + 12 UAT complete (12/12 tests passed: 9 user-clicked, 3 auto-probed); ready for Phase 13 planning.
 
 **Context for next session:**
 
