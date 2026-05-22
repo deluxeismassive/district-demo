@@ -27,16 +27,13 @@ export default defineNuxtConfig({
     components: ['TooltipComponent', 'LegendComponent', 'RadarComponent'],
   },
 
-  // === Phase 13 deployment switches (do not enable in Phase 7) ===
-  //
-  // GitHub Pages (next target):
-  //   app: { baseURL: '/district-demo/' },
-  //   nitro: { preset: 'github_pages' },
-  //   build via `npm run generate && npm run deploy`
-  //
-  // AWS Amplify SSR (future):
-  //   nitro: { preset: 'aws-amplify' },
-  //   keep ssr: true; remove baseURL/static
-  //
-  // Switching between deployment targets should require only edits in this block.
+  // === Deployment: GitHub Pages (v1.0.0) ===
+  // To switch to AWS Amplify SSR: see .planning/adr/AMPLIFY-GLIDEPATH.md
+  // 3-line switch: (1) remove app.baseURL, (2) set nitro.preset='aws-amplify', (3) add amplify.yml
+  app: {
+    baseURL: '/district-demo/',
+  },
+  nitro: {
+    preset: 'github_pages',
+  },
 })
