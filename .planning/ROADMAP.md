@@ -125,8 +125,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 12-01: Risk Position page — ClientOnly donut chart, sortable UTable with UBadge tiers from riskLabels.ts
-- [ ] 12-02: Tags Management page — inline CRUD, UModal delete confirmation, cascade delete, reset-to-defaults
+- [ ] 12-01-PLAN.md — Risk Position page: 3-way useFetch join (vendors+dpa+edtech), tier derivation, ECharts donut (initial-SSR, NO ClientOnly per STATE.md), sortable UTable with RISK_TIER_COLORS :style UBadge tiers, page-level VendorDrawer mount
+- [ ] 12-02-PLAN.md — Tags Management page: extend tags store with 6 new actions (renameTag, renameTagGroup, setTagGroupColor, deleteTag, deleteTagGroup, resetToDefaults), inline rename UI, 8-swatch palette, UModal delete + reset confirmations with cascade-cleanup via setVendorTags
 **UI hint**: yes
 
 ### Phase 13: Deployment
