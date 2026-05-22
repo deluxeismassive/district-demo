@@ -108,8 +108,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 11-01: DPA page — UTable with useFetch, UBadge status colors from riskLabels.ts, sort and filter
-- [ ] 11-02: Dashboard page — UCard "Top 8 Vendors Needing Attention" computed from DPA data
+- [ ] 11-01-PLAN.md — DPA page: useFetch + Vendor/DPA join, UTable with 6 sortable columns, UInput + useDebounce filter, UBadge :style hex injection from DPA_STATUS_COLORS + RISK_LABEL_COLORS, page-level VendorDrawer mount
+- [ ] 11-02-PLAN.md — Dashboard page: 3 KPI tile divs (Total/Signed/Needs Review) + UCard "Top 8 Vendors Needing Attention" with risk-label UBadges and row-click VendorDrawer mount
 **UI hint**: yes
 
 ### Phase 12: Risk Position + Tags
@@ -157,10 +157,10 @@ Plans:
 | 8. Layout & Routing | v1.0.0 | 1/1 | Complete | 2026-05-21 |
 | 9. Server Data Layer | v1.0.0 | 2/2 | Complete | 2026-05-21 |
 | 10. Discovery Page | v1.0.0 | 3/3 | Complete    | 2026-05-21 |
-| 11. DPA + Dashboard | v1.0.0 | 0/2 | Not started | - |
+| 11. DPA + Dashboard | v1.0.0 | 0/2 | Planned     | - |
 | 12. Risk Position + Tags | v1.0.0 | 0/2 | Not started | - |
 | 13. Deployment | v1.0.0 | 0/1 | Not started | - |
 
 ---
 
-*Last updated: 2026-05-21 — Phase 10 (Discovery Page) complete; Phase 11 (DPA + Dashboard) next*
+*Last updated: 2026-05-21 — Phase 11 (DPA + Dashboard) plans 11-01 + 11-02 authored; ready for `/gsd:execute-phase 11`*
