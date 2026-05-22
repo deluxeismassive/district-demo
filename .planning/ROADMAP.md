@@ -29,7 +29,7 @@
 - [x] **Phase 10: Discovery Page** - Fully functional Discovery with UTable, USlideover VendorDrawer, ECharts radar (ClientOnly), USelectMenu tag assignment (completed 2026-05-21)
 - [x] **Phase 11: DPA + Dashboard** - DPA table with UBadge color-coded statuses; Dashboard "Top 8 Vendors Needing Attention" card (completed 2026-05-22)
 - [x] **Phase 12: Risk Position + Tags** - Risk donut chart (ClientOnly) + vendor tier UTable; Tags Management CRUD with UModal (completed 2026-05-22)
-- [ ] **Phase 13: Deployment** - Static generate for GitHub Pages; nuxt.config.ts Amplify glidepath (3-line switch to SSR)
+- [x] **Phase 13: Deployment** - Static generate for GitHub Pages; nuxt.config.ts Amplify glidepath (3-line switch to SSR) (completed 2026-05-22)
 
 ## Phase Details
 
@@ -143,7 +143,7 @@ Plans:
 Plans:
 - [x] 13-01-PLAN.md — Deployment config authorship (Wave 1, parallel): nuxt.config.ts active GH Pages block + Amplify glidepath comment + ADR pointer; package.json deploy/postdeploy scripts; .planning/adr/AMPLIFY-GLIDEPATH.md migration record
 - [x] 13-02-PLAN.md — Local generate verification + smoke script authorship (Wave 2): npm run generate against new config, verify .output/public/ tree (5 routes, .nojekyll, _nuxt baseURL bake-in); scripts/smoke.mjs with 5×20s retry against 5 page markers
-- [ ] 13-03-PLAN.md — Live deploy + visual checkpoint (Wave 3): npm run deploy (generate → gh-pages push → postdeploy smoke); human visual click-through of all 5 routes; DEPLOY-02 readability check on nuxt.config.ts comment
+- [x] 13-03-PLAN.md — Live deploy + visual checkpoint (Wave 3): npm run deploy (generate → gh-pages push → postdeploy smoke); human visual click-through of all 5 routes; DEPLOY-02 readability check on nuxt.config.ts comment
 
 ## Progress
 
@@ -161,8 +161,8 @@ Plans:
 | 10. Discovery Page | v1.0.0 | 3/3 | Complete    | 2026-05-21 |
 | 11. DPA + Dashboard | v1.0.0 | 2/2 | Complete    | 2026-05-22 |
 | 12. Risk Position + Tags | v1.0.0 | 2/2 | Complete    | 2026-05-22 |
-| 13. Deployment | v1.0.0 | 2/3 | In Progress|  |
+| 13. Deployment | v1.0.0 | 3/3 | Complete   | 2026-05-22 |
 
 ---
 
-*Last updated: 2026-05-22 — Phase 13 (Deployment) planned with 3 plans across 3 waves; ready for execution*
+*Last updated: 2026-05-22 — Phase 13 (Deployment) complete: 3/3 plans done. Live URL confirmed: https://deluxeismassive.github.io/district-demo/. v1.0.0 all 15 plans complete — ready for /gsd:complete-milestone*

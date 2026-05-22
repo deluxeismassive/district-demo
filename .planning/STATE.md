@@ -2,21 +2,21 @@
 gsd_state_version: 1.0
 milestone: v1.0.0
 milestone_name: Nuxt Migration
-status: executing
-stopped_at: Completed 13-deployment/13-02-PLAN.md
-last_updated: "2026-05-22T12:52:03.324Z"
+status: verifying
+stopped_at: "Completed 13-deployment/13-03-PLAN.md — Phase 13 COMPLETE. Live URL confirmed: https://deluxeismassive.github.io/district-demo/. DEPLOY-01 + DEPLOY-02 closed. v1.0.0 all 15 plans complete."
+last_updated: "2026-05-22T13:52:22.283Z"
 last_activity: 2026-05-22
 progress:
   total_phases: 7
-  completed_phases: 6
+  completed_phases: 7
   total_plans: 15
-  completed_plans: 14
+  completed_plans: 15
 ---
 
 # Project State: District Demo Portal
 
 **Last updated:** 2026-05-22
-**Session:** Milestone v1.0.0 (Nuxt Migration) — Phase 13 Plan 02 complete. `npm run generate` verified locally (5 routes pre-rendered, .nojekyll written, baseURL baked in). `scripts/smoke.mjs` authored: 5-probe post-deploy health check with 5×20s retry, exits non-zero on miss.
+**Session:** Milestone v1.0.0 (Nuxt Migration) — Phase 13 Plan 03 complete. Live deploy executed: `npm run deploy` chained nuxi generate (17 routes, ~20s) → gh-pages push → postdeploy smoke (5/5 probes passed after ~40s Dashboard CDN wait). Human visual checkpoint approved — all 5 routes render with charts, drawers, and modals; console clean; SPA fallback works. DEPLOY-01 + DEPLOY-02 both closed. All 15 v1.0.0 plans complete.
 
 ---
 
@@ -31,11 +31,11 @@ See: .planning/PROJECT.md (updated 2026-05-21)
 
 ## Current Position
 
-Phase: 13 (deployment) — EXECUTING
-Plan: 3 of 3
-Plans: 14 of 15 done (cumulative across executed phases — Phases 7, 8, 9, 10, 11, 12, 13-01, 13-02)
-Status: Executing Phase 13
-Last activity: 2026-05-22 -- Phase 13 Plan 02 complete
+Phase: 13 (deployment) — COMPLETE
+Plan: 3 of 3 (ALL DONE)
+Plans: 15 of 15 done (cumulative across all phases — Phases 7, 8, 9, 10, 11, 12, 13-01, 13-02, 13-03)
+Status: Phase complete — ready for /gsd:complete-milestone to close v1.0.0
+Last activity: 2026-05-22 — Phase 13 Plan 03 (live deploy + visual checkpoint) approved
 
 ---
 
@@ -65,6 +65,8 @@ Last activity: 2026-05-22 -- Phase 13 Plan 02 complete
 | GitHub Pages deploy config | app.baseURL='/district-demo/' + nitro.preset='github_pages' active in nuxt.config.ts; deploy script: `nuxi generate && gh-pages -d .output/public --nojekyll` | Phase 13-01 |
 | nuxi generate verified locally | `npm run generate` exits 0; all 5 routes pre-rendered; `.nojekyll` written; baseURL baked into index.html — DEPLOY-01 first half confirmed | Phase 13-02 |
 | Smoke script pattern | `scripts/smoke.mjs`: pure Node ESM, zero deps, 5 probes × 5×20s retry, AbortSignal.timeout(10s) per fetch, process.exit(1) on miss — postdeploy hook ready | Phase 13-02 |
+| DEPLOY-01 closed (live URL) | `npm run deploy` exits 0; gh-pages branch published; 5/5 smoke probes passed (Dashboard ~40s CDN wait, others first attempt); human visual checkpoint approved across all 5 routes | Phase 13-03 |
+| DEPLOY-02 closed (glidepath readability) | Developer located Amplify glidepath comment in nuxt.config.ts within ~30s without opening ADR; 3-line switch understood without documentation | Phase 13-03 |
 | Pinia SSR persistence | `pinia-plugin-persistedstate` with `storesDirs: ['app/stores/**']` in nuxt.config.ts | Phase 7 |
 | In-place Nuxt 4 migration | Delete v0.5.0 entry points (src/main.js, src/App.vue, src/style.css, vite.config.js, index.html, dist/) but preserve src/data/, src/components/, src/views/, src/router/, src/stores/, public/ for later phases | Phase 7-01 |
 | Brand color migration | 11-shade palette (50-950) migrated verbatim from v0.5.0 SchoolDayPreset into app/assets/css/main.css @theme static; Nuxt UI maps via ui.colors.primary: 'brand' in app/app.config.ts | Phase 7-01 |
@@ -103,15 +105,17 @@ None.
 
 ## Session Continuity
 
-**To resume:** Phase 13 Plan 03 (live deploy) is the final plan. Run `/gsd:execute-phase 13` to trigger Plan 03.
+**v1.0.0 milestone complete.** Run `/gsd:complete-milestone` to flip the ROADMAP Phase 13 row, close the v1.0.0 milestone entry, and open the v1.1.0 planning horizon.
 
-Phase 13 scope per ROADMAP:
+**Live URL:** https://deluxeismassive.github.io/district-demo/
 
-- `nuxi generate` static output for GitHub Pages with base path `/district-demo/`
-- `npm run deploy` wired through `gh-pages` package (already in dependencies)
-- 3-line Amplify glidepath comment block in `nuxt.config.ts`: enable `ssr: true`, remove static target, add `nitro: { preset: 'aws-amplify' }` — no page-level edits
+Phase 13 delivered:
+- `nuxi generate` static output for GitHub Pages with base path `/district-demo/` (Plan 13-01)
+- `scripts/smoke.mjs` 5-probe post-deploy health check with 5×20s retry (Plan 13-02)
+- `npm run deploy` chain live: generate → gh-pages push → postdeploy smoke — 5/5 probes passed (Plan 13-03)
+- DEPLOY-01 + DEPLOY-02 both closed; 3-line Amplify glidepath comment in `nuxt.config.ts` confirmed developer-readable
 
-**Stopped at:** Completed 13-deployment/13-02-PLAN.md
+**Stopped at:** Completed 13-deployment/13-03-PLAN.md — Phase 13 COMPLETE. Live URL confirmed: https://deluxeismassive.github.io/district-demo/. DEPLOY-01 + DEPLOY-02 closed. v1.0.0 all 15 plans complete.
 
 **Context for next session:**
 
