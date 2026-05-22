@@ -28,7 +28,7 @@
 - [x] **Phase 9: Server Data Layer** - server/api/ routes serving mock data; pages use useFetch exclusively (2/2 plans) — completed 2026-05-21
 - [x] **Phase 10: Discovery Page** - Fully functional Discovery with UTable, USlideover VendorDrawer, ECharts radar (ClientOnly), USelectMenu tag assignment (completed 2026-05-21)
 - [x] **Phase 11: DPA + Dashboard** - DPA table with UBadge color-coded statuses; Dashboard "Top 8 Vendors Needing Attention" card (completed 2026-05-22)
-- [ ] **Phase 12: Risk Position + Tags** - Risk donut chart (ClientOnly) + vendor tier UTable; Tags Management CRUD with UModal
+- [x] **Phase 12: Risk Position + Tags** - Risk donut chart (ClientOnly) + vendor tier UTable; Tags Management CRUD with UModal (completed 2026-05-22)
 - [ ] **Phase 13: Deployment** - Static generate for GitHub Pages; nuxt.config.ts Amplify glidepath (3-line switch to SSR)
 
 ## Phase Details
@@ -158,9 +158,9 @@ Plans:
 | 9. Server Data Layer | v1.0.0 | 2/2 | Complete | 2026-05-21 |
 | 10. Discovery Page | v1.0.0 | 3/3 | Complete    | 2026-05-21 |
 | 11. DPA + Dashboard | v1.0.0 | 2/2 | Complete    | 2026-05-22 |
-| 12. Risk Position + Tags | v1.0.0 | 0/2 | Not started | - |
+| 12. Risk Position + Tags | v1.0.0 | 2/2 | Complete    | 2026-05-22 |
 | 13. Deployment | v1.0.0 | 0/1 | Not started | - |
 
 ---
 
-*Last updated: 2026-05-22 — Phase 11 (DPA + Dashboard) complete; Phase 12 (Risk Position + Tags) next*
+*Last updated: 2026-05-22 — Phase 12 (Risk Position + Tags) complete; Phase 13 (Deployment) next*

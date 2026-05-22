@@ -28,8 +28,8 @@
 
 - [x] **PAGE-01**: Discovery page fully functional — `UTable` with column sort and search filter, `USlideover` VendorDrawer with ECharts radar chart (client-only via `<ClientOnly>` or `nuxt-echarts`), `USelectMenu` tag assignment with tag display
 - [x] **PAGE-02**: DPA page fully functional — `UTable` with column sort and filter, color-coded `UBadge` status badges for Signed/Unsigned/Expired/Pending
-- [ ] **PAGE-03**: Risk Position page fully functional — donut chart (`<VChartFull>` or `<ClientOnly>` wrapped) + `UTable` sortable vendor tier table with `UBadge` tier badges
-- [ ] **PAGE-04**: Tags Management page fully functional — inline CRUD, `UModal` delete confirmation dialog, cascade delete cleans vendor assignments, reset-to-defaults
+- [x] **PAGE-03**: Risk Position page fully functional — donut chart (`<VChartFull>` or `<ClientOnly>` wrapped) + `UTable` sortable vendor tier table with `UBadge` tier badges
+- [x] **PAGE-04**: Tags Management page fully functional — inline CRUD, `UModal` delete confirmation dialog, cascade delete cleans vendor assignments, reset-to-defaults
 - [x] **PAGE-05**: Dashboard functional — "Top 8 Vendors Needing Attention" card surfacing unsigned/expired DPAs using `UCard`
 
 ### Deployment
@@ -87,8 +87,8 @@
 | PAGE-01 | Phase 10 | Complete (2026-05-21) |
 | PAGE-02 | Phase 11 | Complete (2026-05-22) |
 | PAGE-05 | Phase 11 | Complete (2026-05-22) |
-| PAGE-03 | Phase 12 | Not started |
-| PAGE-04 | Phase 12 | Not started |
+| PAGE-03 | Phase 12 | Complete (2026-05-22) |
+| PAGE-04 | Phase 12 | Complete (2026-05-22) |
 | DEPLOY-01 | Phase 13 | Not started |
 | DEPLOY-02 | Phase 13 | Not started |
 

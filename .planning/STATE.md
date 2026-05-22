@@ -3,20 +3,20 @@ gsd_state_version: 1.0
 milestone: v1.0.0
 milestone_name: Nuxt Migration
 status: verifying
-stopped_at: "Completed 11-02-PLAN.md (PAGE-05 closed, Phase 11 done; next is /gsd:verify-work)"
-last_updated: "2026-05-22T00:58:30.782Z"
-last_activity: 2026-05-22
+stopped_at: "Completed 12-02-PLAN.md (PAGE-04 closed, Phase 12 done; Phases 11 + 12 verify-work deferred — run /gsd:verify-work to catch up before Phase 13 deploy)"
+last_updated: "2026-05-21T00:00:00.000Z"
+last_activity: 2026-05-21 -- Resumed session: Phase 12 confirmed complete on disk (both plans + summaries committed); STATE.md synced
 progress:
   total_phases: 7
-  completed_phases: 5
-  total_plans: 10
-  completed_plans: 10
+  completed_phases: 6
+  total_plans: 12
+  completed_plans: 12
 ---
 
 # Project State: District Demo Portal
 
-**Last updated:** 2026-05-22
-**Session:** Milestone v1.0.0 (Nuxt Migration) — Phase 11 COMPLETE; PAGE-02 + PAGE-05 closed; DPA page + Dashboard surfaces shipped, sharing one cached `/api/dpa` payload via Nuxt URL-key dedup. Next: `/gsd:verify-work` for Phase 11 ROADMAP success criteria, then Phase 12 (Risk Position + Tags).
+**Last updated:** 2026-05-21
+**Session:** Milestone v1.0.0 (Nuxt Migration) — Phase 12 COMPLETE; PAGE-03 + PAGE-04 closed; Risk Position (donut + sortable tier table + drawer) and Tags Management (full CRUD via 8 new Pinia actions + UModal confirmations) shipped. Next: `/gsd:verify-work` to catch up on deferred Phase 11 + Phase 12 verification before Phase 13 (deploy).
 
 ---
 
@@ -25,17 +25,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-21)
 
 **Core value:** Sales reps can walk a district admin prospect through a realistic, data-rich portal that makes the value of the product immediately tangible — and any section can be changed within hours for a specific demo.
-**Current focus:** Phase 11 COMPLETE — awaiting `/gsd:verify-work`; next is Phase 12 (Risk Position + Tags)
+**Current focus:** Phases 11 + 12 verification (deferred verify-work) → Phase 13 deploy
 
 ---
 
 ## Current Position
 
-Phase: 12
-Plan: Not started
-Plans: 10 of 10 done (cumulative across executed phases — Phases 7, 8, 9, 10, 11)
-Status: Phase complete — ready for verification
-Last activity: 2026-05-22
+Phase: 12 (risk-position-tags) — COMPLETE
+Plan: 2 of 2 (both shipped)
+Plans: 12 of 12 done (cumulative across executed phases — Phases 7, 8, 9, 10, 11, 12)
+Status: Awaiting `/gsd:verify-work` for Phases 11 + 12 before Phase 13 (deploy)
+Last activity: 2026-05-21 -- Session resumed; STATE.md synced to actual disk state
 
 ---
 
@@ -100,7 +100,9 @@ None.
 
 ## Session Continuity
 
-**To resume:** Run `/gsd:verify-work` to manually verify Phase 11 ROADMAP success criteria 1-4:
+**To resume:** Run `/gsd:verify-work` to catch up on deferred Phase 11 + Phase 12 verification before Phase 13 (deploy).
+
+### Phase 11 verification (DPA + Dashboard surfaces — deferred from earlier)
 
 1. `/dpa` shows UTable with 27 rows + 6 sortable columns; click each header to confirm asc → desc → unsorted cycle.
 2. Type "google" in the filter input — confirm only matching rows visible; clear → all 27 return.
@@ -109,9 +111,18 @@ None.
 5. Click a DPA row → drawer slides in with that vendor's detail; click a Top-8 row → same drawer mounts with the row's vendor.
 6. DevTools Network: navigate `/dpa` → `/` (or reverse) — confirm zero additional `/api/dpa` and `/api/vendors` fetches (URL-key dedup).
 
-After verify-work, proceed to Phase 12 (Risk Position + Tags Management).
+### Phase 12 verification (Risk Position + Tags Management — newly shipped)
 
-**Stopped at:** Completed 11-02-PLAN.md (PAGE-05 closed, Phase 11 done; next is /gsd:verify-work)
+7. `/risk` shows the ECharts donut chart with risk-tier slices and the sortable tier table beneath; click each tier header to cycle asc → desc → unsorted; click a row → vendor drawer mounts.
+8. `/tags` shows the full Tags CRUD surface: 4 groups + child tags; inline rename works on group + tag (autofocus UInput, blur or Enter commits); 8-swatch color palette popover changes group color.
+9. Delete a tag with vendors assigned → UModal confirmation shows vendor count; confirm → tag disappears from chips on `/discovery`, `/dpa`, etc. (cascade-delete via setVendorTags).
+10. Delete a group → UModal confirms; group + its tags removed.
+11. "Reset to defaults" → UModal confirms; SEED_TAG_GROUPS restored (4 groups, 12 children with original hex colors).
+12. "Add group" and "Add tag" affordances create new entries inline; persistedstate survives a hard refresh.
+
+After verify-work, proceed to Phase 13 (deploy — final phase).
+
+**Stopped at:** Completed 12-02-PLAN.md (PAGE-04 closed, Phase 12 done; Phases 11 + 12 verify-work deferred — run /gsd:verify-work to catch up before Phase 13 deploy)
 
 **Context for next session:**
 
