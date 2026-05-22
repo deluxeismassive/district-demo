@@ -54,16 +54,10 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 - ✓ **PAGE-01**: Discovery page fully functional — `UTable` with sort/filter, `USlideover` `VendorDrawer.vue` with 10-axis ECharts radar in `<ClientOnly>`, per-row + drawer `USelectMenu` writing back to Pinia via `setVendorTags`/`clearVendorTags` actions — Validated in Phase 10
 - ✓ **PAGE-02**: DPA page fully functional — `UTable` joined on vendors + DPA, 6 sortable columns, useDebounce filter, `UBadge` `:style` hex from `DPA_STATUS_COLORS` and `RISK_LABEL_COLORS` (no semantic color classes), row-click → `VendorDrawer` — Validated in Phase 11
 - ✓ **PAGE-05**: Dashboard "Top 8 Vendors Needing Attention" — `UCard` derived from same `/api/dpa` (URL-key dedup); 3 KPI tiles; row-click → `VendorDrawer` — Validated in Phase 11
-
-### Active (v1.0.0 — Nuxt Migration)
-- [ ] **DATA-02**: Pages use `useFetch` / `useAsyncData` to load data from server routes
-- [ ] **PAGE-01**: Discovery page fully functional — sortable/filterable vendor table, tag assignment, VendorDrawer drill-down
-- [ ] **PAGE-02**: DPA page fully functional — sortable/filterable table with color-coded status badges
-- [ ] **PAGE-03**: Risk Position page fully functional — donut chart (`<ClientOnly>`) + sortable vendor tier table
-- [ ] **PAGE-04**: Tags Management page fully functional — CRUD, 8-color palette, cascade delete, reset-to-defaults
-- [ ] **PAGE-05**: Dashboard functional — "Top 8 Vendors Needing Attention" card
-- [ ] **DEPLOY-01**: Project builds successfully targeting AWS Amplify (Nitro node-server preset)
-- [ ] **DEPLOY-02**: `amplify.yml` exists and configures build/deploy for dev, staging, and production environments
+- ✓ **PAGE-03**: Risk Position page fully functional — initial-SSR ECharts donut (no `<ClientOnly>` wrap; nuxt-echarts SVG fallback) + sortable `UTable` with hex-injected tier `UBadge`s; page-level `VendorDrawer` mount — Validated in Phase 12
+- ✓ **PAGE-04**: Tags Management page fully functional — 8 Pinia store actions (rename / setColor / delete / reset / addGroup / addTag), `UModal` cascade-delete confirmations with vendor counts, 8-swatch color palette popover, `pinia-plugin-persistedstate` localStorage roundtrip — Validated in Phase 12
+- ✓ **DEPLOY-01**: App generates as a static site via `nuxi generate`; base path `/district-demo/` configured; `npm run deploy` publishes to GitHub Pages via `gh-pages -d .output/public --nojekyll`; live URL: `https://deluxeismassive.github.io/district-demo/` — Validated in Phase 13
+- ✓ **DEPLOY-02**: `nuxt.config.ts` is structured for the Amplify glidepath — the 3-line switch (remove `app.baseURL`, change `nitro.preset` to `'aws-amplify'`, add `amplify.yml`) is documented inline + fully reasoned in `.planning/adr/AMPLIFY-GLIDEPATH.md`; no page-level edits needed — Validated in Phase 13
 
 ### Deferred to v1.1.0+
 
@@ -86,21 +80,21 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 
 ## Context
 
-- **v1.0.0 in progress** — Nuxt 4 migration milestone
-- **Current state**: Phases 7-11 complete. Discovery, DPA, and Dashboard are all fully functional v1.0.0 demo screens sharing UTable + useFetch + UBadge + VendorDrawer patterns. Phase 12 (Risk Position donut chart + Tags Management CRUD) is the last UI phase before deployment.
+- **v1.0.0 shipped 2026-05-22** — Nuxt 4 migration milestone complete. All 7 phases (Phases 7-13), 15 plans done. Live at `https://deluxeismassive.github.io/district-demo/`.
 - **v0.5.0 shipped 2026-05-21** — 6 phases, 15 plans, ~2,331 source LOC (Vue 3 + Vite SPA)
-- **Target stack**: Nuxt 4 + Nuxt UI v3 + Tailwind v4 + Pinia + ECharts (client-only) + TypeScript
-- **Deployment target**: AWS Amplify (dev / staging / prod), Nitro node-server preset
-- **Data**: 27 vendors; mock data moves to `server/data/` served via `server/api/` routes
-- **Routing**: Nuxt file-based routing (`app/pages/`) — no hash history needed with SSR
+- **Stack**: Nuxt 4 + Nuxt UI v4 + Tailwind v4 + Pinia + ECharts (initial-SSR for static charts, ClientOnly for interaction-mounted) + TypeScript
+- **Deployment (v1.0.0)**: Static GitHub Pages via `nuxi generate` + `gh-pages -d .output/public --nojekyll`; postdeploy smoke probe at `scripts/smoke.mjs` (5 routes × 5 retries × 20s backoff)
+- **Deployment (future)**: AWS Amplify SSR documented as a 3-line glidepath in `nuxt.config.ts` + full migration ADR at `.planning/adr/AMPLIFY-GLIDEPATH.md`
+- **Data**: 27 vendors in `server/data/*.ts` (typed via `shared/types/data.ts`); served through `server/api/{vendors,dpa,edtech}.get.ts` Nitro routes; baked into `_payload.json` at generate time
+- **Routing**: Nuxt file-based routing (`app/pages/`); 5 sections — `/`, `/discovery`, `/dpa`, `/risk`, `/tags`
 - Sales reps are the primary operators; district admins are the demo audience
 - Same-day iteration requirement: mock data in `server/data/` files, editable without touching components
 
 ## Constraints
 
 - **Framework**: Nuxt 4 — do not introduce conflicting frameworks or custom Vite configs
-- **UI**: Nuxt UI v3 only — no PrimeVue, no other component libraries
-- **Deployment**: AWS Amplify with Nitro node-server preset
+- **UI**: Nuxt UI v4 only — no PrimeVue, no other component libraries
+- **Deployment**: Static GitHub Pages (current); Amplify SSR is a future 3-line switch (do not re-architect prematurely)
 - **Data**: All data is mocked/synthetic during this milestone — no live API connections yet
 - **Iteration speed**: Mock data and section content must be changeable by a developer in under an hour
 - **Auth**: None in this milestone — portal opens directly
@@ -138,4 +132,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-22 — Phase 11 complete; Discovery + DPA + Dashboard all shipped; Phase 12 (Risk + Tags) next*
+*Last updated: 2026-05-22 — v1.0.0 Nuxt Migration COMPLETE. All 7 phases shipped; portal live at https://deluxeismassive.github.io/district-demo/. Ready for /gsd:complete-milestone.*

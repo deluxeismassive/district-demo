@@ -161,7 +161,7 @@ Plans:
 | 10. Discovery Page | v1.0.0 | 3/3 | Complete    | 2026-05-21 |
 | 11. DPA + Dashboard | v1.0.0 | 2/2 | Complete    | 2026-05-22 |
 | 12. Risk Position + Tags | v1.0.0 | 2/2 | Complete    | 2026-05-22 |
-| 13. Deployment | v1.0.0 | 3/3 | Complete   | 2026-05-22 |
+| 13. Deployment | v1.0.0 | 3/3 | Complete    | 2026-05-22 |
 
 ---
 
