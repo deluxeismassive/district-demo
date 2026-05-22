@@ -27,7 +27,7 @@
 ### Pages
 
 - [x] **PAGE-01**: Discovery page fully functional — `UTable` with column sort and search filter, `USlideover` VendorDrawer with ECharts radar chart (client-only via `<ClientOnly>` or `nuxt-echarts`), `USelectMenu` tag assignment with tag display
-- [ ] **PAGE-02**: DPA page fully functional — `UTable` with column sort and filter, color-coded `UBadge` status badges for Signed/Unsigned/Expired/Pending
+- [x] **PAGE-02**: DPA page fully functional — `UTable` with column sort and filter, color-coded `UBadge` status badges for Signed/Unsigned/Expired/Pending
 - [ ] **PAGE-03**: Risk Position page fully functional — donut chart (`<VChartFull>` or `<ClientOnly>` wrapped) + `UTable` sortable vendor tier table with `UBadge` tier badges
 - [ ] **PAGE-04**: Tags Management page fully functional — inline CRUD, `UModal` delete confirmation dialog, cascade delete cleans vendor assignments, reset-to-defaults
 - [ ] **PAGE-05**: Dashboard functional — "Top 8 Vendors Needing Attention" card surfacing unsigned/expired DPAs using `UCard`
