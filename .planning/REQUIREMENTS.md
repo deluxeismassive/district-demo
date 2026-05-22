@@ -85,8 +85,8 @@
 | DATA-01 | Phase 9 | Complete (2026-05-21) |
 | DATA-02 | Phase 9 | Complete (2026-05-21) |
 | PAGE-01 | Phase 10 | Complete (2026-05-21) |
-| PAGE-02 | Phase 11 | Not started |
-| PAGE-05 | Phase 11 | Not started |
+| PAGE-02 | Phase 11 | Complete (2026-05-22) |
+| PAGE-05 | Phase 11 | Complete (2026-05-22) |
 | PAGE-03 | Phase 12 | Not started |
 | PAGE-04 | Phase 12 | Not started |
 | DEPLOY-01 | Phase 13 | Not started |

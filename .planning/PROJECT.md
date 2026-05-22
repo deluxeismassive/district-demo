@@ -52,6 +52,8 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 - ✓ **DATA-01**: Mock data served through Nuxt server API routes (`server/api/vendors.get.ts`, `dpa.get.ts`, `edtech.get.ts`); typed source data in `server/data/*.ts` with `shared/types/data.ts` interfaces — Validated in Phase 9
 - ✓ **DATA-02**: `app/pages/discovery.vue` uses `useFetch('/api/vendors')` with full Nitro type inference; negative-grep boundary enforces no direct `server/data/` imports from `app/` — Validated in Phase 9
 - ✓ **PAGE-01**: Discovery page fully functional — `UTable` with sort/filter, `USlideover` `VendorDrawer.vue` with 10-axis ECharts radar in `<ClientOnly>`, per-row + drawer `USelectMenu` writing back to Pinia via `setVendorTags`/`clearVendorTags` actions — Validated in Phase 10
+- ✓ **PAGE-02**: DPA page fully functional — `UTable` joined on vendors + DPA, 6 sortable columns, useDebounce filter, `UBadge` `:style` hex from `DPA_STATUS_COLORS` and `RISK_LABEL_COLORS` (no semantic color classes), row-click → `VendorDrawer` — Validated in Phase 11
+- ✓ **PAGE-05**: Dashboard "Top 8 Vendors Needing Attention" — `UCard` derived from same `/api/dpa` (URL-key dedup); 3 KPI tiles; row-click → `VendorDrawer` — Validated in Phase 11
 
 ### Active (v1.0.0 — Nuxt Migration)
 - [ ] **DATA-02**: Pages use `useFetch` / `useAsyncData` to load data from server routes
@@ -85,7 +87,7 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 ## Context
 
 - **v1.0.0 in progress** — Nuxt 4 migration milestone
-- **Current state**: Phases 7-10 complete (foundation + layout/routing + server data layer + Discovery page). Discovery is the first fully-functional v1.0.0 demo screen; Phases 11-12 build DPA/Dashboard and Risk/Tags using the same patterns.
+- **Current state**: Phases 7-11 complete. Discovery, DPA, and Dashboard are all fully functional v1.0.0 demo screens sharing UTable + useFetch + UBadge + VendorDrawer patterns. Phase 12 (Risk Position donut chart + Tags Management CRUD) is the last UI phase before deployment.
 - **v0.5.0 shipped 2026-05-21** — 6 phases, 15 plans, ~2,331 source LOC (Vue 3 + Vite SPA)
 - **Target stack**: Nuxt 4 + Nuxt UI v3 + Tailwind v4 + Pinia + ECharts (client-only) + TypeScript
 - **Deployment target**: AWS Amplify (dev / staging / prod), Nitro node-server preset
@@ -136,4 +138,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-21 — Phase 10 complete; Discovery is the first fully-functional demo screen; Phase 11 (DPA + Dashboard) next*
+*Last updated: 2026-05-22 — Phase 11 complete; Discovery + DPA + Dashboard all shipped; Phase 12 (Risk + Tags) next*
