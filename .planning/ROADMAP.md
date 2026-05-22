@@ -27,7 +27,7 @@
 - [x] **Phase 8: Layout & Routing** - File-based routing for all 5 sections, default.vue app shell with dark sidebar (1/1 plans) — completed 2026-05-21
 - [x] **Phase 9: Server Data Layer** - server/api/ routes serving mock data; pages use useFetch exclusively (2/2 plans) — completed 2026-05-21
 - [x] **Phase 10: Discovery Page** - Fully functional Discovery with UTable, USlideover VendorDrawer, ECharts radar (ClientOnly), USelectMenu tag assignment (completed 2026-05-21)
-- [ ] **Phase 11: DPA + Dashboard** - DPA table with UBadge color-coded statuses; Dashboard "Top 8 Vendors Needing Attention" card
+- [x] **Phase 11: DPA + Dashboard** - DPA table with UBadge color-coded statuses; Dashboard "Top 8 Vendors Needing Attention" card (completed 2026-05-22)
 - [ ] **Phase 12: Risk Position + Tags** - Risk donut chart (ClientOnly) + vendor tier UTable; Tags Management CRUD with UModal
 - [ ] **Phase 13: Deployment** - Static generate for GitHub Pages; nuxt.config.ts Amplify glidepath (3-line switch to SSR)
 
@@ -109,7 +109,7 @@ Plans:
 
 Plans:
 - [x] 11-01-PLAN.md — DPA page: useFetch + Vendor/DPA join, UTable with 6 sortable columns, UInput + useDebounce filter, UBadge :style hex injection from DPA_STATUS_COLORS + RISK_LABEL_COLORS, page-level VendorDrawer mount
-- [ ] 11-02-PLAN.md — Dashboard page: 3 KPI tile divs (Total/Signed/Needs Review) + UCard "Top 8 Vendors Needing Attention" with risk-label UBadges and row-click VendorDrawer mount
+- [x] 11-02-PLAN.md — Dashboard page: 3 KPI tile divs (Total/Signed/Needs Review) + UCard "Top 8 Vendors Needing Attention" with risk-label UBadges and row-click VendorDrawer mount
 **UI hint**: yes
 
 ### Phase 12: Risk Position + Tags
@@ -157,7 +157,7 @@ Plans:
 | 8. Layout & Routing | v1.0.0 | 1/1 | Complete | 2026-05-21 |
 | 9. Server Data Layer | v1.0.0 | 2/2 | Complete | 2026-05-21 |
 | 10. Discovery Page | v1.0.0 | 3/3 | Complete    | 2026-05-21 |
-| 11. DPA + Dashboard | v1.0.0 | 1/2 | In Progress|  |
+| 11. DPA + Dashboard | v1.0.0 | 2/2 | Complete   | 2026-05-22 |
 | 12. Risk Position + Tags | v1.0.0 | 0/2 | Not started | - |
 | 13. Deployment | v1.0.0 | 0/1 | Not started | - |
 

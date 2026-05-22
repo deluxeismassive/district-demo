@@ -2,21 +2,21 @@
 gsd_state_version: 1.0
 milestone: v1.0.0
 milestone_name: Nuxt Migration
-status: executing
-stopped_at: Completed 11-01-PLAN.md (PAGE-02 surface shipped, ROADMAP Phase 11 success criteria 1-3 satisfied)
-last_updated: "2026-05-22T00:42:10.626Z"
+status: verifying
+stopped_at: "Completed 11-02-PLAN.md (PAGE-05 closed, Phase 11 done; next is /gsd:verify-work)"
+last_updated: "2026-05-22T00:50:09.407Z"
 last_activity: 2026-05-22
 progress:
   total_phases: 7
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 10
-  completed_plans: 9
+  completed_plans: 10
 ---
 
 # Project State: District Demo Portal
 
-**Last updated:** 2026-05-21
-**Session:** Milestone v1.0.0 (Nuxt Migration) — Phase 9 COMPLETE; server/api routes + useFetch demo wired; Phase 10 (Discovery UTable + USlideover + ECharts) next after `/gsd:verify-work`
+**Last updated:** 2026-05-22
+**Session:** Milestone v1.0.0 (Nuxt Migration) — Phase 11 COMPLETE; PAGE-02 + PAGE-05 closed; DPA page + Dashboard surfaces shipped, sharing one cached `/api/dpa` payload via Nuxt URL-key dedup. Next: `/gsd:verify-work` for Phase 11 ROADMAP success criteria, then Phase 12 (Risk Position + Tags).
 
 ---
 
@@ -25,16 +25,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-21)
 
 **Core value:** Sales reps can walk a district admin prospect through a realistic, data-rich portal that makes the value of the product immediately tangible — and any section can be changed within hours for a specific demo.
-**Current focus:** Phase 11 — dpa-dashboard
+**Current focus:** Phase 11 COMPLETE — awaiting `/gsd:verify-work`; next is Phase 12 (Risk Position + Tags)
 
 ---
 
 ## Current Position
 
-Phase: 11 (dpa-dashboard) — EXECUTING
-Plan: 2 of 2
-Plans: 5 of 5 done (cumulative across executed phases — Phases 7, 8, 9)
-Status: Ready to execute
+Phase: 11 (dpa-dashboard) — COMPLETE (awaiting verification)
+Plan: 2 of 2 — DONE
+Plans: 10 of 10 done (cumulative across executed phases — Phases 7, 8, 9, 10, 11)
+Status: Phase complete — ready for verification
 Last activity: 2026-05-22
 
 ---
@@ -86,6 +86,11 @@ Last activity: 2026-05-22
 | Pinia setup-store action pattern (named fn inside callback + included in return) | `setVendorTags(vendorId, tagIds)` + empty-array delete branch + `clearVendorTags(vendorId)` — grep-able write path; enables Phase 12 cascade-delete reuse; keeps localStorage JSON tidy | Phase 10-03 |
 | Two-surface single-action pattern for USelectMenu (per-row + drawer share one Pinia action) | Both surfaces call `tagsStore.setVendorTags(vendorId, ids)` via explicit `:model-value` + `@update:model-value` binding; reactivity flows back to #tags-cell chip slot through tableRows computed | Phase 10-03 |
 | USelectMenu :ui slot key is `base` not `trigger` (verified vs installed theme) | Plan §interfaces snippet had `:ui="{ trigger: 'w-auto' }"` — invalid; the SelectMenu theme (extends Select) uses `base` for the trigger button. Documented as Plan 10-03 deviation; carry-forward: always cross-check Nuxt UI v4 :ui slot keys against `node_modules/@nuxt/ui/dist/shared/ui.*.mjs` before authoring | Phase 10-03 |
+| DPA table uses `:style` hex injection via DPA_STATUS_COLORS + RISK_LABEL_COLORS — NO semantic preset on UBadge, NO Tailwind `bg-*-NNN` class injection | Plan 11-01's `#status-cell` + `#riskLabel-cell` slots use `color="neutral" variant="solid" :style="{ backgroundColor: <hex>, color: '#ffffff' }"` — same pattern as VendorDrawer.vue lines 134-139 lifted to table rows; sales rep can recolor by editing one hex in shared/utils/riskLabels.ts | Phase 11-01 |
+| Vue SSR emits inline `:style` in canonical-input hex form (`background-color:#16a34a`), NOT `rgb()` form | Acceptance probes that grep `background-color: rgb(...)` will FAIL even when the code is correct; future plans must probe the hex form directly. Verified in Plan 11-01 deviation #1 and confirmed again in Plan 11-02 | Phase 11-01 |
+| Dashboard Top-8 derivation = `dpaList.filter(d => d.riskLabel !== null).slice(0, 8)` — file-order slice, NO severity re-sort | v0.5.0 verbatim algorithm; 4 Unsigned + 4 Expired in current data exactly matches ROADMAP SC#4 wording "vendors with unsigned or expired DPAs". Surfaces Zoom, Kahoot, Quizlet, Flip, Prodigy, Renaissance, Naviance, Infinite Campus | Phase 11-02 |
+| Dashboard KPI tiles are plain divs, NOT UCards (single UCard reserved for the Top-8 card only) | v0.5.0 visual parity + avoids size-disparity jar of 3 mini-UCards next to a wider Top-8 UCard. ROADMAP SC#4 wording "using UCard" applies only to the Top-8 card per research § Open Question #2 | Phase 11-02 |
+| `useFetch('/api/dpa', { default: () => [] })` URL-key dedup verified across 3 call sites — no `key` option anywhere | `app/pages/dpa.vue` + `app/pages/index.vue` + `app/components/VendorDrawer.vue` all use identical call shape; Nuxt dedups by URL = one cache entry shared across all surfaces. Build chunks include `dpa.get.mjs` once at 4.47 kB | Phase 11-01, 11-02 |
 
 ### Active Blockers
 
@@ -95,9 +100,16 @@ None.
 
 ## Session Continuity
 
-**To resume:** Run `/gsd:verify-work` to manually verify Phase 10 ROADMAP success criteria (UTable sort + filter, drawer + radar, USelectMenu tag assign + persistence). Per Plan 10-03 SUMMARY § "Manual UAT" — assign tags via per-row `+` trigger → chips appear; open drawer → same selection visible; add tag from drawer → row chip updates live; reload `/discovery` → chips still present; navigate to `/` then back → chips still present; remove all tags → localStorage entry deleted. After verify-work, proceed to Phase 11 (DPA + Dashboard).
+**To resume:** Run `/gsd:verify-work` to manually verify Phase 11 ROADMAP success criteria 1-4:
+1. `/dpa` shows UTable with 27 rows + 6 sortable columns; click each header to confirm asc → desc → unsorted cycle.
+2. Type "google" in the filter input — confirm only matching rows visible; clear → all 27 return.
+3. Confirm DPA status badges show correct hex colors per `shared/utils/riskLabels.ts`: Signed (#16a34a green), Expired (#dc2626 red), Pending (#f59e0b amber), Unsigned (#6b7280 gray).
+4. Visit `/` — confirm 3 KPI tiles read "27", "16", "9" and the Top-8 UCard lists 8 vendors (Zoom, Kahoot, Quizlet, Flip, Prodigy, Renaissance, Naviance, Infinite Campus) with color-coded risk-label badges (3x red-700, 3x red-500, 2x amber-600).
+5. Click a DPA row → drawer slides in with that vendor's detail; click a Top-8 row → same drawer mounts with the row's vendor.
+6. DevTools Network: navigate `/dpa` → `/` (or reverse) — confirm zero additional `/api/dpa` and `/api/vendors` fetches (URL-key dedup).
+After verify-work, proceed to Phase 12 (Risk Position + Tags Management).
 
-**Stopped at:** Completed 11-01-PLAN.md (PAGE-02 surface shipped, ROADMAP Phase 11 success criteria 1-3 satisfied)
+**Stopped at:** Completed 11-02-PLAN.md (PAGE-05 closed, Phase 11 done; next is /gsd:verify-work)
 
 **Context for next session:**
 
@@ -125,7 +137,16 @@ None.
   3. Nuxt UI v4 USelectMenu `:ui` slot key for the trigger button is **`base`**, not `trigger` (10-03 — cross-check `node_modules/@nuxt/ui/dist/shared/ui.*.mjs` before authoring `:ui` overrides).
   4. ClientOnly wrap only for interaction-mounted ECharts (drawer/modal); never for initial-SSR charts (let nuxt-echarts handle SVG fallback) — formalized 10-02.
   5. SSR `<tr` counting on Nuxt's single-line HTML uses `grep -oE '<tr[ >]' | wc -l`, not `grep -c '<tr'` (10-02).
-- Phase 11 (DPA + Dashboard) and Phase 12 (Risk + Tags) both depend on Phase 9 data layer only.
+- Phase 11 COMPLETE: PAGE-02 + PAGE-05 closed; all 4 ROADMAP Phase 11 success criteria green.
+  - Plan 11-01: `app/pages/dpa.vue` rewired from 16-line stub → 184-line full page (UTable 6 sortable columns, UInput + useDebounce(200) filter, `#status-cell` + `#riskLabel-cell` UBadge `:style` hex injection, page-level VendorDrawer mount via selectedVendorId + selectedVendor + drawerOpen trio); 89588 bytes SSR; all 4 status hex + 3 risk-label hex counts match data distribution exactly (16 / 5 / 4 / 2 status; 3 / 3 / 4 risk-label).
+  - Plan 11-02: `app/pages/index.vue` rewired from 16-line stub → 145-line Dashboard (3 KPI tile divs reading "27" / "16" / "9", single UCard variant="outline" with `#header` slot for "Top 8 Vendors Needing Attention", 8 clickable rows via @click=selectVendor + RISK_LABEL_COLORS `:style` UBadges, page-level VendorDrawer mount); 42106 bytes SSR; 8x `cursor-pointer hover:bg-gray-50`, 3x #b91c1c + 3x #ef4444 + 2x #d97706 hex backgrounds present.
+  - `useFetch('/api/dpa')` URL-key dedup empirically verified — all 3 call sites (dpa.vue + index.vue + VendorDrawer.vue) share one cache entry; build chunks include `dpa.get.mjs` once at 4.47 kB.
+- Phase 11 deviation lessons (carry-forward for Phase 12+):
+  1. Vue 3 SSR emits inline `:style` in canonical-input hex form (`background-color:#16a34a`), NOT `rgb(22, 163, 74)` — acceptance probes must grep hex literal directly (11-01 deviation #1, confirmed in 11-02).
+  2. UCard slot keys: `root` / `header` / `title` / `description` / `body` / `footer` (NOT `content` — that's USlideover's key). No `:ui` override needed for default UCard usage (11-02 confirmation).
+  3. Top-8 row hover-bleed uses `-mx-4 sm:-mx-6 px-4 sm:px-6` negative-then-positive margin pattern to reclaim UCard's body padding for full-width hover (11-02 pattern, Tailwind v4 idiom).
+  4. Vendor display names differ from vendorIds — `vendor-flipgrid` displays as "Flip" (Microsoft rebranded 2022). Future verification probes should cross-reference `server/data/vendors.ts` display names, NOT extrapolate from vendorId (11-02 deviation #1).
+- Phase 12 (Risk + Tags) depends on Phase 9 data layer + Phase 10 tags store + Phase 11 UBadge `:style` pattern (now ready to reuse for `RISK_TIER_COLORS` chips on Risk Position tier badges).
 - Deployment (Phase 13) is intentionally last — static generate confirmed working after all pages.
 
 ---
