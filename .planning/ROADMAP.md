@@ -141,7 +141,7 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 13-01-PLAN.md — Deployment config authorship (Wave 1, parallel): nuxt.config.ts active GH Pages block + Amplify glidepath comment + ADR pointer; package.json deploy/postdeploy scripts; .planning/adr/AMPLIFY-GLIDEPATH.md migration record
+- [x] 13-01-PLAN.md — Deployment config authorship (Wave 1, parallel): nuxt.config.ts active GH Pages block + Amplify glidepath comment + ADR pointer; package.json deploy/postdeploy scripts; .planning/adr/AMPLIFY-GLIDEPATH.md migration record
 - [ ] 13-02-PLAN.md — Local generate verification + smoke script authorship (Wave 2): npm run generate against new config, verify .output/public/ tree (5 routes, .nojekyll, _nuxt baseURL bake-in); scripts/smoke.mjs with 5×20s retry against 5 page markers
 - [ ] 13-03-PLAN.md — Live deploy + visual checkpoint (Wave 3): npm run deploy (generate → gh-pages push → postdeploy smoke); human visual click-through of all 5 routes; DEPLOY-02 readability check on nuxt.config.ts comment
 
@@ -161,7 +161,7 @@ Plans:
 | 10. Discovery Page | v1.0.0 | 3/3 | Complete    | 2026-05-21 |
 | 11. DPA + Dashboard | v1.0.0 | 2/2 | Complete    | 2026-05-22 |
 | 12. Risk Position + Tags | v1.0.0 | 2/2 | Complete    | 2026-05-22 |
-| 13. Deployment | v1.0.0 | 0/3 | Planned | - |
+| 13. Deployment | v1.0.0 | 1/3 | In Progress|  |
 
 ---
 

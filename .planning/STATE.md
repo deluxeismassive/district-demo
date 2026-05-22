@@ -2,21 +2,21 @@
 gsd_state_version: 1.0
 milestone: v1.0.0
 milestone_name: Nuxt Migration
-status: "Ready for `/gsd:plan-phase 13` (or `/gsd:discuss-phase 13` to gather deployment context first)"
-stopped_at: Phase 13 context gathered
-last_updated: "2026-05-22T12:07:06.697Z"
-last_activity: 2026-05-21 -- Phase 11 + 12 UAT both passed (12/12)
+status: executing
+stopped_at: Completed 13-deployment/13-01-PLAN.md
+last_updated: "2026-05-22T12:46:27.689Z"
+last_activity: 2026-05-22
 progress:
   total_phases: 7
   completed_phases: 6
-  total_plans: 12
-  completed_plans: 12
+  total_plans: 15
+  completed_plans: 13
 ---
 
 # Project State: District Demo Portal
 
-**Last updated:** 2026-05-21
-**Session:** Milestone v1.0.0 (Nuxt Migration) — Phases 11 + 12 verify-work caught up. All 5 user-facing pages (/, /discovery, /dpa, /risk, /tags) confirmed working; only Phase 13 (Deployment) remains.
+**Last updated:** 2026-05-22
+**Session:** Milestone v1.0.0 (Nuxt Migration) — Phase 13 Plan 01 complete. Deployment config wired: nuxt.config.ts has active baseURL + nitro.preset, package.json has deploy + postdeploy scripts, AMPLIFY-GLIDEPATH.md ADR created.
 
 ---
 
@@ -25,17 +25,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-21)
 
 **Core value:** Sales reps can walk a district admin prospect through a realistic, data-rich portal that makes the value of the product immediately tangible — and any section can be changed within hours for a specific demo.
-**Current focus:** Phase 13 — Deployment (final v1.0.0 phase)
+**Current focus:** Phase 13 — deployment
 
 ---
 
 ## Current Position
 
-Phase: 12 (risk-position-tags) — COMPLETE + VERIFIED
-Plan: 2 of 2 (both shipped + UAT passed)
-Plans: 12 of 12 done (cumulative across executed phases — Phases 7, 8, 9, 10, 11, 12)
-Status: Ready for `/gsd:plan-phase 13` (or `/gsd:discuss-phase 13` to gather deployment context first)
-Last activity: 2026-05-21 -- Phase 11 + 12 UAT both passed (12/12)
+Phase: 13 (deployment) — EXECUTING
+Plan: 2 of 3
+Plans: 13 of 15 done (cumulative across executed phases — Phases 7, 8, 9, 10, 11, 12, 13-01)
+Status: Executing Phase 13
+Last activity: 2026-05-22 -- Phase 13 Plan 01 complete
 
 ---
 
@@ -61,7 +61,8 @@ Last activity: 2026-05-21 -- Phase 11 + 12 UAT both passed (12/12)
 | ECharts SSR strategy | `<ClientOnly>` wrapper — avoids "window is not defined" crash; consistent across all charts | Phase 7 |
 | server/api/ route naming | `vendors.get.ts`, `dpa.get.ts`, `edtech.get.ts` — REST-style, Nuxt file-based naming | Phase 9 |
 | UBadge color strategy | `:style` binding with hex values from `riskLabels.ts` constants — no hardcoded Tailwind classes | Phase 11-12 |
-| AWS Amplify glidepath | 3-line switch in nuxt.config.ts: `ssr: true`, remove static target, add nitro aws-amplify preset | Phase 13 |
+| AWS Amplify glidepath | 3-line switch in nuxt.config.ts: (1) remove app.baseURL, (2) set nitro.preset='aws-amplify', (3) add amplify.yml — documented in .planning/adr/AMPLIFY-GLIDEPATH.md | Phase 13-01 |
+| GitHub Pages deploy config | app.baseURL='/district-demo/' + nitro.preset='github_pages' active in nuxt.config.ts; deploy script: `nuxi generate && gh-pages -d .output/public --nojekyll` | Phase 13-01 |
 | Pinia SSR persistence | `pinia-plugin-persistedstate` with `storesDirs: ['app/stores/**']` in nuxt.config.ts | Phase 7 |
 | In-place Nuxt 4 migration | Delete v0.5.0 entry points (src/main.js, src/App.vue, src/style.css, vite.config.js, index.html, dist/) but preserve src/data/, src/components/, src/views/, src/router/, src/stores/, public/ for later phases | Phase 7-01 |
 | Brand color migration | 11-shade palette (50-950) migrated verbatim from v0.5.0 SchoolDayPreset into app/assets/css/main.css @theme static; Nuxt UI maps via ui.colors.primary: 'brand' in app/app.config.ts | Phase 7-01 |
@@ -108,7 +109,7 @@ Phase 13 scope per ROADMAP:
 - `npm run deploy` wired through `gh-pages` package (already in dependencies)
 - 3-line Amplify glidepath comment block in `nuxt.config.ts`: enable `ssr: true`, remove static target, add `nitro: { preset: 'aws-amplify' }` — no page-level edits
 
-**Stopped at:** Phase 13 context gathered
+**Stopped at:** Completed 13-deployment/13-01-PLAN.md
 
 **Context for next session:**
 

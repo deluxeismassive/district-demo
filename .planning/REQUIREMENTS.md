@@ -34,8 +34,8 @@
 
 ### Deployment
 
-- [ ] **DEPLOY-01**: App generates as a static site via `nuxi generate` (or `npm run generate`); base path `/district-demo/` configured; `npm run deploy` publishes to GitHub Pages via `gh-pages`
-- [ ] **DEPLOY-02**: `nuxt.config.ts` is structured for the Amplify glidepath — switching from GitHub Pages to AWS Amplify SSR requires only: (1) enabling `ssr: true`, (2) removing `static` target, (3) adding `nitro: { preset: 'aws-amplify' }`; no page-level code changes needed
+- [x] **DEPLOY-01**: App generates as a static site via `nuxi generate` (or `npm run generate`); base path `/district-demo/` configured; `npm run deploy` publishes to GitHub Pages via `gh-pages`
+- [x] **DEPLOY-02**: `nuxt.config.ts` is structured for the Amplify glidepath — switching from GitHub Pages to AWS Amplify SSR requires only: (1) enabling `ssr: true`, (2) removing `static` target, (3) adding `nitro: { preset: 'aws-amplify' }`; no page-level code changes needed
 
 ---
 
