@@ -1,41 +1,41 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0.0
-milestone_name: Nuxt Migration
-status: completed
-stopped_at: v1.0.0 shipped — master pushed to origin (86 commits), live URL confirmed, gh-pages branch published
-last_updated: "2026-05-22T15:02:32.706Z"
+milestone: null
+milestone_name: null
+status: between_milestones
+stopped_at: "v0.6.0 Nuxt Migration archived 2026-05-22 — no active milestone; run /gsd:new-milestone to scope next"
+last_updated: "2026-05-22T16:00:00.000Z"
 last_activity: 2026-05-22
 progress:
-  total_phases: 7
-  completed_phases: 7
-  total_plans: 15
-  completed_plans: 15
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
 ---
 
 # Project State: District Demo Portal
 
 **Last updated:** 2026-05-22
-**Session:** Milestone v1.0.0 (Nuxt Migration) — Phase 13 Plan 03 complete. Live deploy executed: `npm run deploy` chained nuxi generate (17 routes, ~20s) → gh-pages push → postdeploy smoke (5/5 probes passed after ~40s Dashboard CDN wait). Human visual checkpoint approved — all 5 routes render with charts, drawers, and modals; console clean; SPA fallback works. DEPLOY-01 + DEPLOY-02 both closed. All 15 v1.0.0 plans complete.
+**Session:** v0.6.0 Nuxt Migration archived. Portal live at https://deluxeismassive.github.io/district-demo/. Last 2 milestones (v0.5.0 + v0.6.0) shipped within 9 days; no active milestone scoped. Backlog candidates carried forward in `.planning/milestones/v0.6.0-ROADMAP.md` § Issues Deferred.
 
 ---
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-21)
+See: .planning/PROJECT.md (updated 2026-05-22)
 
 **Core value:** Sales reps can walk a district admin prospect through a realistic, data-rich portal that makes the value of the product immediately tangible — and any section can be changed within hours for a specific demo.
-**Current focus:** Phase 13 — deployment
+**Current focus:** Between milestones — ready for `/gsd:new-milestone`
 
 ---
 
 ## Current Position
 
-Phase: 13
-Plan: Not started
-Plans: 15 of 15 done (cumulative across all phases — Phases 7, 8, 9, 10, 11, 12, 13-01, 13-02, 13-03)
-Status: Phase complete — ready for /gsd:complete-milestone to close v1.0.0
-Last activity: 2026-05-22
+Milestone: (none active)
+Phase: (none active)
+Last shipped: v0.6.0 Nuxt Migration (2026-05-22) — 7 phases, 15 plans
+Status: Between milestones — scope next via `/gsd:new-milestone`
+Last activity: 2026-05-22 — milestone archived
 
 ---
 
@@ -45,14 +45,14 @@ Last activity: 2026-05-22
 
 | Decision | Outcome | Phase |
 |----------|---------|-------|
-| Router history mode | `createWebHashHistory` — GitHub Pages static hosting (replaced by Nuxt file routing in v1.0.0) | Phase 1 |
-| Mock data location | All data in `src/data/*.js` files only — moves to `server/data/` in v1.0.0 | Phase 2 |
-| Pinia store scope | Single tags store for all mutable state — continues in v1.0.0 via `@pinia/nuxt` | Phase 1 |
+| Router history mode | `createWebHashHistory` — GitHub Pages static hosting (replaced by Nuxt file routing in v0.6.0) | Phase 1 |
+| Mock data location | All data in `src/data/*.js` files only — moves to `server/data/` in v0.6.0 | Phase 2 |
+| Pinia store scope | Single tags store for all mutable state — continues in v0.6.0 via `@pinia/nuxt` | Phase 1 |
 | Risk visualization | Donut chart (ECharts) above risk table | Phase 5 |
 | Vendor join key | Stable `vendorId` string (e.g. `vendor-google-classroom`) across all data files | Phase 2 |
 | View-level join pattern | `Object.fromEntries(dataArray.map(d => [d.vendorId, d]))` for O(1) cross-file lookups | Phase 2 |
 
-### Key Decisions (v1.0.0 — active)
+### Key Decisions (v0.6.0 — active)
 
 | Decision | Resolution | Phase |
 |----------|-----------|-------|
@@ -105,20 +105,18 @@ None.
 
 ## Session Continuity
 
-**v1.0.0 milestone complete.** Run `/gsd:complete-milestone` to flip the ROADMAP Phase 13 row, close the v1.0.0 milestone entry, and open the v1.1.0 planning horizon.
+**Between milestones.** v0.6.0 archived 2026-05-22; no active milestone scoped. Run `/gsd:new-milestone` to start the next cycle.
 
 **Live URL:** https://deluxeismassive.github.io/district-demo/
 
-Phase 13 delivered:
+**v0.6.0 archive references:**
+- `.planning/milestones/v0.6.0-ROADMAP.md` — full per-phase details + decisions + technical debt
+- `.planning/milestones/v0.6.0-REQUIREMENTS.md` — all 14 requirements validated
+- `.planning/MILESTONES.md` — short summary across both shipped milestones
 
-- `nuxi generate` static output for GitHub Pages with base path `/district-demo/` (Plan 13-01)
-- `scripts/smoke.mjs` 5-probe post-deploy health check with 5×20s retry (Plan 13-02)
-- `npm run deploy` chain live: generate → gh-pages push → postdeploy smoke — 5/5 probes passed (Plan 13-03)
-- DEPLOY-01 + DEPLOY-02 both closed; 3-line Amplify glidepath comment in `nuxt.config.ts` confirmed developer-readable
+**Stopped at:** v0.6.0 Nuxt Migration shipped; master pushed to origin; gh-pages branch live.
 
-**Stopped at:** v1.0.0 shipped — master pushed to origin (86 commits), live URL confirmed, gh-pages branch published
-
-**Context for next session:**
+**Context preserved below for next milestone's reference** (Phase 7–13 design log; valuable as carry-forward when scoping new work that touches the same patterns):
 
 - Phase 7 COMPLETE: All 5 ROADMAP success criteria empirically verified on a clean reinstall.
 - Phase 8 COMPLETE: All 4 ROADMAP Phase 8 success criteria empirically verified via 22/22 grep+curl panel against live dev server on port 3001.
@@ -157,4 +155,4 @@ Phase 13 delivered:
 - Deployment (Phase 13) is intentionally last — static generate confirmed working after all pages.
 
 ---
-*State initialized: 2026-05-13 | Reset for v1.0.0: 2026-05-21 | Roadmap created: 2026-05-21*
+*State initialized: 2026-05-13 | Reset for v0.6.0: 2026-05-21 | Roadmap created: 2026-05-21*

@@ -8,20 +8,20 @@ A sales demo web portal for edtech that displays school district data across fiv
 
 Sales reps can walk a district admin prospect through a realistic, data-rich portal that makes the value of the product immediately tangible — and any section can be changed within hours for a specific demo.
 
-## Current Milestone: v1.0.0 Nuxt Migration
+## Current State
 
-**Goal:** Migrate the District Demo Portal from a bare Vue 3 + Vite SPA to a production-ready Nuxt 4 SSR app — all existing demo features preserved, TypeScript throughout, clean architecture for future app-catalog backend integration on AWS Amplify.
+**v0.6.0 Nuxt Migration shipped 2026-05-22.** Portal is live at https://deluxeismassive.github.io/district-demo/ with all 5 demo surfaces functional. Source on GitHub at https://github.com/deluxeismassive/district-demo.
 
-**Target features:**
-- Nuxt 4 scaffold with SSR, TypeScript, `compatibilityVersion: 4`, `app/` directory structure
-- Nuxt UI v3 (first-party, nuxt.com/ui) replacing PrimeVue entirely — Tailwind v4 included
-- `@pinia/nuxt` for SSR-safe state management
-- File-based routing (`app/pages/`) replacing manual Vue Router config
-- `app/layouts/default.vue` replacing AppShell + SidebarNav
-- All 5 demo sections migrated: Discovery, DPA, Risk Position, 1EdTech (in drawer), Tags Management
-- ECharts charts wrapped in `<ClientOnly>` for SSR compatibility
-- `server/api/` scaffold with mock data handlers (ready for real API wiring)
-- AWS Amplify deployment config (amplify.yml, Nitro node-server preset)
+**No active milestone.** Run `/gsd:new-milestone` to scope the next milestone. Backlog candidates (carried forward from v0.6.0 deferred section):
+- Real API connections to app-catalog backend via `server/api/` routes
+- AWS Amplify SSR deployment (dev/staging/prod environments) — 3-line glidepath ready in `nuxt.config.ts` + full migration ADR
+- DPA expiry warning — amber highlight for DPAs expiring within 90 days
+- Filter Discovery table by one or more tags
+- Click donut chart segment to filter Risk table below
+- 1EdTech detail surface — which standards/tiers a vendor holds
+- Risk table with contributing factors
+- GitHub Actions CI/CD workflow (replace manual `npm run deploy`)
+- Custom domain via `public/CNAME`
 
 ## Requirements
 
@@ -42,7 +42,7 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 - ✓ Risk Position page: sortable 5-column vendor table with computed risk tiers — v0.5.0 Phase 5
 - ✓ Tags management page: full CRUD (inline rename, 8-color palette, cascade delete, reset-to-defaults) — v0.5.0 Phase 6
 
-### Validated (v1.0.0 — in progress)
+### Validated (v0.6.0 — in progress)
 
 - ✓ **NUXT-01**: App runs as a Nuxt 4 SSR project with TypeScript and `compatibilityVersion: 4` — Validated in Phase 7
 - ✓ **NUXT-02**: Nuxt UI v4 is the sole component library — no PrimeVue dependency remains — Validated in Phase 7
@@ -59,7 +59,7 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 - ✓ **DEPLOY-01**: App generates as a static site via `nuxi generate`; base path `/district-demo/` configured; `npm run deploy` publishes to GitHub Pages via `gh-pages -d .output/public --nojekyll`; live URL: `https://deluxeismassive.github.io/district-demo/` — Validated in Phase 13
 - ✓ **DEPLOY-02**: `nuxt.config.ts` is structured for the Amplify glidepath — the 3-line switch (remove `app.baseURL`, change `nitro.preset` to `'aws-amplify'`, add `amplify.yml`) is documented inline + fully reasoned in `.planning/adr/AMPLIFY-GLIDEPATH.md`; no page-level edits needed — Validated in Phase 13
 
-### Deferred to v1.1.0+
+### Deferred to v0.7.0+
 
 - [ ] DPA expiry warning — amber highlight for DPAs expiring within 90 days
 - [ ] Risk table with contributing factors — show what drives each vendor's tier
@@ -80,10 +80,10 @@ Sales reps can walk a district admin prospect through a realistic, data-rich por
 
 ## Context
 
-- **v1.0.0 shipped 2026-05-22** — Nuxt 4 migration milestone complete. All 7 phases (Phases 7-13), 15 plans done. Live at `https://deluxeismassive.github.io/district-demo/`.
+- **v0.6.0 shipped 2026-05-22** — Nuxt 4 migration milestone complete. All 7 phases (Phases 7-13), 15 plans done. Live at `https://deluxeismassive.github.io/district-demo/`.
 - **v0.5.0 shipped 2026-05-21** — 6 phases, 15 plans, ~2,331 source LOC (Vue 3 + Vite SPA)
 - **Stack**: Nuxt 4 + Nuxt UI v4 + Tailwind v4 + Pinia + ECharts (initial-SSR for static charts, ClientOnly for interaction-mounted) + TypeScript
-- **Deployment (v1.0.0)**: Static GitHub Pages via `nuxi generate` + `gh-pages -d .output/public --nojekyll`; postdeploy smoke probe at `scripts/smoke.mjs` (5 routes × 5 retries × 20s backoff)
+- **Deployment (v0.6.0)**: Static GitHub Pages via `nuxi generate` + `gh-pages -d .output/public --nojekyll`; postdeploy smoke probe at `scripts/smoke.mjs` (5 routes × 5 retries × 20s backoff)
 - **Deployment (future)**: AWS Amplify SSR documented as a 3-line glidepath in `nuxt.config.ts` + full migration ADR at `.planning/adr/AMPLIFY-GLIDEPATH.md`
 - **Data**: 27 vendors in `server/data/*.ts` (typed via `shared/types/data.ts`); served through `server/api/{vendors,dpa,edtech}.get.ts` Nitro routes; baked into `_payload.json` at generate time
 - **Routing**: Nuxt file-based routing (`app/pages/`); 5 sections — `/`, `/discovery`, `/dpa`, `/risk`, `/tags`
@@ -132,4 +132,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-22 — v1.0.0 Nuxt Migration COMPLETE. All 7 phases shipped; portal live at https://deluxeismassive.github.io/district-demo/. Ready for /gsd:complete-milestone.*
+*Last updated: 2026-05-22 — v0.6.0 Nuxt Migration COMPLETE. All 7 phases shipped; portal live at https://deluxeismassive.github.io/district-demo/. Ready for /gsd:complete-milestone.*
