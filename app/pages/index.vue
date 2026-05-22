@@ -80,8 +80,66 @@ const drawerOpen = computed({
 </script>
 
 <template>
-  <div class="p-8">
-    <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
-    <p class="text-gray-600 mt-2">District overview. (Phase 11 wires the Top 8 card.)</p>
+  <div class="p-6">
+    <h1 class="text-xl font-semibold mb-6 text-gray-900">Dashboard</h1>
+
+    <!--
+      KPI tiles — plain divs (NOT UCards) for v0.5.0 visual parity and to avoid
+      a size-disparity jar against the wider Top-8 UCard below (research §6,
+      Open Question #2).
+    -->
+    <div class="grid grid-cols-3 gap-4 mb-8">
+      <div class="bg-white border border-gray-200 rounded-lg p-4">
+        <div class="text-sm text-gray-500">Total Vendors</div>
+        <div class="text-2xl font-semibold text-gray-900 mt-1">{{ totalVendors }}</div>
+      </div>
+      <div class="bg-white border border-gray-200 rounded-lg p-4">
+        <div class="text-sm text-gray-500">DPAs Signed</div>
+        <div class="text-2xl font-semibold text-gray-900 mt-1">{{ signedCount }}</div>
+      </div>
+      <div class="bg-white border border-gray-200 rounded-lg p-4">
+        <div class="text-sm text-gray-500">Needs Review</div>
+        <div class="text-2xl font-semibold mt-1 text-red-600">{{ needsReviewCount }}</div>
+      </div>
+    </div>
+
+    <!--
+      Top-8 UCard — single UCard on the page; default variant="outline".
+      Slot keys: #header for the title row, default slot for the list body
+      (UCard's body region — NOT named "content", which is USlideover's key).
+    -->
+    <UCard variant="outline" class="bg-white">
+      <template #header>
+        <div class="flex items-center justify-between">
+          <h2 class="text-base font-semibold text-gray-900">Top 8 Vendors Needing Attention</h2>
+          <span class="text-sm text-gray-500">{{ topAtRisk.length }} flagged</span>
+        </div>
+      </template>
+      <div class="divide-y divide-gray-100">
+        <div
+          v-for="row in topAtRisk"
+          :key="row.vendorId"
+          class="flex items-center justify-between py-3 cursor-pointer hover:bg-gray-50 -mx-4 sm:-mx-6 px-4 sm:px-6"
+          @click="selectVendor(row.vendorId)"
+        >
+          <div class="flex flex-col">
+            <span class="text-sm font-semibold text-gray-900">{{ row.name }}</span>
+            <span class="text-xs text-gray-500">{{ row.category }}</span>
+          </div>
+          <UBadge
+            :label="row.riskLabel"
+            color="neutral"
+            variant="solid"
+            :style="{ backgroundColor: RISK_LABEL_COLORS[row.riskLabel], color: '#ffffff' }"
+          />
+        </div>
+      </div>
+    </UCard>
+
+    <!--
+      Plan 11-02 — drawer mounted ONCE at the page level (Plan 11-01 carry-forward).
+      Auto-imported from app/components/VendorDrawer.vue — no manual import.
+    -->
+    <VendorDrawer v-model:open="drawerOpen" :vendor="selectedVendor" />
   </div>
 </template>
