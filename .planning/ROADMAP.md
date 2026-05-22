@@ -138,10 +138,12 @@ Plans:
   2. `npm run deploy` publishes the static build to GitHub Pages via `gh-pages` and the site loads correctly at the GitHub Pages URL
   3. `nuxt.config.ts` has a clearly commented Amplify glidepath block — enabling SSR requires only: uncommenting `ssr: true`, removing the `static` target, and adding `nitro: { preset: 'aws-amplify' }`; no page files need changing
   4. A developer reading `nuxt.config.ts` can identify the Amplify switch without documentation
-**Plans**: 1 plan
+**Plans**: 3 plans
 
 Plans:
-- [ ] 13-01: Deployment config — nuxi generate static output, gh-pages deploy script, Amplify glidepath comments in nuxt.config.ts
+- [ ] 13-01-PLAN.md — Deployment config authorship (Wave 1, parallel): nuxt.config.ts active GH Pages block + Amplify glidepath comment + ADR pointer; package.json deploy/postdeploy scripts; .planning/adr/AMPLIFY-GLIDEPATH.md migration record
+- [ ] 13-02-PLAN.md — Local generate verification + smoke script authorship (Wave 2): npm run generate against new config, verify .output/public/ tree (5 routes, .nojekyll, _nuxt baseURL bake-in); scripts/smoke.mjs with 5×20s retry against 5 page markers
+- [ ] 13-03-PLAN.md — Live deploy + visual checkpoint (Wave 3): npm run deploy (generate → gh-pages push → postdeploy smoke); human visual click-through of all 5 routes; DEPLOY-02 readability check on nuxt.config.ts comment
 
 ## Progress
 
@@ -159,8 +161,8 @@ Plans:
 | 10. Discovery Page | v1.0.0 | 3/3 | Complete    | 2026-05-21 |
 | 11. DPA + Dashboard | v1.0.0 | 2/2 | Complete    | 2026-05-22 |
 | 12. Risk Position + Tags | v1.0.0 | 2/2 | Complete    | 2026-05-22 |
-| 13. Deployment | v1.0.0 | 0/1 | Not started | - |
+| 13. Deployment | v1.0.0 | 0/3 | Planned | - |
 
 ---
 
-*Last updated: 2026-05-22 — Phase 12 (Risk Position + Tags) complete; Phase 13 (Deployment) next*
+*Last updated: 2026-05-22 — Phase 13 (Deployment) planned with 3 plans across 3 waves; ready for execution*
